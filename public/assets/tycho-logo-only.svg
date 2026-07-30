@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-labelledby="title">
+  <title id="title">Tycho logo mark</title>
+  <g fill="none" stroke-linecap="butt" stroke-width="7">
+    <path d="M8.46 43.79A42 42 0 0 1 43.79 8.46" stroke="#ff8700"/>
+    <path d="M56.21 8.46A42 42 0 0 1 91.54 43.79" stroke="#f1efe8"/>
+    <path d="M91.54 56.21A42 42 0 0 1 56.21 91.54" stroke="#f1efe8"/>
+    <path d="M43.79 91.54A42 42 0 0 1 8.46 56.21" stroke="#9b9b9b"/>
+  </g>
+  <g fill="#f1efe8">
+    <rect x="47.4" y="37.7" width="5.2" height="5.2"/>
+    <rect x="47.4" y="49.4" width="5.2" height="5.2"/>
+    <rect x="47.4" y="61.1" width="5.2" height="5.2"/>
+  </g>
+</svg>

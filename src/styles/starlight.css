@@ -1,0 +1,18 @@
+:root {
+	--sl-color-accent-low: #4a2600;
+	--sl-color-accent: #ff8700;
+	--sl-color-accent-high: #ffd4a0;
+	--sl-color-white: #f7f2e8;
+	--sl-color-gray-1: #eee7dc;
+	--sl-color-gray-2: #cfc6b7;
+	--sl-color-gray-3: #958b7c;
+	--sl-color-gray-4: #5b5348;
+	--sl-color-gray-5: #3a352d;
+	--sl-color-gray-6: #24211d;
+	--sl-color-black: #11100e;
+	letter-spacing: 0;
+}
+
+.site-title {
+	font-weight: 800;
+}
