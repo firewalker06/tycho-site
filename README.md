@@ -23,13 +23,20 @@ corepack pnpm build
 
 ## Cloudflare Pages
 
-Use these settings:
+The Cloudflare Pages project is `tycho-site`.
+
+Manual deploy:
+
+```bash
+corepack pnpm deploy
+```
+
+If switching to Cloudflare's Git integration later, use these settings:
 
 - Framework preset: Astro
 - Build command: `pnpm build`
 - Build output directory: `dist`
 - Production branch: `main`
-- Custom domain: `usetycho.com`
 
 Cloudflare owns DNS for `usetycho.com`, so Pages should manage the production custom-domain binding.
 

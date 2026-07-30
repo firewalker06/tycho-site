@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "deploy": "astro build && wrangler pages deploy dist --project-name tycho-site --branch main",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -21,6 +22,7 @@
   "devDependencies": {
     "node-addon-api": "^8.9.0",
     "node-gyp": "^13.0.1",
-    "playwright": "^1.62.0"
+    "playwright": "^1.62.0",
+    "wrangler": "^4.115.0"
   }
 }
