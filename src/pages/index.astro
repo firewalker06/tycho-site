@@ -22,6 +22,11 @@ const workflows = [
 	'Answer questions or send follow-ups when the session needs direction.',
 	'Resume or re-run work with Tycho keeping the durable session record.',
 ];
+
+const title = 'Tycho - Supervise coding agents across projects';
+const description = 'Tycho is a local-first operator console for supervising coding agents across projects.';
+const canonicalUrl = 'https://usetycho.com/';
+const ogImage = 'https://usetycho.com/og-image.png';
 ---
 
 <!doctype html>
@@ -29,12 +34,26 @@ const workflows = [
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Tycho - Supervise coding agents across projects</title>
-		<meta
-			name="description"
-			content="Tycho is a local-first operator console for supervising coding agents across projects."
-		/>
-		<link rel="icon" href="/favicon.svg" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="theme-color" content="#11100e" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Tycho" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
 	</head>
 	<body>
 		<header class="site-header">
