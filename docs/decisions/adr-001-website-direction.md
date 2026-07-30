@@ -1,7 +1,4 @@
----
-title: "ADR 001: Website Direction"
-description: Landing page and docs decisions from the initial Tycho grilling session.
----
+# ADR 001: Website Direction
 
 ## Status
 
@@ -17,7 +14,7 @@ Tycho needs a public landing page and documentation for developers who already u
 - Use Astro + Starlight.
 - Deploy with Cloudflare Pages.
 - Use `https://usetycho.com` as the canonical site.
-- Lead the homepage with: "Supervise many AI coding sessions across projects."
+- Lead the homepage with: "Supervise coding agents across projects."
 - Use "agent sessions" in public copy.
 - Use "Supervise, Switch, Loop" as the homepage feature pillars.
 - Treat local-first as a primary proof point under the hero, not the headline.

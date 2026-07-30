@@ -72,7 +72,7 @@ a {
 
 .hero {
 	display: grid;
-	grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
+	grid-template-columns: minmax(0, 0.72fr) minmax(520px, 1.28fr);
 	gap: 44px;
 	align-items: center;
 	width: min(1180px, calc(100% - 32px));
@@ -82,7 +82,7 @@ a {
 }
 
 .hero-copy {
-	max-width: 620px;
+	max-width: 560px;
 }
 
 .eyebrow {
@@ -146,7 +146,7 @@ h1 {
 
 .hero-visual {
 	position: relative;
-	min-height: 520px;
+	min-height: 610px;
 }
 
 .screen {
@@ -183,14 +183,14 @@ h1 {
 .screen-tui {
 	top: 0;
 	left: 0;
-	width: 72%;
+	width: 78%;
 	aspect-ratio: 1.62;
 }
 
 .screen-web {
 	right: 0;
-	bottom: 0;
-	width: 64%;
+	bottom: 18px;
+	width: 70%;
 	aspect-ratio: 1.22;
 }
 
@@ -299,15 +299,15 @@ h1 {
 	}
 
 	.hero-visual {
-		min-height: 460px;
+		min-height: 520px;
 	}
 
 	.screen-tui {
-		width: 84%;
+		width: 88%;
 	}
 
 	.screen-web {
-		width: 76%;
+		width: 82%;
 	}
 }
 
@@ -333,7 +333,7 @@ h1 {
 	}
 
 	.hero-visual {
-		min-height: 360px;
+		min-height: 0;
 	}
 
 	.screen-tui,

@@ -25,6 +25,8 @@ corepack pnpm build
 
 The Cloudflare Pages project is `tycho-site`.
 
+Production URL: `https://usetycho.com`
+
 Manual deploy:
 
 ```bash
@@ -38,11 +40,11 @@ If switching to Cloudflare's Git integration later, use these settings:
 - Build output directory: `dist`
 - Production branch: `main`
 
-Cloudflare owns DNS for `usetycho.com`, so Pages should manage the production custom-domain binding.
+Cloudflare owns DNS for `usetycho.com`, and Pages manages the production custom-domain binding.
 
 ## Content Direction
 
-Primary promise: "Supervise many AI coding sessions across projects."
+Primary promise: "Supervise coding agents across projects."
 
 Feature pillars: Supervise, Switch, Loop.
 

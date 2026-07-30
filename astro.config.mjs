@@ -11,7 +11,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Tycho',
-			description: 'Supervise many AI coding sessions across projects.',
+			description: 'Supervise coding agents across projects.',
 			logo: {
 				src: './public/assets/tycho-logo-only.svg',
 			},
@@ -37,7 +37,6 @@ export default defineConfig({
 					items: [
 						{ label: 'CLI Reference', slug: 'docs/reference' },
 						{ label: 'Glossary', slug: 'docs/reference/glossary' },
-						{ label: 'ADR: Site Direction', slug: 'docs/decisions/adr-001-website-direction' },
 					],
 				},
 			],
