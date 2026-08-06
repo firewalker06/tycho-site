@@ -8,7 +8,7 @@ const pillars = [
 	},
 	{
 		title: 'Switch',
-		body: 'Use Codex, Claude, OpenCode, or custom Claude-compatible harnesses without changing how you launch and follow work.',
+		body: 'Move between coding agents without changing how you launch work, follow progress, or continue a session.',
 	},
 	{
 		title: 'Loop',
@@ -27,6 +27,9 @@ const title = 'Tycho - Supervise coding agents across projects';
 const description = 'Tycho is a local-first operator console for supervising coding agents across projects.';
 const canonicalUrl = 'https://usetycho.com/';
 const ogImage = 'https://usetycho.com/og-image.png';
+const currentVersion = 'v0.9.0';
+const currentReleaseUrl = `https://github.com/firewalker06/tycho/releases/tag/${currentVersion}`;
+const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 ---
 
 <!doctype html>
@@ -57,12 +60,18 @@ const ogImage = 'https://usetycho.com/og-image.png';
 	</head>
 	<body>
 		<header class="site-header">
-			<a class="brand" href="/" aria-label="Tycho home">
-				<img src="/assets/tycho-logo-only.svg" alt="" />
-				<span>Tycho</span>
-			</a>
+			<div class="brand-lockup">
+				<a class="brand" href="/" aria-label="Tycho home">
+					<img src="/assets/tycho-logo-only.svg" alt="" />
+					<span>Tycho</span>
+				</a>
+				<a class="version-badge" href={currentReleaseUrl} aria-label={`Tycho ${currentVersion} release notes`}>
+					{currentVersion}
+				</a>
+			</div>
 			<nav aria-label="Primary">
 				<a href="/docs/getting-started/">Docs</a>
+				<a href={changelogUrl}>Changelog</a>
 				<a href="https://github.com/firewalker06/tycho">GitHub</a>
 			</nav>
 		</header>
@@ -76,6 +85,9 @@ const ogImage = 'https://usetycho.com/og-image.png';
 						Tycho gives solo developers and technical leads one place to launch, monitor, switch, and continue
 						agent work across their repos.
 					</p>
+					<p class="compatibility">
+						Built-in support for Codex, Claude, and OpenCode.
+					</p>
 					<div class="actions">
 						<a class="button primary" href="/docs/getting-started/">Get started</a>
 						<a class="button secondary" href="https://github.com/firewalker06/tycho">View on GitHub</a>
@@ -85,11 +97,11 @@ const ogImage = 'https://usetycho.com/og-image.png';
 				<div class="hero-visual" aria-label="Composed Tycho terminal and Remote UI screenshots">
 					<div class="screen screen-tui">
 						<div class="screen-label">Terminal UI</div>
-						<img src="/assets/tui-agents-list.png" alt="Tycho TUI agents dashboard" />
+						<img src="/assets/tui-agents-list.d9ee959d9346.png?v=d9ee959d9346" alt="Tycho v0.9.0 TUI agents dashboard with varied session states" />
 					</div>
 					<div class="screen screen-web">
 						<div class="screen-label">Remote UI</div>
-						<img src="/assets/web-now.png" alt="Tycho Remote UI Now view" />
+						<img src="/assets/web-now.png" alt="Tycho v0.9.0 Remote UI Now view with multiserver attention states" />
 					</div>
 				</div>
 			</section>
@@ -133,8 +145,8 @@ const ogImage = 'https://usetycho.com/og-image.png';
 					<a class="text-link" href="/docs/getting-started/">Read the quickstart</a>
 				</div>
 				<div class="workflow-image">
-					<img src="/assets/web-chat-compose.png" alt="Tycho Remote UI chat composer" />
-					<img src="/assets/tui-chat-compose.png" alt="Tycho TUI chat composer" />
+					<img src="/assets/web-chat-compose.png" alt="Tycho v0.9.0 Remote UI agent conversation and composer" />
+					<img src="/assets/tui-chat-compose.717ae1293caf.png?v=717ae1293caf" alt="Tycho v0.9.0 TUI agent conversation and composer" />
 				</div>
 			</section>
 		</main>

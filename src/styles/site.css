@@ -44,11 +44,16 @@ a {
 	padding: 18px 0;
 }
 
+.brand-lockup,
 .brand,
 .site-header nav {
 	display: flex;
 	align-items: center;
 	gap: 12px;
+}
+
+.brand-lockup {
+	gap: 10px;
 }
 
 .brand img {
@@ -59,6 +64,20 @@ a {
 .brand span {
 	font-size: 18px;
 	font-weight: 700;
+}
+
+.version-badge {
+	padding: 4px 7px;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	color: var(--muted);
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.version-badge:hover {
+	border-color: var(--accent);
+	color: var(--text);
 }
 
 .site-header nav a {
@@ -109,10 +128,18 @@ h1 {
 
 .lede {
 	max-width: 600px;
-	margin-bottom: 30px;
+	margin-bottom: 18px;
 	color: var(--muted);
 	font-size: 21px;
 	line-height: 1.55;
+}
+
+.compatibility {
+	max-width: 600px;
+	margin-bottom: 30px;
+	color: var(--text);
+	font-size: 15px;
+	line-height: 1.6;
 }
 
 .actions {
@@ -314,6 +341,19 @@ h1 {
 @media (max-width: 620px) {
 	.site-header {
 		width: min(100% - 24px, 1180px);
+	}
+
+	.site-header nav {
+		gap: 9px;
+	}
+
+	.site-header nav a {
+		font-size: 12px;
+	}
+
+	.version-badge {
+		padding-inline: 6px;
+		font-size: 11px;
 	}
 
 	.hero,

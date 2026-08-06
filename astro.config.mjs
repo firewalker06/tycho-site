@@ -43,7 +43,10 @@ export default defineConfig({
 				},
 				{
 					label: 'Configuration',
-					items: [{ label: 'Projects and Agents', slug: 'docs/configuration' }],
+					items: [
+						{ label: 'Projects and Agents', slug: 'docs/configuration' },
+						{ label: 'Harnesses', slug: 'docs/configuration/harnesses' },
+					],
 				},
 				{
 					label: 'Reference',
