@@ -32,6 +32,8 @@ The `agent` field is the default harness. You can override it per session:
 tycho agent create my-workspace "Try the alternate implementation" --harness claude --run
 ```
 
+Tycho includes Codex, Claude, and OpenCode harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, and custom Claude-compatible wrappers.
+
 ## Response Style
 
 Tycho appends `~/.tycho/config/response_style.md` to cold and resumed agent prompts by default.
@@ -49,5 +51,6 @@ Use `TYCHO_` environment variables when you need a temporary profile or test run
 | `TYCHO_LOGS_ROOT` | Override runtime state and logs. |
 | `TYCHO_CODEX_BIN` | Override Codex executable lookup. |
 | `TYCHO_CLAUDE_BIN` | Override Claude executable lookup. |
+| `TYCHO_OPENCODE_BIN` | Override OpenCode executable lookup. |
 
 Keep secrets, real config files, and generated agent artifacts out of committed repos.
