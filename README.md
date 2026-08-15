@@ -30,8 +30,14 @@ Production URL: `https://usetycho.com`
 Manual deploy:
 
 ```bash
+cp .env.deploy.example .env.deploy
+# Add CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN to .env.deploy.
 corepack pnpm deploy
 ```
+
+The token needs `Cloudflare Pages: Edit` access for the account that owns
+`tycho-site`. `.env.deploy` is gitignored. You can also pass another environment
+file to `scripts/deploy-pages.sh`.
 
 If switching to Cloudflare's Git integration later, use these settings:
 
