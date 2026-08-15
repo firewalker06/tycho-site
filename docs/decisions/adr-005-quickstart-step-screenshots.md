@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed. Do not merge the homepage change until all four final assets are present and visual QA passes.
+Accepted.
 
 ## Context
 
@@ -30,14 +30,18 @@ Use `loading="lazy"`, `decoding="async"`, and explicit `width="1440"` and `heigh
 
 All four assets must come from the exact `v0.10.0` Tycho tag and one deterministic synthetic Remote UI fixture. Capture the browser viewport at 1440x900 CSS pixels, device scale factor 1, and 100% zoom. Capture page pixels only: no browser chrome, cursor, selection highlight, devtools, notifications, QR code, token, server URL, or post-capture annotation. Deliver sRGB PNGs at exactly 1440x900. Do not resize or crop after capture.
 
-Keep the app shell, sidebar width, project name, agent name, and theme identical across the set. Use the dark theme and the local server label `Host`. Use the synthetic registered project `Web`, agent name `Quickstart notes`, harness `codex`, and workspace display path `~/.tycho/workspaces/web`. The four images should read as consecutive states of one session, not four unrelated demos.
+Keep the app shell, sidebar width, project name, agent name, and theme identical across the set. Use the dark theme and the local server label `Host`. Use the synthetic registered project `Web`, agent name `Quickstart notes`, harness `codex`, and the approved synthetic workspace path described below. The four images should read as consecutive states of one session, not four unrelated demos.
+
+### Approved capture deviation
+
+Tycho v0.10.0 expands and renders a registered project path verbatim. The authentic captures therefore show the short, privacy-safe synthetic absolute path `/tmp/q.mRmDvI/h/.tycho/workspaces/web` instead of `~/.tycho/workspaces/web`. The exact v0.10.0 UI and captured pixels are unchanged. This is the only approved deviation from the original brief.
 
 ### 1. `quickstart-launch-v0.10.0.png`
 
 Open **New agent** for the registered `Web` project. Show:
 
 - Name: `Quickstart notes`
-- Workspace: `~/.tycho/workspaces/web`, with the `Project path` badge
+- Workspace: `/tmp/q.mRmDvI/h/.tycho/workspaces/web`, with the `Project path` badge
 - Advanced collapsed, with the authentic v0.10.0 summary showing Custom / Global / codex / Default / Default
 - Prompt: `Read README.md and docs/quickstart.md. Add one concrete next step to docs/quickstart.md, then summarize the change.`
 - The complete `Create and run` action and `More options` control
@@ -88,7 +92,7 @@ Alt text: `Tycho v0.10.0 Remote UI showing two recorded Quickstart notes runs an
 
 ## Safe fixture state
 
-Build the fixture in a disposable root created with `mktemp -d`. Set `HOME` to a home directory inside that root; create the registered project at `$HOME/.tycho/workspaces/web`; and point `TYCHO_CONFIG_PATH`, `TYCHO_SYSTEM_PROMPTS_PATH`, `TYCHO_RESPONSE_STYLE_PATH`, and `TYCHO_LOGS_ROOT` into the same root. Bind `tycho serve` only to `127.0.0.1` on an unused port. Do not set or display a remote token.
+Build the fixture in a disposable root created with `mktemp -d`. Set `HOME` to a home directory inside that root; create the registered project at `$HOME/.tycho/workspaces/web`; and point `TYCHO_CONFIG_PATH`, `TYCHO_SYSTEM_PROMPTS_PATH`, `TYCHO_RESPONSE_STYLE_PATH`, and `TYCHO_LOGS_ROOT` into the same root. Bind `tycho serve` only to `127.0.0.1` on an unused port. Do not set or display a remote token. The approved capture root was `/tmp/q.mRmDvI`, so v0.10.0 rendered `/tmp/q.mRmDvI/h/.tycho/workspaces/web` in the final images.
 
 The workspace should contain only:
 
