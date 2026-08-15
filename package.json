@@ -9,7 +9,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "deploy": "astro build && wrangler pages deploy dist --project-name tycho-site --branch main",
+    "deploy": "./scripts/deploy-pages.sh",
     "preview": "astro preview",
     "astro": "astro"
   },
