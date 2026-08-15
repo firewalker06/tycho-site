@@ -31,6 +31,14 @@ One Tycho installation that owns its registered projects, agent sessions, logs, 
 
 A durable parent-child relationship between agent sessions on the same Tycho server. Terminal child reports return to the parent, and both directions remain navigable after archive.
 
+## Structured Result
+
+The final schema-validated status, summary, inquiry, and attachment payload returned by a managed agent. Invalid results are not accepted as success; supported harnesses can retry a bounded correction in the same native session.
+
+## Workspace Browser
+
+The read-only Remote UI view for bounded directory listings and text previews inside a registered project. The server rejects traversal, unsafe symlinks, VCS and generated paths, secret-shaped names or content, binary files, and oversized previews.
+
 ## Usage Metrics
 
 Normalized records for finalized runs and native sessions, including tokens and estimated cost when the harness and pricing data provide them. Unknown values remain unknown rather than becoming zero.

@@ -221,32 +221,13 @@ h1 {
 	aspect-ratio: 1.22;
 }
 
-.proof,
-.pillars,
-.release,
 .workflow {
 	width: min(1180px, calc(100% - 32px));
 	margin: 0 auto;
 	padding: 78px 0;
-}
-
-.proof {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 24px;
 	border-top: 1px solid var(--line);
 }
 
-.proof > div,
-.pillar {
-	border: 1px solid var(--line);
-	border-radius: 8px;
-	background: var(--panel);
-	padding: 24px;
-}
-
-.proof h2,
-.section-heading h2,
 .workflow h2 {
 	margin-bottom: 14px;
 	font-size: clamp(30px, 4vw, 52px);
@@ -254,9 +235,6 @@ h1 {
 	letter-spacing: 0;
 }
 
-.proof p,
-.pillar p,
-.release p,
 .workflow li {
 	color: var(--muted);
 	font-size: 17px;
@@ -266,61 +244,6 @@ h1 {
 .section-heading {
 	max-width: 680px;
 	margin-bottom: 28px;
-}
-
-.pillar-grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 18px;
-}
-
-.release {
-	border-top: 1px solid var(--line);
-}
-
-.release .section-heading p:last-child {
-	color: var(--muted);
-	font-size: 18px;
-	line-height: 1.6;
-}
-
-.release-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 18px;
-}
-
-.release-grid article {
-	border: 1px solid var(--line);
-	border-radius: 8px;
-	background: var(--panel);
-	padding: 24px;
-}
-
-.release-grid h3 {
-	margin-bottom: 12px;
-	font-size: 22px;
-}
-
-.release-grid p {
-	margin-bottom: 0;
-}
-
-.release-actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px 24px;
-	margin-top: 24px;
-}
-
-.pillar h3 {
-	margin-bottom: 12px;
-	color: var(--text);
-	font-size: 25px;
-}
-
-.workflow {
-	border-top: 1px solid var(--line);
 }
 
 .workflow-heading {
@@ -461,14 +384,8 @@ h1 {
 }
 
 @media (max-width: 920px) {
-	.hero,
-	.proof,
-	.pillar-grid,
-	.release-grid {
-		grid-template-columns: 1fr;
-	}
-
 	.hero {
+		grid-template-columns: 1fr;
 		min-height: auto;
 		padding-top: 28px;
 	}
@@ -505,9 +422,6 @@ h1 {
 	}
 
 	.hero,
-	.proof,
-	.release,
-	.pillars,
 	.workflow {
 		width: min(100% - 24px, 1180px);
 		padding: 46px 0;

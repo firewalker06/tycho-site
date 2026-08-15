@@ -39,7 +39,10 @@ export default defineConfig({
 				},
 				{
 					label: 'Concept',
-					items: [{ label: 'Mental Model', slug: 'docs/concept' }],
+					items: [
+						{ label: 'Mental Model', slug: 'docs/concept' },
+						{ label: 'Delegating Work Between Agents', slug: 'docs/concept/delegation' },
+					],
 				},
 				{
 					label: 'Configuration',

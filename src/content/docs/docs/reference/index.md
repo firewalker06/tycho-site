@@ -37,6 +37,23 @@ tycho agent create my-project "Check the API boundary" \
 
 Inside a managed Tycho session, a new agent inherits the current parent automatically. Use `--root` only when the new session should be unrelated.
 
+The same relationship can be attached to an idle existing session before its next run:
+
+```bash
+tycho agent send child-agent-key "Continue the delegated check" \
+  --parent-agent parent-agent-key
+tycho agent run child-agent-key --parent-agent parent-agent-key
+```
+
+`--parent-agent` and `--root` are mutually exclusive. A managed session that creates work with `--server` must choose one explicitly. Both parent and child must exist on that target server. See [Delegating Work Between Agents](/docs/concept/delegation/).
+
+Inspect archived sessions without mixing them into active polling:
+
+```bash
+tycho agent list --archived
+tycho agent list --include-archived
+```
+
 ## Schedules
 
 ```bash
@@ -65,7 +82,11 @@ tycho server login vps
 tycho server status vps
 tycho server verify vps
 tycho server logout vps
+tycho server migrate vps
+tycho server migrate --all
 ```
+
+`login` verifies before saving unless `--no-verify` is set. `status` reports metadata and never prints the token. `migrate` moves legacy inline `hq.yml` tokens into the private credential store.
 
 Target that server with the same project and agent commands:
 
@@ -81,6 +102,8 @@ tycho agent stop my-project-agent-3 --server vps
 tycho agent archive my-project-agent-3 --server vps
 ```
 
+Project `list` and `show`, the remote agent lifecycle above, and metrics support `--json`. Local-only `agent logs` and `agent clone` do not accept `--server`.
+
 ## Usage Metrics
 
 ```bash
@@ -92,4 +115,14 @@ tycho metrics query \
 tycho metrics query --server vps --from 2026-08-01 --to 2026-08-16 --timezone UTC --json
 ```
 
-The range starts at `--from` and ends before `--to`. Unknown telemetry and prices remain unknown.
+The range starts at `--from` and ends before `--to`. Offset-free boundaries use the named IANA timezone; values with `Z` or an explicit offset are absolute. Query filters accept comma-separated `--group`, `--project`, `--agent`, `--harness`, `--model`, and `--status` values.
+
+Tycho normalizes finalized managed runs and native sessions across harnesses. Missing telemetry, session baselines, models, or prices remain unknown rather than becoming zero; costs are estimates, not invoices. Agent and project archives mark matching records as archived without moving them out of the global query path.
+
+Backfill is best-effort and idempotent. Use `--durable-only` to read active and archived manifests without inspecting legacy raw telemetry:
+
+```bash
+tycho metrics backfill --durable-only --json
+```
+
+When legacy run headers have no offset, pass `--timezone`. Repeating a completed backfill leaves the same stable records unchanged.
