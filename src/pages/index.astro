@@ -18,21 +18,25 @@ const pillars = [
 
 const workflows = [
 	{
+		label: 'Launch',
 		title: 'Launch an agent session from a registered project.',
 		image: '/assets/quickstart-launch-v0.10.0.png',
-		alt: 'Tycho v0.10.0 New agent form for the Web project, ready to create and run the Quickstart notes session.',
+		alt: 'Tycho quick agent modal populated for the registered Atlas Web project, ready to create and run a session.',
 	},
 	{
+		label: 'Watch',
 		title: 'Watch status, logs, and attention states without hunting through terminal tabs.',
 		image: '/assets/quickstart-watch-v0.10.0.png',
-		alt: 'Tycho v0.10.0 Remote UI showing the Quickstart notes session running with its prompt and live file-reading activity.',
+		alt: 'Tycho complete six-session agent list showing succeeded, answer required, running, and failed states across two projects.',
 	},
 	{
+		label: 'Answer',
 		title: 'Answer questions or send follow-ups when the session needs direction.',
 		image: '/assets/quickstart-answer-v0.10.0.png',
 		alt: 'Tycho v0.10.0 Remote UI showing the Quickstart notes session waiting for a required Terminal UI or Remote UI decision.',
 	},
 	{
+		label: 'Resume',
 		title: 'Resume or re-run work with Tycho keeping the durable session record.',
 		image: '/assets/quickstart-resume-v0.10.0.png',
 		alt: 'Tycho v0.10.0 Remote UI showing two recorded Quickstart notes runs and a follow-up ready to resume the same session.',
@@ -198,33 +202,123 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 					<p class="eyebrow">From first run to follow-up</p>
 					<h2 id="workflow-heading">Install Tycho, then supervise your first agent session.</h2>
 				</div>
-				<ol class="workflow-steps">
-					{workflows.map((item, index) => (
-						<li>
-							<div class="workflow-step">
-								<h3>{item.title}</h3>
+				<tycho-carousel class="workflow-carousel">
+					<ol class="workflow-tabs" aria-label="Quickstart steps">
+						{workflows.map((item, index) => (
+							<li>
+								<a
+									class="workflow-tab"
+									href={`#workflow-panel-${index + 1}`}
+									id={`workflow-tab-${index + 1}`}
+									data-carousel-tab
+								>
+									<span class="workflow-tab-number" aria-hidden="true">{index + 1}</span>
+									<span>{item.label}</span>
+								</a>
+							</li>
+						))}
+					</ol>
+					<ol class="workflow-panels">
+						{workflows.map((item, index) => (
+							<li
+								class="workflow-panel"
+								id={`workflow-panel-${index + 1}`}
+								aria-labelledby={`workflow-tab-${index + 1}`}
+								data-carousel-panel
+							>
+								<div class="workflow-panel-heading">
+									<span class="workflow-panel-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+									<h3>{item.title}</h3>
+								</div>
 								<figure>
-									<a class="workflow-screenshot" href={item.image}>
-										<img
-											src={item.image}
-											alt={item.alt}
-											width="1440"
-											height="900"
-											loading="lazy"
-											decoding="async"
-										/>
-										<span>
-											Open full-size screenshot
-											<span class="sr-only"> for step {index + 1}: {item.title}</span>
-										</span>
-									</a>
+									<img
+										class="workflow-screenshot"
+										src={item.image}
+										alt={item.alt}
+										width="1440"
+										height="900"
+										loading={index === 0 ? 'eager' : 'lazy'}
+										decoding="async"
+									/>
 								</figure>
-							</div>
-						</li>
-					))}
-				</ol>
+							</li>
+						))}
+					</ol>
+				</tycho-carousel>
 				<a class="text-link workflow-quickstart-link" href="/docs/getting-started/">Read the quickstart</a>
 			</section>
 		</main>
+		<script>
+			class TychoCarousel extends HTMLElement {
+				connectedCallback() {
+					const tabs = [...this.querySelectorAll('[data-carousel-tab]')];
+					const panels = [...this.querySelectorAll('[data-carousel-panel]')];
+					if (tabs.length === 0 || tabs.length !== panels.length) return;
+
+					const tablist = this.querySelector('.workflow-tabs');
+					const panelList = this.querySelector('.workflow-panels');
+					tablist?.setAttribute('role', 'tablist');
+					panelList?.setAttribute('role', 'none');
+					tabs.forEach((tab) => tab.parentElement?.setAttribute('role', 'presentation'));
+					tabs.forEach((tab, index) => {
+						tab.setAttribute('role', 'tab');
+						tab.setAttribute('aria-controls', panels[index].id);
+					});
+					panels.forEach((panel) => {
+						panel.setAttribute('role', 'tabpanel');
+						panel.setAttribute('tabindex', '0');
+					});
+
+					const select = (selectedIndex, moveFocus = false) => {
+						tabs.forEach((tab, index) => {
+							const selected = index === selectedIndex;
+							tab.setAttribute('aria-selected', String(selected));
+							tab.setAttribute('tabindex', selected ? '0' : '-1');
+							panels[index].hidden = !selected;
+						});
+						if (moveFocus) tabs[selectedIndex].focus();
+					};
+
+					const hashIndex = panels.findIndex((panel) => `#${panel.id}` === window.location.hash);
+					select(hashIndex >= 0 ? hashIndex : 0);
+
+					tabs.forEach((tab, index) => {
+						tab.addEventListener('click', (event) => {
+							event.preventDefault();
+							select(index);
+						});
+							tab.addEventListener('keydown', (event) => {
+							let nextIndex;
+							switch (event.key) {
+								case 'Enter':
+								case ' ':
+									nextIndex = index;
+									break;
+								case 'ArrowRight':
+								case 'ArrowDown':
+									nextIndex = (index + 1) % tabs.length;
+									break;
+								case 'ArrowLeft':
+								case 'ArrowUp':
+									nextIndex = (index - 1 + tabs.length) % tabs.length;
+									break;
+								case 'Home':
+									nextIndex = 0;
+									break;
+								case 'End':
+									nextIndex = tabs.length - 1;
+									break;
+								default:
+									return;
+							}
+							event.preventDefault();
+							select(nextIndex, true);
+						});
+					});
+				}
+			}
+
+			if (!customElements.get('tycho-carousel')) customElements.define('tycho-carousel', TychoCarousel);
+		</script>
 	</body>
 </html>

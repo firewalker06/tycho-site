@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted.
+Superseded by [ADR-006](./adr-006-quickstart-carousel.md).
 
 ## Context
 
@@ -22,7 +22,7 @@ Show four vertically ordered step rows. Each row owns one screenshot and keeps t
 
 At 900px and wider, each row uses a 4/8 text-to-image grid with the number and copy on the left and a 16:10 screenshot on the right. Below 900px, the image stacks immediately after its step copy. Keep the same left-to-right order for every desktop row rather than alternating it. Give the ordered list its native semantics, keep each screenshot in the corresponding `li`, and use one heading for each step. The existing **Read the quickstart** link follows the list.
 
-Each image is a link to its original PNG so small-screen users can inspect the full-size UI. The link receives a visible `Open full-size screenshot` label; do not make the image the only indication that it is interactive. Do not open a new window. Use a precise `alt` on the image and do not repeat it in a figcaption. Provide a visible keyboard focus ring. The layout and content must remain complete with JavaScript disabled.
+Each image is a link to its original PNG so small-screen users can inspect the full-size UI. The link receives a visible source-image label; do not make the image the only indication that it is interactive. Do not open a new window. Use a precise `alt` on the image and do not repeat it in a figcaption. Provide a visible keyboard focus ring. The layout and content must remain complete with JavaScript disabled.
 
 Use `loading="lazy"`, `decoding="async"`, and explicit `width="1440"` and `height="900"` attributes. Keep the screenshot frame at `aspect-ratio: 8 / 5`; do not use `object-fit: cover` or CSS positioning to repair a mismatched capture. Preserve the whole delivered frame.
 
