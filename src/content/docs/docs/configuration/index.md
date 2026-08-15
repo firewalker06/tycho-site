@@ -12,6 +12,7 @@ Tycho configuration lives under `~/.tycho` by default.
 | Response style policy | `~/.tycho/config/response_style.md` |
 | Schedules | `~/.tycho/config/schedules.yml` |
 | Runtime state and logs | `~/.tycho/logs/` |
+| Normalized usage metrics | `~/.tycho/logs/usage_metrics.json` |
 
 ## Project Registry
 
@@ -52,5 +53,7 @@ Use `TYCHO_` environment variables when you need a temporary profile or test run
 | `TYCHO_CODEX_BIN` | Override Codex executable lookup. |
 | `TYCHO_CLAUDE_BIN` | Override Claude executable lookup. |
 | `TYCHO_OPENCODE_BIN` | Override OpenCode executable lookup. |
+| `TYCHO_SKILLS_HOME` | Override the home prefix used for isolated harness-skill profiles. |
+| `TYCHO_STRUCTURED_OUTPUT_CORRECTION_LIMIT` | Set structured-output correction attempts from `0` to `5`; the default is `2`. |
 
 Keep secrets, real config files, and generated agent artifacts out of committed repos.

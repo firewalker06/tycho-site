@@ -13,6 +13,24 @@
 	letter-spacing: 0;
 }
 
+:root[data-theme='light'] {
+	--sl-color-accent-low: #ffe4c4;
+	--sl-color-accent: #9a4700;
+	--sl-color-accent-high: #4a2100;
+	--sl-color-white: #11100e;
+	--sl-color-gray-1: #24211d;
+	--sl-color-gray-2: #3a352d;
+	--sl-color-gray-3: #5b5348;
+	--sl-color-gray-4: #958b7c;
+	--sl-color-gray-5: #cfc6b7;
+	--sl-color-gray-6: #eee7dc;
+	--sl-color-black: #f7f2e8;
+}
+
+:root[data-theme='light'] .display-current {
+	color: #34302a;
+}
+
 .site-title {
 	font-weight: 800;
 }

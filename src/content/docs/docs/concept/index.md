@@ -19,6 +19,8 @@ An agent session is one durable unit of supervised work.
 
 It includes the starting prompt, harness, model override if any, status, run count, logs, conversation history, attachments, and follow-up messages. In the Tycho codebase this is often called a managed agent.
 
+An agent session can delegate work to child sessions. Tycho records that relationship, returns each terminal child report to the parent, and keeps the links available in archived history. Delegation stays within one Tycho server.
+
 ## Harness
 
 A harness is the command adapter Tycho uses to run a coding agent.
@@ -33,20 +35,26 @@ A remote server is one Tycho installation that owns its registered projects, age
 
 Remote UI can combine resources from Local and configured peers into one operator view. Each project and agent session keeps its server owner, so reads and mutations return to the Tycho server that owns the resource. A temporary peer failure can leave a stale last-good snapshot visible without moving ownership or copying the underlying agent state.
 
+The CLI can target a configured peer with `--server`. Project reads and agent-session commands then use that server while commands without `--server` continue to use local state.
+
 <div class="multiserver-screenshots">
   <figure>
-    <a href="/assets/web-agents-multiserver.png">
-      <img src="/assets/web-agents-multiserver.png" alt="Tycho v0.9.0 Remote UI listing agents from Host, VPS, and AtasGG with running, blocked, unread, failed, succeeded, answer-required, and idle states" />
+    <a href="/assets/web-delegation-v0.10.0.png">
+      <img src="/assets/web-delegation-v0.10.0.png" alt="Tycho v0.10.0 Remote UI showing a parent agent session with delegated children and a returned report" />
     </a>
-    <figcaption>Agent sessions from three servers in one list, with ownership and attention state kept visible.</figcaption>
+    <figcaption>A parent session keeps child starts and terminal reports in one durable conversation.</figcaption>
   </figure>
   <figure>
-    <a href="/assets/web-projects-multiserver.png">
-      <img src="/assets/web-projects-multiserver.png" alt="Tycho v0.9.0 Remote UI grouping agents by projects owned by Host, VPS, and AtasGG servers" />
+    <a href="/assets/web-workspace-v0.10.0.png">
+      <img src="/assets/web-workspace-v0.10.0.png" alt="Tycho v0.10.0 Remote UI showing a read-only text preview in a project workspace" />
     </a>
-    <figcaption>Project-grouped supervision across Host, VPS, and AtasGG.</figcaption>
+    <figcaption>Registered project files can be listed and previewed without changing the workspace.</figcaption>
   </figure>
 </div>
+
+## Usage Metrics
+
+Tycho normalizes finalized run and native-session usage across supported harnesses. Metrics queries can group or filter tokens and estimated cost without treating unavailable provider telemetry or pricing as zero.
 
 ## Operator Loop
 
@@ -62,4 +70,4 @@ This is why the product pillars are Supervise, Switch, and Loop.
 
 ## Local-First
 
-Tycho coordinates local tools, local repos, local logs, and local agent history. Remote UI is still local-first: it exposes your Tycho server over localhost, local network, or tailnet instead of moving the control plane into hosted SaaS.
+Tycho coordinates local tools, local repos, local logs, and local agent history. Remote UI is still local-first: it exposes your Tycho server over localhost, local network, or tailnet instead of moving the control plane into hosted SaaS. Its workspace browser is read-only and limits listings and text previews to the registered project boundary.

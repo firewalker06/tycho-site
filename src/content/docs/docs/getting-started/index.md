@@ -18,6 +18,15 @@ brew tap firewalker06/tycho
 brew install tycho
 ```
 
+The Tycho v0.10.0 Homebrew release publishes bottles for arm64 Tahoe, Sequoia, and x86_64 Linux. Existing Homebrew users can upgrade with:
+
+```bash
+brew update
+brew upgrade tycho
+```
+
+After upgrading, restart any running `tycho serve` process so the API and browser assets come from the same v0.10.0 build.
+
 ## Install from Source
 
 Use a source checkout when you want to contribute or Homebrew is not suitable:
@@ -137,7 +146,7 @@ See the [CLI Reference](/docs/reference/) for project update and archive command
 
 ### Ask an Agent from Remote UI
 
-Remote UI cannot browse the server filesystem or directly register an arbitrary local directory. It can ask an agent in the Welcome Sandbox to run the project command for you.
+Remote UI cannot register an arbitrary local directory. It can browse files only inside an already registered project, using bounded read-only listings and text previews. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
 
 Create another Welcome Sandbox agent and give it the exact existing path:
 
