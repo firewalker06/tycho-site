@@ -21,11 +21,19 @@ The repeated workflow of starting work, watching status, reading output, answeri
 
 ## Remote UI
 
-Tycho's browser UI for creating, checking, and controlling agent sessions from localhost, local network, or tailnet. It can create the Welcome Sandbox on an empty installation, but it does not browse the server filesystem or directly register arbitrary local projects.
+Tycho's browser UI for creating, checking, and controlling agent sessions from localhost, local network, or tailnet. It can create the Welcome Sandbox on an empty installation and browse bounded, read-only listings and text previews inside registered projects. It cannot register an arbitrary server path.
 
 ## Remote Server
 
 One Tycho installation that owns its registered projects, agent sessions, logs, and actions. Remote UI can combine server-qualified resources from Local and configured peers, but each operation returns to the server that owns the resource.
+
+## Delegation
+
+A durable parent-child relationship between agent sessions on the same Tycho server. Terminal child reports return to the parent, and both directions remain navigable after archive.
+
+## Usage Metrics
+
+Normalized records for finalized runs and native sessions, including tokens and estimated cost when the harness and pricing data provide them. Unknown values remain unknown rather than becoming zero.
 
 ## Welcome Sandbox
 
@@ -33,7 +41,7 @@ A safe starter project at `~/.tycho/workspaces/welcome`. On an empty installatio
 
 ## Agent-Assisted Project Registration
 
-A Remote UI workflow where an agent in the Welcome Sandbox receives an exact local path and runs the Tycho project CLI for the operator. The agent registers the project; the browser does not access the filesystem directly.
+A Remote UI workflow where an agent in the Welcome Sandbox receives an exact local path and runs the Tycho project CLI for the operator. The agent registers the project; the browser cannot choose an arbitrary unregistered path itself.
 
 ## Local-First
 

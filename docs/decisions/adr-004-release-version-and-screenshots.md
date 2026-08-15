@@ -30,4 +30,4 @@ Tycho v0.9.0 also introduced persistent multiserver Agents and Projects in Remot
 
 The homepage version, release notes, and screenshots move together through an intentional documentation update. Site builds remain deterministic and do not depend on GitHub availability.
 
-Screenshot audits are mandatory for release updates, while full recapture remains conditional. Synthetic fixtures make the multiserver model concrete without publishing live peer data or credentials.
+Screenshot audits are mandatory for release updates, while full recapture remains conditional. Synthetic fixtures make current product behavior concrete without publishing live peer data or credentials. For v0.10.0, images whose fixtures named v0.9.0 were replaced with exact-release captures of the TUI, delegation, workspace preview, and run-summary navigation.
