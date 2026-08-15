@@ -119,6 +119,8 @@ tycho agent send <agent-key> "Explain why you chose that next step."
 
 You have now completed Tycho's core loop: create work, watch it, respond when useful, and keep the session record durable.
 
+For agent-led operation, open **Settings → Skills** in Remote UI. Tycho can install its bundled `tycho` skill for Codex, Claude Code, or OpenCode after confirmation. Verify the row reads **Installed**, then invoke `$tycho` in Codex or OpenCode or `/tycho` in Claude Code. See [Harnesses](/docs/configuration/harnesses/#install-the-tycho-skill) for ownership and update safety.
+
 ## Add a Real Project
 
 Tycho stores registered projects in `~/.tycho/config/hq.yml`. Choose one of these methods to add a local repository.
@@ -158,6 +160,10 @@ Run `tycho project show my-workspace` afterward and report the result.
 ```
 
 The new project appears in Remote UI after Tycho refreshes its project registry.
+
+Open the project's **Files** view to browse bounded directory listings and preview supported text files. This view is read-only and stays inside the registered project; it excludes sensitive, generated, binary, oversized, and unsafe paths. See [Projects and Agents](/docs/configuration/#inspect-a-project-workspace) for the boundary.
+
+Once one agent session is coordinating several bounded tasks, continue with [Delegating Work Between Agents](/docs/concept/delegation/).
 
 ## Optional: Open Remote UI on Your Tailnet
 
