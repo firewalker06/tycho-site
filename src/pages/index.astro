@@ -17,10 +17,26 @@ const pillars = [
 ];
 
 const workflows = [
-	'Launch an agent session from a registered project.',
-	'Watch status, logs, and attention states without hunting through terminal tabs.',
-	'Answer questions or send follow-ups when the session needs direction.',
-	'Resume or re-run work with Tycho keeping the durable session record.',
+	{
+		title: 'Launch an agent session from a registered project.',
+		image: '/assets/quickstart-launch-v0.10.0.png',
+		alt: 'Tycho v0.10.0 New agent form for the Web project, ready to create and run the Quickstart notes session.',
+	},
+	{
+		title: 'Watch status, logs, and attention states without hunting through terminal tabs.',
+		image: '/assets/quickstart-watch-v0.10.0.png',
+		alt: 'Tycho v0.10.0 Remote UI showing the Quickstart notes session running with its prompt and live file-reading activity.',
+	},
+	{
+		title: 'Answer questions or send follow-ups when the session needs direction.',
+		image: '/assets/quickstart-answer-v0.10.0.png',
+		alt: 'Tycho v0.10.0 Remote UI showing the Quickstart notes session waiting for a required Terminal UI or Remote UI decision.',
+	},
+	{
+		title: 'Resume or re-run work with Tycho keeping the durable session record.',
+		image: '/assets/quickstart-resume-v0.10.0.png',
+		alt: 'Tycho v0.10.0 Remote UI showing two recorded Quickstart notes runs and a follow-up ready to resume the same session.',
+	},
 ];
 
 const releaseHighlights = [
@@ -178,17 +194,36 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 			</section>
 
 			<section class="workflow" aria-labelledby="workflow-heading">
-				<div class="workflow-copy">
+				<div class="section-heading workflow-heading">
 					<p class="eyebrow">From first run to follow-up</p>
 					<h2 id="workflow-heading">Install Tycho, then supervise your first agent session.</h2>
-					<ol>
-						{workflows.map((item) => <li>{item}</li>)}
-					</ol>
-					<a class="text-link" href="/docs/getting-started/">Read the quickstart</a>
 				</div>
-				<div class="workflow-image">
-					<img src="/assets/web-summary-v0.10.0.png" alt="Tycho v0.10.0 Remote UI run summary with previous and next navigation and an attachment download" />
-				</div>
+				<ol class="workflow-steps">
+					{workflows.map((item, index) => (
+						<li>
+							<div class="workflow-step">
+								<h3>{item.title}</h3>
+								<figure>
+									<a class="workflow-screenshot" href={item.image}>
+										<img
+											src={item.image}
+											alt={item.alt}
+											width="1440"
+											height="900"
+											loading="lazy"
+											decoding="async"
+										/>
+										<span>
+											Open full-size screenshot
+											<span class="sr-only"> for step {index + 1}: {item.title}</span>
+										</span>
+									</a>
+								</figure>
+							</div>
+						</li>
+					))}
+				</ol>
+				<a class="text-link workflow-quickstart-link" href="/docs/getting-started/">Read the quickstart</a>
 			</section>
 		</main>
 	</body>
