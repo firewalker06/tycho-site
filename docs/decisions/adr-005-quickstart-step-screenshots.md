@@ -11,7 +11,6 @@ The homepage quickstart currently pairs four numbered actions with one Remote UI
 The checked-in assets cannot form a coherent replacement set:
 
 - `remote-new-agent.png` shows the Welcome Sandbox instead of the registered-project path named in the homepage step, uses a 1280x900 frame, and is not release-versioned.
-- `tui-agents-v0.10.0.png` shows idle agents rather than a running session, live activity, or an attention state.
 - `web-delegation-v0.10.0.png` shows delegation and a generic composer, not a first-session question or follow-up, and uses a 4:3 frame.
 - `web-summary-v0.10.0.png` shows run-summary navigation and an attachment, but no resume or send action. Its visible "Run #2" and "Total Runs 0" state is not suitable for a first-session sequence.
 - `web-workspace-v0.10.0.png` supports workspace browsing, not the quickstart loop.
