@@ -211,14 +211,14 @@ h1 {
 	top: 0;
 	left: 0;
 	width: 78%;
-	aspect-ratio: 1.62;
+	aspect-ratio: 8 / 5;
 }
 
 .screen-web {
 	right: 0;
 	bottom: 18px;
 	width: 70%;
-	aspect-ratio: 1.22;
+	aspect-ratio: 4 / 3;
 }
 
 .workflow {

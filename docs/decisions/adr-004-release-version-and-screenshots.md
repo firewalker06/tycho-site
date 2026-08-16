@@ -26,6 +26,14 @@ Tycho v0.9.0 also introduced persistent multiserver Agents and Projects in Remot
 - Keep the homepage screenshot story focused on supervision and follow-up.
 - Put paired multiserver Agents and Projects screenshots on the Concept page.
 
+For the v0.10.0 homepage, the Terminal UI capture is the canonical
+`docs/assets/site-homepage/tui-conversation-v0.10.0.png` asset from the Tycho
+product repository. Store it as `public/assets/tui-conversation-v0.10.0.png` at
+1440×900 with SHA-256
+`1f0ec71927c93f8d7497f5ce5fb016aa92fb9b486a25c684d1e37c7889e41824`.
+It shows the current conversation surface through a completed run and a focused
+follow-up composer.
+
 ## Consequences
 
 The homepage version, release notes, and screenshots move together through an intentional documentation update. Site builds remain deterministic and do not depend on GitHub availability.

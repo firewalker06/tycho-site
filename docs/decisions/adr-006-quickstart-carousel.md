@@ -29,11 +29,11 @@ Use Tycho's existing orange accent, dark panel, type, border, and shadow tokens 
 
 ## Assets
 
-The Answer and Resume captures from ADR-005 remain valid. The Launch capture uses an authentic populated Tycho quick-agent modal over the registered-project ledger. The Watch capture uses an authentic, complete six-row agent list across Succeeded, Answer required, Running, and Failed states. Both approved canonical PNGs come from the Tycho product repository's `docs/assets/site-quickstart/` directory and retain their release-versioned names in this site's `public/assets/` directory.
+The Answer and Resume captures from ADR-005 remain valid. The Launch capture uses an authentic populated Tycho quick-agent modal over the registered-project ledger. The Watch capture uses an authentic, complete nine-row agent list across three projects and Succeeded, Answer required, Running, and Failed states. Both approved canonical PNGs come from the Tycho product repository's `docs/assets/site-quickstart/` directory and retain their release-versioned names in this site's `public/assets/` directory.
 
 Canonical replacement checksums:
 
 - `quickstart-launch-v0.10.0.png`: `91db4a2fadcd40b0869a79b7c2508c369e8038fe57704706b6ffbbade46a7065`
-- `quickstart-watch-v0.10.0.png`: `c3e740c280468506907e2176b28787a39002757373f6e3fd37de25b239820c18`
+- `quickstart-watch-v0.10.0.png`: `db14da9b2b26e58f305e6b76b3fc901d4b9d3bd6621dba716a02f8206eba80ff`
 
 Do not merge or deploy until both replacement assets have been delivered, reviewed at their original size, copied into this repository, and included in the full responsive and accessibility QA pass.
