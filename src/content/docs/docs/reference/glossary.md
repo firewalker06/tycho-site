@@ -13,7 +13,7 @@ The internal Tycho object behind an agent session. Use this term in technical re
 
 ## Harness
 
-The command adapter Tycho uses to run a coding agent. Codex, Claude, and OpenCode are built in. A custom harness is currently a Claude-compatible wrapper configured with its own key and execution command.
+The command adapter Tycho uses to run a coding agent. Codex, Claude, OpenCode, and Pi are built in. A custom harness is currently a Claude-compatible wrapper configured with its own key and execution command.
 
 ## Operator Loop
 

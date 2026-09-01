@@ -8,8 +8,8 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 ## Requirements
 
 - macOS with Homebrew for the packaged install.
-- Ruby 3.2 or newer for source installs.
-- At least one coding-agent CLI you want Tycho to supervise, such as Codex, Claude, OpenCode, or a custom Claude-compatible harness.
+- For a source install: Ruby 3.2 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
+- At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a custom Claude-compatible harness.
 
 ## Install with Homebrew
 
@@ -18,14 +18,14 @@ brew tap firewalker06/tycho
 brew install tycho
 ```
 
-The Tycho v0.10.0 Homebrew release publishes bottles for arm64 Tahoe, Sequoia, and x86_64 Linux. Existing Homebrew users can upgrade with:
+Existing Homebrew users can upgrade with:
 
 ```bash
 brew update
 brew upgrade tycho
 ```
 
-After upgrading, restart any running `tycho serve` process so the API and browser assets come from the same v0.10.0 build.
+After upgrading, restart any running `tycho serve` process so the API and browser assets come from the same build.
 
 ## Install from Source
 
@@ -34,9 +34,12 @@ Use a source checkout when you want to contribute or Homebrew is not suitable:
 ```bash
 git clone https://github.com/firewalker06/tycho.git
 cd tycho
+bin/setup --check
 bin/setup
 bin/tycho
 ```
+
+`bin/setup --check` reports missing requirements without installing gems or creating config files. `bin/setup` installs dependencies, creates the user config files under `~/.tycho`, and runs `tycho doctor` as a smoke check.
 
 The remaining commands use the Homebrew executable, `tycho`. For a source checkout, replace it with `bin/tycho`.
 
@@ -45,6 +48,8 @@ The remaining commands use the Homebrew executable, `tycho`. For a source checko
 Tycho offers to create a safe Welcome Sandbox when it starts without any projects. The sandbox lives at `~/.tycho/workspaces/welcome` and contains a small `README.md` and `notes.md`.
 
 Choose the terminal or Remote UI for your first run. Both paths create the same sandbox and run the same task.
+
+Before you start, confirm the selected harness is installed and authenticated. The harness—not Tycho—ultimately enforces model access, approval, and sandbox behavior. The Welcome Sandbox keeps this first write away from a real repository; review [Harness Safety](/docs/configuration/harnesses/#harness-and-workspace-safety) before registering one.
 
 ### Terminal
 
@@ -107,6 +112,8 @@ Keep that terminal open, then open [http://127.0.0.1:7373](http://127.0.0.1:7373
 
 Remote UI records and displays the same agent session state as the TUI and CLI.
 
+See [Remote UI](/docs/getting-started/remote-ui/) for live conversations, queued follow-ups, localhost and tailnet safety, schedules, and multiserver ownership.
+
 ## Continue the Loop
 
 When the agent finishes, ask why it chose that next step.
@@ -119,7 +126,7 @@ tycho agent send <agent-key> "Explain why you chose that next step."
 
 You have now completed Tycho's core loop: create work, watch it, respond when useful, and keep the session record durable.
 
-For agent-led operation, open **Settings → Skills** in Remote UI. Tycho can install its bundled `tycho` skill for Codex, Claude Code, or OpenCode after confirmation. Verify the row reads **Installed**, then invoke `$tycho` in Codex or OpenCode or `/tycho` in Claude Code. See [Harnesses](/docs/configuration/harnesses/#install-the-tycho-skill) for ownership and update safety.
+For agent-led operation, open **Settings → Skills** in Remote UI. Tycho can install its bundled `tycho` skill for Codex, Claude Code, OpenCode, or Pi after confirmation. Verify the row reads **Installed**, then invoke `$tycho` in Codex or OpenCode, `/tycho` in Claude Code, or `/skill:tycho` in Pi. See [Harnesses](/docs/configuration/harnesses/#install-the-tycho-skill) for ownership and update safety.
 
 ## Add a Real Project
 
@@ -165,12 +172,19 @@ Open the project's **Files** view to browse bounded directory listings and previ
 
 Once one agent session is coordinating several bounded tasks, continue with [Delegating Work Between Agents](/docs/concept/delegation/).
 
+For the full create, send, run, stop, clone, and archive behavior, see [Agent Session Lifecycle](/docs/concept/lifecycle/). To run recurring work in one durable session, see [Schedules](/docs/configuration/schedules/).
+
 ## Optional: Open Remote UI on Your Tailnet
 
 Localhost is the safest first run. Before exposing Remote UI on Tailscale or another non-loopback address, set an access token:
 
 ```bash
-TYCHO_REMOTE_TOKEN="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')" tycho serve
+TYCHO_REMOTE_TOKEN_VALUE="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')"
+export TYCHO_REMOTE_TOKEN="$TYCHO_REMOTE_TOKEN_VALUE"
+printf %s "$TYCHO_REMOTE_TOKEN_VALUE" | pbcopy
+tycho serve
 ```
 
-When Tailscale is available, Tycho prints its MagicDNS URL and a terminal QR code. Keep the token private and use the printed URL from another device on your tailnet.
+The named variable keeps the generated value available, while `pbcopy` copies it without printing it. When Remote UI asks for authentication, paste that same value into **Remote token** and save it. On WSL, replace `pbcopy` with `clip.exe`; on Linux with Wayland, use `wl-copy`. Keep the token private, do not put its literal value in shell history, and run `unset TYCHO_REMOTE_TOKEN_VALUE TYCHO_REMOTE_TOKEN` after the server stops.
+
+When Tailscale is available, Tycho prints its MagicDNS URL and a terminal QR code. Use that URL from another device on your tailnet.

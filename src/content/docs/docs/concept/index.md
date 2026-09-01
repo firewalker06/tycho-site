@@ -13,11 +13,11 @@ A project is a registered workspace with a key, name, path, group, and default h
 
 An agent session is one durable unit of supervised work. It keeps the starting prompt, harness, status, runs, conversation, logs, attachments, and follow-ups. Tycho's code and CLI often call this a managed agent.
 
-An agent session can create bounded child work and receive a durable report when that work reaches a terminal state. See [Delegating Work Between Agents](/docs/concept/delegation/) for parent inheritance, callbacks, privacy, archives, and the same-server boundary.
+An agent session can create bounded child work and receive a durable report when that work reaches a terminal state. See [Agent Session Lifecycle](/docs/concept/lifecycle/) for run and attention states, and [Delegating Work Between Agents](/docs/concept/delegation/) for explicit parent ownership, callbacks, privacy, archives, and the same-server boundary.
 
 ## Harness
 
-A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, and OpenCode are built in; custom harnesses are Claude-compatible wrappers. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
+A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, OpenCode, and Pi are built in; custom harnesses are Claude-compatible wrappers. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
 
 ## Remote Server
 
