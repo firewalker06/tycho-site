@@ -39,10 +39,15 @@ Each registered project has a read-only **Files** view. The server accepts relat
 Without `TYCHO_REMOTE_TOKEN`, Remote UI and its API are appropriate only on localhost. Set a bearer token before binding to Tailscale or another non-loopback address:
 
 ```bash
-TYCHO_REMOTE_TOKEN="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')" tycho serve
+TYCHO_REMOTE_TOKEN_VALUE="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')"
+export TYCHO_REMOTE_TOKEN="$TYCHO_REMOTE_TOKEN_VALUE"
+printf %s "$TYCHO_REMOTE_TOKEN_VALUE" | pbcopy
+tycho serve
 ```
 
-Keep the token private. When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and print a MagicDNS URL and QR code. Prefer Tailscale Serve HTTPS when you need service workers or push notifications. Passing `--host` disables Tailscale auto-binding.
+This keeps the generated value in the named shell variable and copies it to the macOS clipboard without printing it. When Remote UI asks for authentication, paste that same value into **Remote token** and save it. On WSL, replace `pbcopy` with `clip.exe`; on Linux with Wayland, use `wl-copy`. Do not print the token, put its literal value in shell history, or paste it anywhere else. Run `unset TYCHO_REMOTE_TOKEN_VALUE TYCHO_REMOTE_TOKEN` after the server stops.
+
+When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and print a MagicDNS URL and QR code. Prefer Tailscale Serve HTTPS when you need service workers or push notifications. Passing `--host` disables Tailscale auto-binding.
 
 ## Combine Tycho Servers
 

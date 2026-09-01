@@ -179,7 +179,12 @@ For the full create, send, run, stop, clone, and archive behavior, see [Agent Se
 Localhost is the safest first run. Before exposing Remote UI on Tailscale or another non-loopback address, set an access token:
 
 ```bash
-TYCHO_REMOTE_TOKEN="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')" tycho serve
+TYCHO_REMOTE_TOKEN_VALUE="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(24)')"
+export TYCHO_REMOTE_TOKEN="$TYCHO_REMOTE_TOKEN_VALUE"
+printf %s "$TYCHO_REMOTE_TOKEN_VALUE" | pbcopy
+tycho serve
 ```
 
-When Tailscale is available, Tycho prints its MagicDNS URL and a terminal QR code. Keep the token private and use the printed URL from another device on your tailnet.
+The named variable keeps the generated value available, while `pbcopy` copies it without printing it. When Remote UI asks for authentication, paste that same value into **Remote token** and save it. On WSL, replace `pbcopy` with `clip.exe`; on Linux with Wayland, use `wl-copy`. Keep the token private, do not put its literal value in shell history, and run `unset TYCHO_REMOTE_TOKEN_VALUE TYCHO_REMOTE_TOKEN` after the server stops.
+
+When Tailscale is available, Tycho prints its MagicDNS URL and a terminal QR code. Use that URL from another device on your tailnet.

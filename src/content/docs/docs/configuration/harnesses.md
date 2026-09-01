@@ -20,7 +20,19 @@ Install and authenticate the CLI you plan to use before starting its first agent
 
 Tycho parses each built-in harness's native output, records conversation and run history, preserves its native session ID, and maps configured model and reasoning-effort values to that CLI's arguments. This creates a consistent supervision workflow, not identical behavior across the four CLIs.
 
-Pi support targets `@mariozechner/pi-coding-agent` 0.73.1. Install that version, authenticate with `pi` and `/login`, then confirm `pi --list-models` returns at least one model before selecting the harness.
+Pi support targets `@mariozechner/pi-coding-agent` 0.73.1. Install the exact supported version:
+
+```bash
+npm install -g --ignore-scripts @mariozechner/pi-coding-agent@0.73.1
+```
+
+Run `pi`, enter `/login`, and authenticate a provider. Then verify readiness before selecting the harness:
+
+```bash
+pi --list-models
+```
+
+Tycho reports Pi as ready only when that command returns at least one authenticated model.
 
 ## Harness and Workspace Safety
 
