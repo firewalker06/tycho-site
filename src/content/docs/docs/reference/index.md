@@ -35,7 +35,7 @@ tycho agent create my-project "Check the API boundary" \
   --run
 ```
 
-Inside a managed Tycho session, a new agent inherits the current parent automatically. Use `--root` only when the new session should be unrelated.
+Tycho never infers a parent from `TYCHO_AGENT_KEY`. A managed agent must pass `--parent-agent "$TYCHO_AGENT_KEY"` explicitly. Omitting it creates an unrelated root; `--root` makes that intent explicit.
 
 The same relationship can be attached to an idle existing session before its next run:
 
@@ -63,15 +63,32 @@ tycho schedule run weekly-review
 tycho schedule pause weekly-review
 tycho schedule resume weekly-review
 tycho schedule reload
+tycho schedule daemon
+tycho schedule daemon --once
+tycho schedule daemon --dry-run
 ```
+
+The dedicated daemon owns the clock; the TUI and Remote UI only manage it. See [Schedules](/docs/configuration/schedules/).
 
 ## Remote UI
 
 ```bash
 tycho serve
+tycho serve daemon
 ```
 
 When Tailscale is available, Tycho can expose a MagicDNS URL and terminal QR code for checking agent state from another device on your tailnet.
+
+See [Remote UI](/docs/getting-started/remote-ui/) for localhost, bearer-token, tailnet, multiserver, and browser workspace boundaries.
+
+## Second Brain Memory Handoffs
+
+```bash
+tycho memory handoffs
+tycho memory handoffs --server vps --json
+```
+
+Successful runs may return a semantic `memory_handoff`. Tycho stores it with run-owned provenance and exposes it locally or from one configured peer. This command does not search raw conversations or failed runs.
 
 ## Remote Servers
 

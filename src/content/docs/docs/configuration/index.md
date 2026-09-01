@@ -35,7 +35,7 @@ The `agent` field is the default harness. You can override it per session:
 tycho agent create my-workspace "Try the alternate implementation" --harness claude --run
 ```
 
-Tycho includes Codex, Claude, and OpenCode harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, and custom Claude-compatible wrappers.
+Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, safety differences, and custom Claude-compatible wrappers.
 
 ## Inspect a Project Workspace
 
@@ -96,6 +96,7 @@ Use `TYCHO_` environment variables when you need a temporary profile or test run
 | `TYCHO_CODEX_BIN` | Override Codex executable lookup. |
 | `TYCHO_CLAUDE_BIN` | Override Claude executable lookup. |
 | `TYCHO_OPENCODE_BIN` | Override OpenCode executable lookup. |
+| `TYCHO_PI_BIN` | Override Pi Coding Agent executable lookup. |
 | `TYCHO_SKILLS_HOME` | Override the home prefix used for isolated harness-skill profiles. |
 | `TYCHO_STRUCTURED_OUTPUT_CORRECTION_LIMIT` | Set structured-output correction attempts from `0` to `5`; the default is `2`. |
 

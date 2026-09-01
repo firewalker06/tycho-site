@@ -35,12 +35,14 @@ export default defineConfig({
 					label: 'Getting Started',
 					items: [
 						{ label: 'Install and Run', slug: 'docs/getting-started' },
+						{ label: 'Remote UI', slug: 'docs/getting-started/remote-ui' },
 					],
 				},
 				{
 					label: 'Concept',
 					items: [
 						{ label: 'Mental Model', slug: 'docs/concept' },
+						{ label: 'Agent Session Lifecycle', slug: 'docs/concept/lifecycle' },
 						{ label: 'Delegating Work Between Agents', slug: 'docs/concept/delegation' },
 					],
 				},
@@ -49,6 +51,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Projects and Agents', slug: 'docs/configuration' },
 						{ label: 'Harnesses', slug: 'docs/configuration/harnesses' },
+						{ label: 'Schedules', slug: 'docs/configuration/schedules' },
 					],
 				},
 				{

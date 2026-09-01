@@ -36,11 +36,13 @@ tycho agent send child-agent-key \
 tycho agent run child-agent-key --parent-agent parent-agent-key
 ```
 
-When a local `tycho agent create` runs inside a managed session, Tycho inherits the current `TYCHO_AGENT_KEY` automatically. This preserves the relationship even if the calling agent omits `--parent-agent`:
+Tycho never infers a parent from the environment. A managed agent must pass its own key explicitly:
 
 ```bash
-# Inside a managed Tycho session: linked to the current session.
-tycho agent create my-project "Check the migration path." --run
+# Inside a managed Tycho session: explicitly linked to this session.
+tycho agent create my-project "Check the migration path." \
+  --parent-agent "${TYCHO_AGENT_KEY:?Missing TYCHO_AGENT_KEY}" \
+  --run
 ```
 
 Use `--root` when the new work is intentionally unrelated:
@@ -49,7 +51,7 @@ Use `--root` when the new work is intentionally unrelated:
 tycho agent create my-project "Independent maintenance task." --root --run
 ```
 
-`--parent-agent` and `--root` are mutually exclusive. When a managed session uses `--server`, Tycho cannot safely infer whether its local parent exists on the target. The command must include either an explicit parent key or `--root`:
+Omitting the parent creates an unrelated root; `--root` makes that intent explicit. `--parent-agent` and `--root` are mutually exclusive. The same rule applies locally and with `--server`:
 
 ```bash
 tycho agent create my-project "Inspect the remote build." \
@@ -59,6 +61,14 @@ tycho agent create my-project "Inspect the remote build." \
 ```
 
 Both parent and child must live on `vps` in this example. Remote UI may show several servers together, but each server has its own independent delegation graph.
+
+## Delegation, Takeover, and Reclaim
+
+The recorded edge has an owner. A prompt sent with the recorded `--parent-agent` key preserves parent ownership. A direct user prompt without that key enters **Takeover** before Tycho stores the prompt: pending reports and queued parent resumes are canceled, and the resulting user-owned run cannot report upward later.
+
+A later prompt declared with the recorded parent key restores delegation for later work. It does not make a user-owned run reportable after the fact. Parent reclaim also cancels an unresolved child inquiry before storing the new prompt. Remote UI links the relationship in both directions and shows **Takeover** while the edge is user-owned.
+
+Remote UI can disconnect the callback edge without deleting its history. Runs completed while disconnected do not report to the parent and are not replayed after reconnection; only later eligible runs report.
 
 ## Lifecycle and Attention
 
