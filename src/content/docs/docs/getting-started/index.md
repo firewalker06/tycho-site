@@ -40,6 +40,8 @@ Projects must now be created explicitly: replace `tycho project my-project` with
 
 Existing Claude custom profiles keep working, but new profiles must declare one native adapter: `codex`, `claude`, `opencode`, or `pi`. Automation using the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands must be deleted; read-only agent pull-request diffs use an authenticated local `gh` CLI.
 
+The release also adds FRED, schedule creation and editing, workspace search and previews, queued follow-ups, richer summary and attachment rendering, and agent-switcher improvements. See the [v0.11.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.11.0) for the complete change list.
+
 ## Install from Source
 
 Use a source checkout when you want to contribute or Homebrew is not suitable:
@@ -168,7 +170,7 @@ See the [CLI Reference](/docs/reference/) for project update and archive command
 
 ### Ask an Agent from Remote UI
 
-Remote UI cannot register an arbitrary local directory. It can search files, preview Markdown and images, and make guarded plain-text edits only inside an already registered project. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
+Remote UI cannot register an arbitrary local directory. It can search files, preview Markdown and images, and make guarded plain-text edits only inside an already registered project; existing workspaces remain read-only on mobile. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
 
 Create another Welcome Sandbox agent and give it the exact existing path:
 

@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "check:links": "node scripts/check-links.mjs",
     "deploy": "./scripts/deploy-pages.sh",
     "preview": "astro preview",
     "astro": "astro"

@@ -34,7 +34,7 @@ The agent switcher follows the same ordering and status cues as the Agents view,
 
 ## Browse a Project Safely
 
-Each registered project has a **Files** view. Search files, preview Markdown and images, and use guarded plain-text editing where available. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing and editing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
+Each registered project has a **Files** view. Search files, preview Markdown and images, and use guarded plain-text editing on desktop where available; existing workspaces remain read-only on mobile. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing and editing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
 
 ## Use FRED
 

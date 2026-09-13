@@ -39,7 +39,7 @@ Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/
 
 ## Inspect a Project Workspace
 
-Remote UI exposes a **Files** view for every registered project, including projects owned by configured peers. Search the registered workspace, preview Markdown and images safely, and make guarded plain-text edits where editing is available. Directory and selected-file state stays in browser history, so Back and Forward return to the expected location.
+Remote UI exposes a **Files** view for every registered project, including projects owned by configured peers. Search the registered workspace, preview Markdown and images safely, and make guarded plain-text edits on desktop where editing is available. Existing workspaces remain read-only on mobile. Directory and selected-file state stays in browser history, so Back and Forward return to the expected location.
 
 The server accepts relative paths only and resolves them against the registered project root. It rejects traversal and paths that escape through symlinks, hides VCS and generated directories, filters secret-shaped names and content, and refuses binary or oversized previews. Listings are paginated and bounded. The browser never receives an arbitrary host path and cannot use this view to register a new project.
 

@@ -9,6 +9,24 @@ The dedicated `tycho schedule daemon` owns the clock. The TUI and Remote UI mana
 
 ## Define a Schedule
 
+Create or update a schedule from the CLI:
+
+```bash
+tycho schedule create weekday-maintenance \
+  --cron "0 9 * * 1-5" \
+  --timezone local \
+  --project-key tycho \
+  --agent-name "Tycho scheduled maintenance" \
+  --message "Run the weekday maintenance check and report the outcome."
+
+tycho schedule update weekday-maintenance \
+  --agent codex \
+  --model gpt-6-astra \
+  --reasoning-effort medium
+```
+
+The optional `--agent`, `--model`, and `--reasoning-effort` values override project defaults for this schedule. Omit them to keep using the project defaults. You can also manage the same fields in Remote UI.
+
 Definitions live in `~/.tycho/config/schedules.yml`. A schedule targets one registered project and uses standard five-field cron syntax:
 
 ```yaml
