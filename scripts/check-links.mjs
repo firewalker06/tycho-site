@@ -51,5 +51,5 @@ if (failures.length) {
 	console.error(`Internal link check failed:\n${failures.map((item) => `- ${item}`).join('\n')}`);
 	process.exitCode = 1;
 } else {
-	console.log(`Checked ${htmlFiles.length} generated HTML pages; internal links and same-page fragments are valid.`);
+	console.log(`Checked ${htmlFiles.length} generated HTML pages; internal links and fragments are valid.`);
 }
