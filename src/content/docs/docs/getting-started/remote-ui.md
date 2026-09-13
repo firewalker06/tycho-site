@@ -15,7 +15,7 @@ tycho serve --host 127.0.0.1 --port 7373
 
 Open [http://127.0.0.1:7373](http://127.0.0.1:7373). Use `tycho serve daemon` when you want the server to continue in the background; its request and lifecycle output continues in `~/.tycho/logs/remote_server_daemon.log` and `~/.tycho/logs/hq.log`.
 
-Remote UI can create the Welcome Sandbox on an empty installation. It cannot register an arbitrary host directory. Register real project paths from the TUI or CLI, or ask a Welcome Sandbox agent to run an exact `tycho project` command.
+Remote UI can create the Welcome Sandbox on an empty installation. It cannot register an arbitrary host directory. Register real project paths from the TUI or CLI, or ask a Welcome Sandbox agent to run an exact `tycho project create` command.
 
 ## Supervise a Session
 
@@ -25,14 +25,22 @@ The **Agents** view combines projects and sessions. Open a conversation to:
 - queue ordered follow-ups without waiting for the current run to stop;
 - answer, dismiss, or restore a structured inquiry;
 - inspect concise previews and ordered rich summary sections;
-- open run attachments, usage details, saved pull-request diffs, and durable history;
+- open run attachments, including scrollable attachment detail and direct file downloads, usage details, saved pull-request diffs, and durable history;
 - run, stop, clone, archive, schedule, or delegate work when that action is valid.
 
 The **Now** view keeps attention work and schedules compact. `no_action_needed` runs stay quiet; input-required, blocked, failed, stopped, partial, and normal successful outcomes keep their distinct lifecycle meaning. See [Agent Session Lifecycle](/docs/concept/lifecycle/).
 
+The agent switcher follows the same ordering and status cues as the Agents view, including FRED when it is configured. While a session is running, you can queue follow-up prompts and load newer conversation messages on demand without losing the focused conversation.
+
 ## Browse a Project Safely
 
-Each registered project has a read-only **Files** view. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
+Each registered project has a **Files** view. Search files, preview Markdown and images, and use guarded plain-text editing on desktop where available; existing workspaces remain read-only on mobile. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing and editing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
+
+## Use FRED
+
+FRED is Tycho's opt-in Personal Assistant on the current server. Open FRED to choose its Codex model, reasoning effort, timezone, personality, and optional external-event preference, then confirm setup. FRED keeps one persisted daily conversation, offers recommendations, and can inspect Tycho state directly.
+
+When FRED proposes a change—such as creating a project or schedule, or installing a Tycho skill—it shows the exact action preview and requires a separate confirmation for each action. FRED's persisted daily sessions are not ordinary agent sessions: regular lifecycle and delegation controls cannot start, stop, or attach to them.
 
 ## Protect Non-Local Access
 

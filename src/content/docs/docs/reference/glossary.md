@@ -13,7 +13,7 @@ The internal Tycho object behind an agent session. Use this term in technical re
 
 ## Harness
 
-The command adapter Tycho uses to run a coding agent. Codex, Claude, OpenCode, and Pi are built in. A custom harness is currently a Claude-compatible wrapper configured with its own key and execution command.
+The command adapter Tycho uses to run a coding agent. Codex, Claude, OpenCode, and Pi are built in. A compatible custom profile declares one of those native adapters plus its own key and execution command.
 
 ## Operator Loop
 
@@ -21,7 +21,7 @@ The repeated workflow of starting work, watching status, reading output, answeri
 
 ## Remote UI
 
-Tycho's browser UI for creating, checking, and controlling agent sessions from localhost, local network, or tailnet. It can create the Welcome Sandbox on an empty installation and browse bounded, read-only listings and text previews inside registered projects. It cannot register an arbitrary server path.
+Tycho's browser UI for creating, checking, and controlling agent sessions from localhost, local network, or tailnet. It can create the Welcome Sandbox on an empty installation and search, preview, and make guarded plain-text edits inside registered projects. Existing workspaces remain read-only on mobile. It cannot register an arbitrary server path.
 
 ## Remote Server
 
@@ -37,7 +37,7 @@ The final schema-validated status, summary, inquiry, and attachment payload retu
 
 ## Workspace Browser
 
-The read-only Remote UI view for bounded directory listings and text previews inside a registered project. The server rejects traversal, unsafe symlinks, VCS and generated paths, secret-shaped names or content, binary files, and oversized previews.
+The Remote UI view for bounded file search, directory listings, Markdown and image previews, and guarded plain-text editing inside a registered project. Existing workspaces remain read-only on mobile. The server rejects traversal, unsafe symlinks, VCS and generated paths, secret-shaped names or content, binary files, and oversized previews.
 
 ## Usage Metrics
 

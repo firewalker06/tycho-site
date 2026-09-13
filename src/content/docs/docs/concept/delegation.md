@@ -88,7 +88,9 @@ If the parent is stopped and active, Tycho resumes it automatically. Resume is d
 - an archived parent receives the report in read-only history but is never restored or resumed;
 - a missing parent stays recorded in the delegation ledger.
 
-The detached child runner finalizes the run and delivers callbacks even when Remote UI and the original parent process are not running. Server polling provides a recovery path. If writing the callback fails, the report remains queued; processing retries it rather than marking it delivered. Each relationship-and-run pair has one report, so retrying delivery does not duplicate the callback.
+The detached child runner finalizes the run and delivers callbacks even when Remote UI and the original parent process are not running. Eligible child outcomes for one parent are batched into one deterministic callback. If writing the callback fails, the report remains queued; processing retries it rather than marking it delivered. Each relationship-and-run pair has one report, so retrying delivery does not duplicate the callback.
+
+For a terminal child turn still owned by the current parent generation, the parent callback is the attention path: Tycho does not add a child unread count or send a child completion push. A direct user takeover, stale ownership generation, or detached legacy relationship falls back to ordinary operator attention.
 
 A failed or blocked child still reports. Fix the child with `tycho agent send` or start another run; each later terminal run returns its own report to the same parent.
 

@@ -17,7 +17,7 @@ An agent session can create bounded child work and receive a durable report when
 
 ## Harness
 
-A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, OpenCode, and Pi are built in; custom harnesses are Claude-compatible wrappers. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
+A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, OpenCode, and Pi are built in; compatible custom profiles can use any of those four native adapter families. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
 
 ## Remote Server
 
