@@ -38,9 +38,9 @@ Each registered project has a **Files** view. Search files, preview Markdown and
 
 ## Use FRED
 
-FRED is Tycho's opt-in Personal Assistant on the current server. Open FRED to choose its Codex model, reasoning effort, timezone, personality, and optional external-event preference, then confirm setup. FRED keeps one protected daily conversation, offers recommendations, and can inspect Tycho state directly.
+FRED is Tycho's opt-in Personal Assistant on the current server. Open FRED to choose its Codex model, reasoning effort, timezone, personality, and optional external-event preference, then confirm setup. FRED keeps one persisted daily conversation, offers recommendations, and can inspect Tycho state directly.
 
-When FRED proposes a change—such as creating a project or schedule, or installing a Tycho skill—it shows the exact action preview and requires a separate confirmation for each action. FRED's protected daily sessions are not ordinary agent sessions: regular lifecycle and delegation controls cannot start, stop, or attach to them.
+When FRED proposes a change—such as creating a project or schedule, or installing a Tycho skill—it shows the exact action preview and requires a separate confirmation for each action. FRED's persisted daily sessions are not ordinary agent sessions: regular lifecycle and delegation controls cannot start, stop, or attach to them.
 
 ## Protect Non-Local Access
 
