@@ -9,7 +9,7 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 - macOS with Homebrew for the packaged install.
 - For a source install: Ruby 3.2 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
-- At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a custom Claude-compatible harness.
+- At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
 ## Install with Homebrew
 
@@ -21,11 +21,24 @@ brew install tycho
 Existing Homebrew users can upgrade with:
 
 ```bash
-brew update
-brew upgrade tycho
+tycho update
 ```
 
-After upgrading, restart any running `tycho serve` process so the API and browser assets come from the same build.
+`tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
+
+After upgrading from 0.10.2, verify the installed release:
+
+```bash
+tycho --version
+tycho --help
+tycho doctor
+tycho project list
+tycho schedule list
+```
+
+Projects must now be created explicitly: replace `tycho project my-project` with `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect an existing project. In Remote UI, update every Tycho-owned skill in **Settings → Skills**, then restart a harness if it does not discover the new skill. Tycho will not overwrite an unmarked or locally modified skill.
+
+Existing Claude custom profiles keep working, but new profiles must declare one native adapter: `codex`, `claude`, `opencode`, or `pi`. Automation using the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands must be deleted; read-only agent pull-request diffs use an authenticated local `gh` CLI.
 
 ## Install from Source
 
@@ -144,7 +157,7 @@ Tycho stores registered projects in `~/.tycho/config/hq.yml`. Choose one of thes
 Run this from any directory:
 
 ```bash
-tycho project my-workspace \
+tycho project create my-workspace \
   --path ~/Code/my-workspace \
   --name "My Workspace" \
   --group Personal \
@@ -155,7 +168,7 @@ See the [CLI Reference](/docs/reference/) for project update and archive command
 
 ### Ask an Agent from Remote UI
 
-Remote UI cannot register an arbitrary local directory. It can browse files only inside an already registered project, using bounded read-only listings and text previews. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
+Remote UI cannot register an arbitrary local directory. It can search files, preview Markdown and images, and make guarded plain-text edits only inside an already registered project. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
 
 Create another Welcome Sandbox agent and give it the exact existing path:
 
@@ -168,7 +181,7 @@ Run `tycho project show my-workspace` afterward and report the result.
 
 The new project appears in Remote UI after Tycho refreshes its project registry.
 
-Open the project's **Files** view to browse bounded directory listings and preview supported text files. This view is read-only and stays inside the registered project; it excludes sensitive, generated, binary, oversized, and unsafe paths. See [Projects and Agents](/docs/configuration/#inspect-a-project-workspace) for the boundary.
+Open the project's **Files** view to search and browse bounded listings, preview supported text files, and make guarded plain-text edits. It stays inside the registered project and excludes sensitive, generated, binary, oversized, and unsafe paths. See [Projects and Agents](/docs/configuration/#inspect-a-project-workspace) for the boundary.
 
 Once one agent session is coordinating several bounded tasks, continue with [Delegating Work Between Agents](/docs/concept/delegation/).
 

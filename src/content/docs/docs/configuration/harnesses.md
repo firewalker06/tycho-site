@@ -1,6 +1,6 @@
 ---
 title: Harnesses
-description: Run Codex, Claude, OpenCode, Pi, or a custom Claude-compatible wrapper through Tycho.
+description: Run Codex, Claude, OpenCode, Pi, or a compatible custom harness profile through Tycho.
 ---
 
 A harness is the command adapter Tycho uses to run a coding-agent CLI.
@@ -96,9 +96,9 @@ export TYCHO_PI_BIN=/Users/you/.local/bin/pi
 
 Only set the override for the harnesses you use. The value must point to an executable file.
 
-## Add a Custom Claude-Compatible Wrapper
+## Add a Custom Harness Profile
 
-Custom harnesses support wrappers that accept Claude's non-interactive CLI contract. Define a unique key and execution command:
+Custom harnesses can use the native `codex`, `claude`, `opencode`, or `pi` adapter. Define a unique key, its native adapter, and an execution command. Tycho keeps that adapter's native session, parsing, skills, metrics, and readiness behavior:
 
 ```yaml
 custom_harnesses:
@@ -126,7 +126,7 @@ custom_harnesses:
       - /Users/you/bin/claude
 ```
 
-Tycho currently accepts only `adapter: claude` for custom harnesses. The command must accept the Claude flags Tycho adds for streaming JSON, structured results, model and effort selection, and native session resume. Tycho validates the configuration and executable, but the wrapper remains responsible for its provider credentials and runtime dependencies.
+The command must accept the selected adapter's native flags for streaming output, structured results, model and effort selection, and native-session resume. Tycho validates the configuration and executable, but the wrapper remains responsible for its provider credentials and runtime dependencies. Existing `adapter: claude` profiles remain valid.
 
 A custom key cannot be `codex`, `claude`, `opencode`, or `pi`, because those names belong to the built-in harnesses.
 

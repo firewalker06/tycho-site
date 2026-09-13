@@ -6,12 +6,13 @@ description: Common Tycho commands for projects, agent sessions, and schedules.
 ## Projects
 
 ```bash
-tycho project my-project
 tycho project create my-project --path ~/Code/my-project --name "My Project"
 tycho project show my-project
 tycho project update my-project --group Personal --harness codex
 tycho project archive my-project
 ```
+
+Projects must be created explicitly. `tycho project my-project` no longer creates one and fails without changing the registry.
 
 ## Agent Sessions
 
@@ -57,6 +58,10 @@ tycho agent list --include-archived
 ## Schedules
 
 ```bash
+tycho schedule create weekday-maintenance \
+  --cron "0 9 * * 1-5" --timezone local --project-key my-project \
+  --agent-name "Weekday maintenance" --message "Run the maintenance check."
+tycho schedule update weekday-maintenance --agent codex --model gpt-6-astra --reasoning-effort medium
 tycho schedule list
 tycho schedule validate
 tycho schedule run weekly-review
@@ -75,7 +80,10 @@ The dedicated daemon owns the clock; the TUI and Remote UI only manage it. See [
 ```bash
 tycho serve
 tycho serve daemon
+tycho restart
 ```
+
+Check the installed version with `tycho --version` or `tycho -v`. `tycho update` upgrades a Homebrew installation and restarts running local services through their stable launcher; source checkouts update through Git instead.
 
 When Tailscale is available, Tycho can expose a MagicDNS URL and terminal QR code for checking agent state from another device on your tailnet.
 

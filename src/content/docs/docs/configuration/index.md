@@ -35,15 +35,15 @@ The `agent` field is the default harness. You can override it per session:
 tycho agent create my-workspace "Try the alternate implementation" --harness claude --run
 ```
 
-Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, safety differences, and custom Claude-compatible wrappers.
+Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, safety differences, and compatible custom harness profiles.
 
 ## Inspect a Project Workspace
 
-Remote UI exposes a read-only **Files** view for every registered project, including projects owned by configured peers. Directory and selected-file state stays in browser history, so Back and Forward return to the expected location.
+Remote UI exposes a **Files** view for every registered project, including projects owned by configured peers. Search the registered workspace, preview Markdown and images safely, and make guarded plain-text edits where editing is available. Directory and selected-file state stays in browser history, so Back and Forward return to the expected location.
 
 The server accepts relative paths only and resolves them against the registered project root. It rejects traversal and paths that escape through symlinks, hides VCS and generated directories, filters secret-shaped names and content, and refuses binary or oversized previews. Listings are paginated and bounded. The browser never receives an arbitrary host path and cannot use this view to register a new project.
 
-Use the Files view for inspection. Ask an agent to make changes, or use the TUI or CLI for project registration.
+The browser cannot register an arbitrary host directory. Use the TUI or CLI for project registration. The Files boundary protects browsing and guarded editing; it does not restrict a launched harness.
 
 ## Configure a Remote Server
 
@@ -68,7 +68,7 @@ tycho server verify vps
 tycho server status vps
 ```
 
-`login` uses a hidden prompt. Verified credentials bind to the stable server key and normalized origin. Changing the scheme, host, or effective port requires verification or a new login. `token_env` takes precedence when configured; if that variable is absent, the request fails rather than falling through to another credential source. See [CLI Reference](/docs/reference/#remote-servers).
+`login` uses a hidden prompt. Verified credentials bind to the stable server key and normalized origin. Changing the scheme, host, or effective port requires verification or a new login. `token_env` takes precedence when configured; if that variable is absent, the request fails rather than falling through to another credential source. Inline `token` values still work with a migration warning; move them into the private store with `tycho server migrate <server-key>` or `tycho server migrate --all`. See [CLI Reference](/docs/reference/#remote-servers).
 
 ## Review Agent Output in Remote UI
 
