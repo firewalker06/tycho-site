@@ -7,16 +7,16 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- Apple Silicon macOS or Linux for the supported Homebrew bottle targets. v0.14.0 bottle publication is still pending.
+- Homebrew bottles for v0.14.0: Apple Silicon on macOS 26 (Tahoe) or newer, and x86_64 Linux.
 - Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.0.
 - For a source install: Ruby 3.2 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
-For v0.14.0 now, use [Install from Source](#install-from-source). The source release is published; Homebrew bottle publication and website deployment are separate delivery steps.
+On macOS 15 or other platforms without a supported bottle, use [Install from Source](#install-from-source).
 
 ## Install with Homebrew
 
-These commands install the release currently published in the tap. v0.14.0 bottles are not yet published; do not assume this path installs v0.14.0 until tap publication is verified.
+The [v0.14.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.0) are published for the supported platforms listed above. Install with:
 
 ```bash
 brew tap firewalker06/tycho
@@ -31,7 +31,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After installing the released source, or after v0.14.0 reaches the tap, verify that `tycho --version` reports `0.14.0`:
+After installing or upgrading, verify that `tycho --version` reports `0.14.0`:
 
 ```bash
 tycho --version
