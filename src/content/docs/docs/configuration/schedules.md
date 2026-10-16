@@ -77,7 +77,7 @@ Runtime state is separate from config: schedule state lives in `~/.tycho/logs/sc
 tycho schedule run weekday-maintenance
 tycho schedule pause weekday-maintenance
 tycho schedule resume weekday-maintenance
-tycho schedule reload
+tycho schedule restart
 ```
 
 Remote UI exposes the same run, pause, resume, edit, and daemon controls. Removing a schedule detaches its active session but keeps that session, transcript, attachments, and native history as ordinary agent work.
@@ -87,8 +87,9 @@ Remote UI exposes the same run, pause, resume, edit, and daemon controls. Removi
 - If a prior run is still active when the next time is due, Tycho skips that occurrence and computes the next one.
 - If Tycho starts late, it runs at most once for missed work, then computes the next future time.
 - A direct operator message to the schedule-owned session stops automatic work until the operator resumes the schedule.
-- `paused` is an intentional operator hold. `stopped` means Tycho halted the schedule because continuing is unsafe, such as a partial, failed, blocked, input-required, or start-error outcome.
+- `paused` is an intentional operator hold. `stopped` means Tycho halted the schedule because continuing is unsafe, such as a failed, blocked, input-required, or start-error outcome.
 - Resuming keeps the schedule-owned session and waits for the next due time.
+- A `partial` run records Partial as the last outcome, clears failure state, and remains scheduled. It does not send a failure notification.
 - `no_action_needed` records a quiet successful check without unread state or success push notifications.
 
 Tycho sends a success notification only for the first successful run and the first recovery after a failure. A failed, blocked, or input-required run stops the schedule and can notify the operator through Web Push.

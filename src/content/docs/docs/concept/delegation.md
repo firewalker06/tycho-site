@@ -13,7 +13,7 @@ A parent and child are ordinary durable agent sessions with one added relationsh
 
 One child can have only one parent. Tycho accepts repeated attachment to that same parent, but rejects self-parenting, cycles, an unknown parent, re-parenting to a different session, or a mismatched server identity.
 
-![Tycho Remote UI showing a parent session, delegated children, and a returned report](/assets/web-delegation-v0.10.0.png)
+![Tycho Remote UI showing a parent session, delegated children, and a returned report](/assets/web-delegation-v0.13.0.png)
 
 ## Create Child Work
 
@@ -123,3 +123,7 @@ Remote UI does not add the unbounded archive to the normal Agents browser or act
 - Check `tycho agent status <key> --json` when automation needs stable `delegation.parent` and `delegation.children` data.
 
 See the [CLI Reference](/docs/reference/#agent-sessions) for the full command surface and [Projects and Agents](/docs/configuration/) for server ownership and local state paths.
+
+## Queued Reports and Partial Results
+
+Tycho claims due user prompts and delegated reports into one receiver-owned FIFO batch. The newest entry supplies its ownership stamp; earlier entry stamps remain acceptance history and do not split the batch. A Partial result keeps its status and settles delivered work with the default user and report outcomes. Failed, blocked, and input-required results retain unresolved work. Protected reports cannot be discarded. See [Queue Work and Recovery](/docs/reference/#queue-work-and-recovery).

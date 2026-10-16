@@ -3,7 +3,7 @@ title: Mental Model
 description: The core nouns behind Tycho's operator workflow.
 ---
 
-Tycho is a local-first operator console for agent sessions. It does not replace Codex, Claude, OpenCode, or custom harnesses; it gives them one supervision workflow.
+Tycho is a local-first operator console for agent sessions. It does not replace Codex, Claude, OpenCode, Pi, or custom harnesses; it gives them one supervision workflow.
 
 ## Project
 
@@ -26,3 +26,7 @@ A remote server is one Tycho installation that owns its projects, agent sessions
 ## Operator Loop
 
 Start work, watch status and attention, inspect output, respond, then resume, re-run, schedule, delegate, or archive. Tycho keeps this loop local by default: project configuration, runtime state, logs, prompts, and history stay under user-controlled paths.
+
+## Queue Work
+
+Follow-ups and delegated reports enter a durable queue. Tycho delivers due entries as one ordered batch with stable IDs and records a **Read queue** block. Delivery and completion are separate: successful or Partial runs settle delivered entries, while failed, blocked, and input-required runs retain unresolved work. See [Agent Session Lifecycle](/docs/concept/lifecycle/#durable-queue-work).

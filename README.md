@@ -10,6 +10,8 @@ Landing page and documentation for [Tycho](https://github.com/firewalker06/tycho
 
 ## Development
 
+Use Node 22.20.0 from `.mise.toml` and the pnpm version pinned in `package.json`.
+
 ```bash
 corepack pnpm install
 corepack pnpm dev
@@ -20,6 +22,10 @@ corepack pnpm dev
 ```bash
 corepack pnpm build
 ```
+
+## Release updates
+
+Follow the [site release checklist](https://github.com/firewalker06/tycho-site/blob/main/docs/RELEASING.md) for each published Tycho release. Keep the product release, documentation, and screenshot audit in one reviewed site PR.
 
 ## Cloudflare Pages
 

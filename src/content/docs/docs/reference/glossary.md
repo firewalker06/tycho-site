@@ -54,3 +54,11 @@ A Remote UI workflow where an agent in the Welcome Sandbox receives an exact loc
 ## Local-First
 
 Tycho keeps project config, runtime state, logs, prompts, and agent history under local user-controlled paths by default.
+
+## QueueWork
+
+A durable batch of queued user instructions and delegated reports with stable entry IDs, attachments, provenance, and recorded outcomes. Success and Partial settle delivered work; failed, blocked, and input-required runs keep unresolved work.
+
+## Context Handoff
+
+A concise continuation prompt for a new clone, created from the source session with `agent clone --handoff`. It preserves the source session for review.
