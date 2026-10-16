@@ -82,6 +82,10 @@ tycho schedule restart
 
 Remote UI exposes the same run, pause, resume, edit, and daemon controls. Removing a schedule detaches its active session but keeps that session, transcript, attachments, and native history as ordinary agent work.
 
+## Context Replacement
+
+Remote UI **Start New** and **Start with Handoff** transfer recurring schedule ownership to the replacement session. Start New archives the source after saving the clone; Start with Handoff archives it after the replacement starts. Check the schedule target after replacement. Do not create a second schedule for the same work. Running agents, unresolved inquiries, and ordinary or mixed queued work block replacement. Manual archive has different outcomes; see [Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).
+
 ## Runtime Policy
 
 - If a prior run is still active when the next time is due, Tycho skips that occurrence and computes the next one.

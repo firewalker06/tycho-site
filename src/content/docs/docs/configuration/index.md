@@ -38,6 +38,8 @@ tycho agent create my-workspace "Try the alternate implementation" --harness cla
 
 Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, safety differences, and compatible custom harness profiles.
 
+The local `tycho harness list` command reads model and reasoning suggestions from fallback or configured catalogs. It is offline by default. See [Harness Catalogs](/docs/configuration/harnesses/#inspect-local-model-and-reasoning-catalogs) for exact filters, discovery, and evidence limits.
+
 ## Inspect a Project Workspace
 
 Remote UI exposes a **Files** view for every registered project, including projects owned by configured peers. Search the registered workspace, preview Markdown and images safely, and make guarded plain-text edits on desktop where editing is available. Existing workspaces remain read-only on mobile. Directory and selected-file state stays in browser history, so Back and Forward return to the expected location.
@@ -75,11 +77,13 @@ tycho server status vps
 
 Run summaries are durable conversation entries. Open a summary to move to the previous or next run and inspect its attachments; file attachments offer a direct authenticated download beside the detail view. Downloads keep a validated safe form of the original filename. Each uploaded file and workspace image preview can be up to 20 MB; a message can include up to five files with a 25 MB total limit.
 
+On wide screens, select a Summary attachment to open its safe preview in a third column with independent scrolling and keyboard focus. Smaller screens keep their normal workspace navigation. Known errors can be inspected in Summary details while the recorded result stays intact. Safe Markdown frontmatter is shown as metadata, nested lists keep their structure, and HTML remains sanitized.
+
 A missing or invalid structured result still gets a Summary card. Only the detail view can show bounded, redacted fallback assistant context. This does not turn an invalid result into success.
 
 Attach or detach a pull request from the session's PR diff catalog through Remote UI or `tycho agent pr-diff add` and `remove`. Detaching preserves source attachments and shared immutable snapshots.
 
-![Tycho v0.13.0 Summary view with run navigation and a completed result](/assets/web-summary-v0.13.0.png)
+![Tycho v0.14.0 Summary view with run navigation and a completed result](/assets/web-summary-v0.14.0.png)
 
 For an agent-owned pull request, open its saved diff, select exact added, removed, or context lines, write a comment, and choose **Add section**. Tycho attaches bounded context from that immutable snapshot to the same agent composer. If the pull request changes, refresh and select again; stale selections are rejected instead of being applied to a different diff.
 

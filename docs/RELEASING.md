@@ -8,6 +8,7 @@ This checklist implements [ADR 004](https://github.com/firewalker06/tycho-site/b
 
 - [ ] Record the published release URL, tag, and full commit SHA. Read its release notes and changes since the site's last reviewed release. Check release status directly; do not use an unreleased product branch as evidence.
 - [ ] Check live agents, schedules, Git status, default branch, and open site PRs. Preserve unfinished work. On the clean actual default branch, pull with `git pull --ff-only`, then create a scoped branch. Do not stash, reset, discard, or make a new clone or worktree to bypass occupied work.
+- [ ] Record source release, Homebrew publication, and website delivery separately. Do not claim bottles are available before tap publication and installed/bottle checks confirm that version.
 - [ ] Set `currentVersion` in `src/pages/index.astro`. Its badge must link to that exact tag. Keep Changelog linked to [all Tycho releases](https://github.com/firewalker06/tycho/releases). Verify version and release URLs in installation and upgrade guidance, image text, alt text, and social previews agree.
 
 ## 2. Audit docs and every public screenshot
@@ -35,9 +36,11 @@ git diff --check
 ## 4. Review and merge
 
 - [ ] Commit shipped public assets. Keep temporary review-only screenshots and capture output outside the checkout.
-- [ ] Open a draft site PR with What, Why, How, and Screenshots. Link the work card, exact product release and source SHA, screenshot audit, check results, and durable evidence.
+- [ ] For a new update, open a draft site PR with What, Why, How, and Screenshots. Link the work card, exact product release and source SHA, screenshot audit, check results, and durable evidence.
 - [ ] Add native GitHub image evidence. Verify that the PR renders the images and that the URLs are durable. Only then remove temporary review-only image files. Do not treat unaccepted uploads or local paths as native evidence.
 - [ ] Obtain independent review on the exact pushed head. Resolve findings and rerun affected checks. The operator merges the approved PR. A prepared draft PR is not permission to merge or deploy.
+
+For a continuation of an existing ready PR, preserve its ready state and approved history. Update its scope and evidence, then obtain fresh independent review on the new exact head.
 
 ## 5. Deploy and verify production
 

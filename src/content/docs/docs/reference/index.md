@@ -1,9 +1,9 @@
 ---
 title: CLI Reference
-description: Tycho v0.13.0 commands, queue recovery, server controls, and compatibility notes.
+description: Tycho v0.14.0 commands, queue recovery, server controls, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.13.0](https://github.com/firewalker06/tycho/releases/tag/v0.13.0), commit `cef0e9a07d2658e5a2cd9394b26e016bed79571e`. Command forms were checked against that tag's help and command registry. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.14.0](https://github.com/firewalker06/tycho/releases/tag/v0.14.0), commit `8d813dca497fe9e106d0a679ee2f74849239c54c`. Command forms were checked against that tag's help and command registry. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
 
 ## General Commands
 
@@ -21,6 +21,19 @@ tycho update --server vps --json
 ```
 
 Running `tycho` without a command opens the TUI. `doctor --claude --run-agent` creates a disposable diagnostic agent; plain `doctor` inspects readiness. `update` upgrades a Homebrew install and restarts running local services. Update source installs through Git and `bin/setup`.
+
+## Local Harness Catalogs
+
+```bash
+tycho harness list [--harness KEY] [--model MODEL] [--discover] [--json]
+tycho harness list --harness claude --model claude-opus-5-5 --json
+```
+
+This command is local-only: no `--server` or remote forwarding. The offline default reads built-in fallbacks and configured `harness_catalogs`, including custom harnesses, without tool execution, authentication checks, or provider contact. Both filters are exact and case-sensitive. A missing model is absent from the catalog; provider availability is not checked.
+
+`--discover` runs local catalog commands used by Settings. They can need tools, credentials, and network/provider access. `catalog_source` records the source or fallback. Tycho adds no provider API query or authentication check of its own. Discovery does not prove live entitlement or validate a model/reasoning pair.
+
+Unknown defaults are JSON `null` or text `unknown; harness decides`. Harness suggestions do not prove model effort support. For `claude-opus-5-5`, `low`, `medium`, `high`, `xhigh`, and `max` are harness suggestions; model support and defaults remain unknown. Model-specific lists appear only with source evidence. Project/template overrides are not listed. See [Harness Catalogs](/docs/configuration/harnesses/#inspect-local-model-and-reasoning-catalogs).
 
 ## Projects
 
@@ -51,7 +64,7 @@ tycho agent clone my-project-agent-3 --run
 tycho agent clone my-project-agent-3 --handoff --run
 ```
 
-Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Clone supports `--handoff` for concise source context. Logs support `--type raw|conversation|system` and `--follow`.
+Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Clone supports `--handoff` for concise source context. Ordinary CLI clones retain their source; Remote UI context replacement archives its source and transfers schedule ownership at its safe lifecycle point. Logs support `--type raw|conversation|system` and `--follow`.
 
 Create an explicit child session:
 
@@ -72,6 +85,8 @@ tycho agent run child-agent-key --parent-agent parent-agent-key
 ```
 
 `--parent-agent` and `--root` are mutually exclusive. Both parent and child must exist on that target server. See [Delegating Work Between Agents](/docs/concept/delegation/).
+
+For CLI manual archive, stop a running session first. Manual archive cancels unresolved inquiries and records queued work without executing it: undelivered user work is declined with a reason, protected reports are superseded with a reason in read-only history, and delivered or in-flight work is marked aborted with uncertainty. Context replacement has different guards; see [Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).
 
 Inspect archived sessions without mixing them into active polling:
 
@@ -172,7 +187,7 @@ tycho metrics query --server vps --from 2026-08-01 --to 2026-08-16 --timezone UT
 
 The range starts at `--from` and ends before `--to`. Offset-free boundaries use the named IANA timezone; values with `Z` or an explicit offset are absolute. Query filters accept comma-separated `--group`, `--project`, `--agent`, `--harness`, `--model`, and `--status` values.
 
-Tycho normalizes finalized managed runs and native sessions across harnesses. Missing telemetry, session baselines, models, or prices remain unknown rather than becoming zero; costs are estimates, not invoices. Agent and project archives mark matching records as archived without moving them out of the global query path.
+Tycho normalizes finalized managed runs and native sessions across harnesses. Missing telemetry, session baselines, models, or prices remain unknown rather than becoming zero; costs are API list-price equivalents, not subscription charges or invoices. The embedded GPT-6 rate card includes cache-write accounting; cache writes replace the corresponding ordinary input cost. Missing rates or token counts remain explicitly unpriced. Agent and project archives mark matching records as archived without moving them out of the global query path.
 
 Qualified custom Codex model names such as `openai.gpt-5.4` use the canonical OpenAI price table when known. Unknown models keep token telemetry and remain unpriced.
 
@@ -216,7 +231,7 @@ These commands are local-only. Backups lists validated rolling snapshots with ti
 
 ## Removed and Deprecated Commands
 
-| Old form | v0.13.0 behavior and replacement |
+| Old form | v0.14.0 behavior and replacement |
 | --- | --- |
 | `tycho project <key>` | Unsupported; use explicit `project create` or `project show`. |
 | `tycho github login`, `status`, `logout` | Removed; use an authenticated local `gh` CLI for PR diff reads. |

@@ -30,3 +30,7 @@ Start work, watch status and attention, inspect output, respond, then resume, re
 ## Queue Work
 
 Follow-ups and delegated reports enter a durable queue. Tycho delivers due entries as one ordered batch with stable IDs and records a **Read queue** block. Delivery and completion are separate: successful or Partial runs settle delivered entries, while failed, blocked, and input-required runs retain unresolved work. See [Agent Session Lifecycle](/docs/concept/lifecycle/#durable-queue-work).
+
+## Replacement and Archive
+
+Context replacement creates a new session, archives the source at a safe lifecycle point, and transfers recurring schedule ownership. It blocks running work, unresolved inquiries, and ordinary or mixed queues. Manual archive has different behavior: it stops active work in Remote UI and records queue outcomes without running queued work. See [Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).

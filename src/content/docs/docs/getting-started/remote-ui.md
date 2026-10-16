@@ -3,7 +3,7 @@ title: Remote UI
 description: Supervise local and remote Tycho sessions from a browser without moving ownership into the browser.
 ---
 
-Remote UI is Tycho's browser control surface. It uses the same local project registry, agent store, schedules, logs, and lifecycle rules as the TUI and CLI. The browser does not become the owner of that state.
+Remote UI is Tycho's browser control surface. It serves the Plus Jakarta Sans font locally, with a system fallback; no external font service is required. It uses the same local project registry, agent store, schedules, logs, and lifecycle rules as the TUI and CLI. The browser does not become the owner of that state.
 
 ## Start Locally
 
@@ -30,6 +30,8 @@ The **Agents** view combines projects and sessions. Open a conversation to:
 
 The **Now** view keeps attention work and schedules compact. `no_action_needed` runs stay quiet; input-required, blocked, failed, stopped, partial, and normal successful outcomes keep their distinct lifecycle meaning. See [Agent Session Lifecycle](/docs/concept/lifecycle/).
 
+Inquiry values save locally while you type and survive refresh and reload. Conversation opens at its latest message. The working/completion marker follows matching run evidence and respects reduced motion.
+
 The agent switcher follows the same ordering and status cues as the Agents view. While a session is running, you can queue follow-up prompts and load newer conversation messages on demand without losing the focused conversation.
 
 ## Browse a Project Safely
@@ -38,9 +40,9 @@ Each registered project has a **Files** view. Search files, preview Markdown and
 
 ## Recover Queued Work
 
-Open a session's queue controls when automatic dispatch is blocked. Process selected stable-ID entries or all pending entries, or remove eligible entries with a recorded reason. Tycho checks the exact queue snapshot and preserves FIFO order. Protected delegation reports cannot be discarded. A failed claimed batch stays visible for retry; discard is available only when its sources allow it.
+Open a session's queue controls when automatic dispatch is blocked. Process selected stable-ID entries or all pending entries, or remove eligible entries with a recorded reason. Tycho checks the exact queue snapshot and preserves FIFO order. Queue discard/removal cannot discard protected delegation reports. Manual archive instead records a reason and retains read-only history; it does not run the queued work. A failed claimed batch stays visible for retry; discard is available only when its sources allow it.
 
-Context-pressure warnings use active harness evidence. Tycho shows a measured percentage only when the harness provides a valid limit. You can keep going, start a clean clone, start with a concise handoff, or archive when allowed. See [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).
+Context-pressure warnings use active harness evidence. Tycho shows a measured percentage only when the harness provides a valid limit. You can dismiss the warning for the current evidence, keep going, start a replacement, or archive. Replacement and manual archive have different guards and queue outcomes. See [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).
 
 ## Protect Non-Local Access
 
@@ -56,6 +58,12 @@ tycho serve
 This keeps the generated value in the named shell variable and copies it to the macOS clipboard without printing it. When Remote UI asks for authentication, paste that same value into **Remote token** and save it. On WSL, replace `pbcopy` with `clip.exe`; on Linux with Wayland, use `wl-copy`. Do not print the token, put its literal value in shell history, or paste it anywhere else. Run `unset TYCHO_REMOTE_TOKEN_VALUE TYCHO_REMOTE_TOKEN` after the server stops.
 
 When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and print a MagicDNS URL and QR code. Prefer Tailscale Serve HTTPS when you need service workers or push notifications. Passing `--host` disables Tailscale auto-binding.
+
+## Notification Evidence
+
+Settings includes redacted click tracing, export, and an explicit test sender for the current browser subscription. The sender shares the normal retained-record and send path, resolves Tycho and native session IDs, and reports missing or ambiguous targets without changing the selected agent.
+
+A provider accepting a send does not prove native display or activation. Synthetic Chrome checks do not establish native Edge notification activation, installed-PWA focus, or cold-window behavior. Use the redacted trace to collect evidence when a native click fails. These diagnostics do not require a credential reset.
 
 ## Combine Tycho Servers
 

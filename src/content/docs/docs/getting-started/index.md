@@ -7,12 +7,16 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- Apple Silicon macOS or Linux with Homebrew for the v0.13.0 packaged install.
-- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.13.0.
+- Apple Silicon macOS or Linux for the supported Homebrew bottle targets. v0.14.0 bottle publication is still pending.
+- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.0.
 - For a source install: Ruby 3.2 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
+For v0.14.0 now, use [Install from Source](#install-from-source). The source release is published; Homebrew bottle publication and website deployment are separate delivery steps.
+
 ## Install with Homebrew
+
+These commands install the release currently published in the tap. v0.14.0 bottles are not yet published; do not assume this path installs v0.14.0 until tap publication is verified.
 
 ```bash
 brew tap firewalker06/tycho
@@ -27,7 +31,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After upgrading, verify that `tycho --version` reports `0.13.0`:
+After installing the released source, or after v0.14.0 reaches the tap, verify that `tycho --version` reports `0.14.0`:
 
 ```bash
 tycho --version
@@ -37,20 +41,20 @@ tycho project list
 tycho schedule list
 ```
 
-Projects must now be created explicitly: replace `tycho project my-project` with `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect an existing project. In Remote UI, update every Tycho-owned skill in **Settings → Skills**, then restart a harness if it does not discover the new skill. Tycho will not overwrite an unmarked or locally modified skill.
+Projects must now be created explicitly: replace `tycho project my-project` with `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect an existing project. If upgrading from a release before v0.13.0, update every Tycho-owned skill in **Settings → Skills**, then restart a harness if needed. The packaged skill is unchanged from v0.13.0 to v0.14.0. Tycho will not overwrite an unmarked or locally modified skill.
 
 Existing Claude custom profiles keep working, but new profiles must declare one native adapter: `codex`, `claude`, `opencode`, or `pi`. Automation using the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands must be deleted; read-only agent pull-request diffs use an authenticated local `gh` CLI.
 
-v0.13.0 adds queue recovery controls, context-pressure warnings and concise handoff clones, and managed pull-request diff catalogs. Partial results now settle delivered queue work. Partial scheduled runs remain scheduled for their next run. No manual data migration is required. FRED was removed in v0.12.0; its old configuration is ignored and legacy records stay hidden.
+v0.14.0 adds the local offline `tycho harness list` catalog, inquiry draft persistence, and improved Summary attachment previews. Context replacement transfers recurring schedule ownership and archives the source at its safe lifecycle point. Manual archive has different queue and inquiry outcomes; read [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs) before using it. No manual data migration or credential reset is required. FRED remains removed.
 
-Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.13.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.13.0) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
+Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.14.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.0) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
 
 ## Install from Source
 
 Use a source checkout when you want to contribute or Homebrew is not suitable:
 
 ```bash
-git clone --branch v0.13.0 https://github.com/firewalker06/tycho.git
+git clone --branch v0.14.0 https://github.com/firewalker06/tycho.git
 cd tycho
 bin/setup --check
 bin/setup

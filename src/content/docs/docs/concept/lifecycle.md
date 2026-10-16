@@ -74,7 +74,7 @@ tycho agent clone <agent-key> --run
 tycho agent clone <agent-key> --handoff --run
 ```
 
-Archive finished work to move it out of active lists and polling:
+Manual archive moves a session out of active lists and polling. From the CLI, stop a running session first:
 
 ```bash
 tycho agent archive <agent-key>
@@ -82,13 +82,19 @@ tycho agent list --archived
 tycho agent list --include-archived
 ```
 
+Manual archive in Remote UI stops active work and cancels an unresolved inquiry. It does not run queued work. Undelivered user prompts are declined with a reason; protected delegation callbacks are superseded with a reason and kept in read-only history. Delivered or in-flight work is marked aborted with uncertainty. Queue outcomes, inquiry cancellation, and delivery evidence remain in the archive.
+
 Archives retain the transcript, artifacts, run metadata, and delegation references. Typed delegation links and direct archived-agent routes remain readable, but archived sessions do not resume automatically.
 
 ## Context Pressure and Handoffs
 
 Tycho warns when reliable active harness evidence shows context pressure. A percentage appears only when the harness reports a valid limit. Missing evidence remains unknown.
 
-You can keep going, use **Start New** for a clean clone, or use **Start with Handoff** for a new session with a concise source-session handoff. The CLI equivalent is `tycho agent clone <agent-key> --handoff`. The source session remains available. Archive follows the existing queue and delegation safeguards.
+You can dismiss the warning for its current evidence and keep going. **Start New** saves a fresh replacement before it archives the source. **Start with Handoff** adds a concise continuity record and archives the source after the replacement starts. A recurring schedule follows the replacement; check the target instead of creating a second schedule.
+
+Context replacement blocks running agents, unresolved inquiries, and ordinary or mixed queued work. Stop active work, answer or retire the inquiry, and process or remove ordinary queue entries first. Callback-only work can be retained in archived history. Manual archive has the different outcomes described above; do not rely on replacement guards to protect work from manual archive.
+
+Ordinary `tycho agent clone <agent-key> --handoff` creates a clone and retains its source. It is not the same operation as Remote UI **Start with Handoff** context replacement.
 
 ## Durable Queue Work
 

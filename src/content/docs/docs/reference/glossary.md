@@ -61,4 +61,8 @@ A durable batch of queued user instructions and delegated reports with stable en
 
 ## Context Handoff
 
-A concise continuation prompt for a new clone, created from the source session with `agent clone --handoff`. It preserves the source session for review.
+A concise continuation prompt for a new clone, created from the source session with `agent clone --handoff`. Ordinary CLI cloning preserves the source. Remote UI context replacement archives the source at its safe lifecycle point and transfers recurring schedule ownership.
+
+## Harness Catalog
+
+Local model IDs and reasoning suggestions from fallback data, configured `harness_catalogs`, or optional local discovery. A catalog is not proof of entitlement, provider availability, model effort support, or a valid model/reasoning pair.
