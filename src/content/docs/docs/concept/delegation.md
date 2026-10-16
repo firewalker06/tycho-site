@@ -13,7 +13,7 @@ A parent and child are ordinary durable agent sessions with one added relationsh
 
 One child can have only one parent. Tycho accepts repeated attachment to that same parent, but rejects self-parenting, cycles, an unknown parent, re-parenting to a different session, or a mismatched server identity.
 
-![Tycho Remote UI showing a parent session, delegated children, and a returned report](/assets/web-delegation-v0.10.0.png)
+![Tycho Remote UI showing a parent session, delegated children, and a returned report](/assets/web-delegation-v0.14.0.png)
 
 ## Create Child Work
 
@@ -102,7 +102,7 @@ Reports exclude raw logs, commands, environment data, credentials, tool inputs, 
 
 ## Archives and History
 
-Archiving either session preserves the relationship ledger and callback history. Direct links and typed parent/child references still open archived detail and conversation views on the owning server, regardless of archive order.
+Archiving either session preserves the relationship ledger and callback history. Manual archive stops active work in Remote UI, cancels inquiries, and records undelivered reports as superseded with a reason; delivered or in-flight work has an aborted outcome with uncertainty. The CLI requires running work to be stopped first. See [Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs) for context replacement guards. Direct links and typed parent/child references still open archived detail and conversation views on the owning server, regardless of archive order.
 
 The CLI can discover archived sessions with:
 
@@ -123,3 +123,7 @@ Remote UI does not add the unbounded archive to the normal Agents browser or act
 - Check `tycho agent status <key> --json` when automation needs stable `delegation.parent` and `delegation.children` data.
 
 See the [CLI Reference](/docs/reference/#agent-sessions) for the full command surface and [Projects and Agents](/docs/configuration/) for server ownership and local state paths.
+
+## Queued Reports and Partial Results
+
+Tycho claims due user prompts and delegated reports into one receiver-owned FIFO batch. The newest entry supplies its ownership stamp; earlier entry stamps remain acceptance history and do not split the batch. A Partial result keeps its status and settles delivered work with the default user and report outcomes. Failed, blocked, and input-required results retain unresolved work. Queue discard/removal cannot discard protected reports. Manual archive supersedes them with a reason and retains read-only delivery evidence; it does not run them. Context replacement uses separate safety guards. See [Queue Work and Recovery](/docs/reference/#queue-work-and-recovery).

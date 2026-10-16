@@ -3,7 +3,7 @@ title: Remote UI
 description: Supervise local and remote Tycho sessions from a browser without moving ownership into the browser.
 ---
 
-Remote UI is Tycho's browser control surface. It uses the same local project registry, agent store, schedules, logs, and lifecycle rules as the TUI and CLI. The browser does not become the owner of that state.
+Remote UI is Tycho's browser control surface. It serves the Plus Jakarta Sans font locally, with a system fallback; no external font service is required. It uses the same local project registry, agent store, schedules, logs, and lifecycle rules as the TUI and CLI. The browser does not become the owner of that state.
 
 ## Start Locally
 
@@ -30,17 +30,19 @@ The **Agents** view combines projects and sessions. Open a conversation to:
 
 The **Now** view keeps attention work and schedules compact. `no_action_needed` runs stay quiet; input-required, blocked, failed, stopped, partial, and normal successful outcomes keep their distinct lifecycle meaning. See [Agent Session Lifecycle](/docs/concept/lifecycle/).
 
-The agent switcher follows the same ordering and status cues as the Agents view, including FRED when it is configured. While a session is running, you can queue follow-up prompts and load newer conversation messages on demand without losing the focused conversation.
+Inquiry values save locally while you type and survive refresh and reload. Conversation opens at its latest message. The working/completion marker follows matching run evidence and respects reduced motion.
+
+The agent switcher follows the same ordering and status cues as the Agents view. While a session is running, you can queue follow-up prompts and load newer conversation messages on demand without losing the focused conversation.
 
 ## Browse a Project Safely
 
 Each registered project has a **Files** view. Search files, preview Markdown and images, and use guarded plain-text editing on desktop where available; existing workspaces remain read-only on mobile. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing and editing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
 
-## Use FRED
+## Recover Queued Work
 
-FRED is Tycho's opt-in Personal Assistant on the current server. Open FRED to choose its Codex model, reasoning effort, timezone, personality, and optional external-event preference, then confirm setup. FRED keeps one persisted daily conversation, offers recommendations, and can inspect Tycho state directly.
+Open a session's queue controls when automatic dispatch is blocked. Process selected stable-ID entries or all pending entries, or remove eligible entries with a recorded reason. Tycho checks the exact queue snapshot and preserves FIFO order. Queue discard/removal cannot discard protected delegation reports. Manual archive instead records a reason and retains read-only history; it does not run the queued work. A failed claimed batch stays visible for retry; discard is available only when its sources allow it.
 
-When FRED proposes a change—such as creating a project or schedule, or installing a Tycho skill—it shows the exact action preview and requires a separate confirmation for each action. FRED's persisted daily sessions are not ordinary agent sessions: regular lifecycle and delegation controls cannot start, stop, or attach to them.
+Context-pressure warnings use active harness evidence. Tycho shows a measured percentage only when the harness provides a valid limit. You can dismiss the warning for the current evidence, keep going, start a replacement, or archive. Replacement and manual archive have different guards and queue outcomes. See [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs).
 
 ## Protect Non-Local Access
 
@@ -57,10 +59,16 @@ This keeps the generated value in the named shell variable and copies it to the 
 
 When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and print a MagicDNS URL and QR code. Prefer Tailscale Serve HTTPS when you need service workers or push notifications. Passing `--host` disables Tailscale auto-binding.
 
+## Notification Evidence
+
+Settings includes redacted click tracing, export, and an explicit test sender for the current browser subscription. The sender shares the normal retained-record and send path, resolves Tycho and native session IDs, and reports missing or ambiguous targets without changing the selected agent.
+
+A provider accepting a send does not prove native display or activation. Synthetic Chrome checks do not establish native Edge notification activation, installed-PWA focus, or cold-window behavior. Use the redacted trace to collect evidence when a native click fails. These diagnostics do not require a credential reset.
+
 ## Combine Tycho Servers
 
 Configure peers under `remote_servers` in `~/.tycho/config/hq.yml`, then enroll each bearer token with `tycho server login <key>`. The UI-serving Tycho instance brokers requests and keeps one server-qualified catalog; the browser does not send one peer's credential to another.
 
-Projects, agent sessions, and delegation graphs remain owned by one server. Schedules, setup, GitHub, push notifications, skills, and restart controls apply to the Tycho server serving the UI. Resource health remains visible when a peer is offline, stale, or needs a token.
+Projects, agent sessions, and delegation graphs remain owned by one server. Schedule editing, setup, push notifications, skills, and the Settings restart action apply to the Tycho server serving the UI. Configured online peers with a supported Homebrew install can expose an Update action in Settings. Its confirmation names the peer and its service restarts. Resource health remains visible when a peer is offline, stale, or needs a token.
 
 See [Projects and Agents](/docs/configuration/#configure-a-remote-server) for peer configuration and the [CLI Reference](/docs/reference/#remote-servers) for direct `--server` commands.

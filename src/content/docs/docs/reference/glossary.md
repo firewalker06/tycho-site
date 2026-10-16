@@ -54,3 +54,15 @@ A Remote UI workflow where an agent in the Welcome Sandbox receives an exact loc
 ## Local-First
 
 Tycho keeps project config, runtime state, logs, prompts, and agent history under local user-controlled paths by default.
+
+## QueueWork
+
+A durable batch of queued user instructions and delegated reports with stable entry IDs, attachments, provenance, and recorded outcomes. Success and Partial settle delivered work; failed, blocked, and input-required runs keep unresolved work.
+
+## Context Handoff
+
+A concise continuation prompt for a new clone, created from the source session with `agent clone --handoff`. Ordinary CLI cloning preserves the source. Remote UI context replacement archives the source at its safe lifecycle point and transfers recurring schedule ownership.
+
+## Harness Catalog
+
+Local model IDs and reasoning suggestions from fallback data, configured `harness_catalogs`, or optional local discovery. A catalog is not proof of entitlement, provider availability, model effort support, or a valid model/reasoning pair.

@@ -34,6 +34,38 @@ pi --list-models
 
 Tycho reports Pi as ready only when that command returns at least one authenticated model.
 
+## Inspect Local Model and Reasoning Catalogs
+
+```bash
+tycho harness list
+tycho harness list --json
+tycho harness list --harness claude --model claude-opus-5-5 --json
+tycho harness list --harness codex --discover --json
+```
+
+The default is offline. It reads shared fallback catalogs and `harness_catalogs` in `hq.yml` for built-in and configured custom harnesses. It does not run tools, check authentication, or contact providers. The command is local-only and has no `--server` option.
+
+`--harness` and `--model` are exact, case-sensitive filters. An absent model means only that this catalog has no matching entry. It does not prove provider availability or lack of support. Project and template overrides are not listed.
+
+`--discover` runs the local catalog commands used by Settings. Those commands can need installed tools and credentials, and can contact providers or the network. Read `catalog_source` for the source or fallback used. Tycho adds no separate provider API query or authentication check for this command. Discovery does not validate entitlement or a model/reasoning pair.
+
+Unknown defaults stay JSON `null` or text `unknown; harness decides`. Harness-wide reasoning suggestions do not prove model-specific support. For `claude-opus-5-5`, `low`, `medium`, `high`, `xhigh`, and `max` are harness suggestions; model effort support and defaults remain unknown. A model row has `reasoning_scope`; `reasoning_efforts` appears on that row only when the source supplies model-specific values.
+
+For a local catalog override:
+
+```yaml
+harness_catalogs:
+  claude:
+    models:
+      - claude-opus-5-5
+      - my-gateway/claude
+    reasoning_efforts:
+      - low
+      - high
+```
+
+This changes catalog suggestions, not provider permissions or model validation. No new config or packaged skill update is required to use the command.
+
 ## Harness and Workspace Safety
 
 Tycho starts the chosen CLI inside the registered project path. Review that path, the prompt, and the harness's own approval and sandbox settings before starting an agent session. Tycho removes its Remote UI and GitHub bearer tokens, plus Ruby and Bundler loader state, before spawning a harness, but the harness still inherits the rest of the Tycho process environment.
