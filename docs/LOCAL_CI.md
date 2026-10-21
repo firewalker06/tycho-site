@@ -50,6 +50,16 @@ gh signoff status --commit "$sha"
 gh pr view --json headRefOid,mergeStateStatus,statusCheckRollup
 ```
 
+In v0.4.1, `status` also displays a missing bare `signoff` even when the rule
+requires only `signoff/site-ci`. Do not create a bare status to clear that line.
+Confirm the actual required context with `contexts` and check its state directly:
+
+```bash
+gh api "repos/firewalker06/tycho-site/commits/$sha/status" \
+  --jq '.statuses[] | select(.context == "signoff/site-ci") | .state'
+# success
+```
+
 Every new commit needs a complete run and a new signoff, including documentation
 or workflow changes. Another trusted maintainer can fetch and check out the
 exact published SHA, run the same gate in a clean checkout, and sign that SHA.
