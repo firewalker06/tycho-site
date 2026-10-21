@@ -4,14 +4,16 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 expected_node=v22.20.0
-if [[ "$(node --version)" != "$expected_node" ]]; then
+actual_node=$(node --version)
+if [[ "$actual_node" != "$expected_node" ]]; then
   echo "Local CI requires Node ${expected_node#v}; run mise install and mise exec -- scripts/ci.sh." >&2
   exit 1
 fi
 
 corepack enable
 expected_pnpm=$(node --input-type=module -e 'import p from "./package.json" with { type: "json" }; console.log(p.packageManager.match(/^pnpm@([^+]+)/)[1])')
-if [[ "$(corepack pnpm --version)" != "$expected_pnpm" ]]; then
+actual_pnpm=$(corepack pnpm --version)
+if [[ "$actual_pnpm" != "$expected_pnpm" ]]; then
   echo "Corepack must use pnpm $expected_pnpm from package.json." >&2
   exit 1
 fi
