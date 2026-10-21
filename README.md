@@ -17,11 +17,15 @@ corepack pnpm install
 corepack pnpm dev
 ```
 
-## Build
+## Local CI
 
 ```bash
-corepack pnpm build
+scripts/ci.sh
 ```
+
+This runs the frozen install, full build, and generated link checks. Follow the
+[local CI signoff instructions](https://github.com/firewalker06/tycho-site/blob/main/docs/LOCAL_CI.md)
+for exact-head verification and the required `signoff/site-ci` status.
 
 ## Release updates
 
