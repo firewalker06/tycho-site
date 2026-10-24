@@ -1,6 +1,6 @@
 # Local CI signoff
 
-Run `scripts/ci.sh` for the complete site gate. It uses Node **22.20.0** from
+Run `scripts/ci.sh` for the complete site gate. It uses Node **22.23.4** from
 `.mise.toml`, enables Corepack, checks the pnpm version pinned in `package.json`
 (currently **11.18.0**), installs with `--frozen-lockfile`, builds the full site,
 and runs `check:links`. Any failed step stops the script with a nonzero exit.

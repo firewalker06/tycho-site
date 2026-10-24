@@ -2,3 +2,6 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+# Miniflare pins an affected Undici release. Keep its 7.x API with the fixed patch.
+overrides:
+  miniflare>undici: ^7.30.1
