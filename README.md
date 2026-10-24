@@ -10,7 +10,7 @@ Landing page and documentation for [Tycho](https://github.com/firewalker06/tycho
 
 ## Development
 
-Use Node 22.20.0 from `.mise.toml` and the pnpm version pinned in `package.json`.
+Use Node 22.23.4 from `.mise.toml` and the pnpm version pinned in `package.json`.
 
 ```bash
 corepack pnpm install

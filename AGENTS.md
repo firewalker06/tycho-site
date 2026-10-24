@@ -36,7 +36,7 @@ Cloudflare Pages should build with `pnpm build` and publish `dist`.
 
 ## Local CI
 
-- Run `scripts/ci.sh` with Node 22.20.0 and Corepack. It runs the frozen install,
+- Run `scripts/ci.sh` with Node 22.23.4 and Corepack. It runs the frozen install,
   full build, and generated link checks. See [local CI instructions](https://github.com/firewalker06/tycho-site/blob/main/docs/LOCAL_CI.md).
 - Keep gh-signoff pinned to v0.4.1. Test the exact pushed PR head after the final
   push. Post `signoff/site-ci` success only after the full gate passes; post

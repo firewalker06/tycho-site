@@ -3,7 +3,7 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-expected_node=v22.20.0
+expected_node=v22.23.4
 actual_node=$(node --version)
 if [[ "$actual_node" != "$expected_node" ]]; then
   echo "Local CI requires Node ${expected_node#v}; run mise install and mise exec -- scripts/ci.sh." >&2
