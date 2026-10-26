@@ -7,9 +7,9 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- Homebrew bottles for v0.14.0: Apple Silicon on macOS 26 (Tahoe) or newer, and x86_64 Linux.
-- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.0.
-- For a source install: Ruby 3.2 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
+- Homebrew bottles for v0.14.0: Apple Silicon on macOS 26 (Tahoe) or newer, and x86_64 Linux. Bottles for v0.14.1 are not yet published, so use a source install for v0.14.1.
+- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.0 or v0.14.1.
+- For a source install: Ruby 4.0.9 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
 On macOS 15 or other platforms without a supported bottle, use [Install from Source](#install-from-source).
@@ -31,7 +31,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After installing or upgrading, verify that `tycho --version` reports `0.14.0`:
+After installing or upgrading, verify that `tycho --version` reports the version you installed. A Homebrew install reports `0.14.0` until v0.14.1 bottles are published. A v0.14.1 source checkout reports `0.14.1`:
 
 ```bash
 tycho --version
@@ -45,16 +45,18 @@ Projects must now be created explicitly: replace `tycho project my-project` with
 
 Existing Claude custom profiles keep working, but new profiles must declare one native adapter: `codex`, `claude`, `opencode`, or `pi`. Automation using the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands must be deleted; read-only agent pull-request diffs use an authenticated local `gh` CLI.
 
+v0.14.1 requires Ruby 4.0.9 or newer, adds `jwt` (`>= 3.2.0`, `< 4`) as a direct gem dependency, and adds the optional `quick_agent.default_project_key` setting. It groups delegated agents under their parents in the Agents list and shows harness marks beside harness names. No manual data migration is required. See the [v0.14.1 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.1) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.14.1/docs/UPGRADING.md#0141).
+
 v0.14.0 adds the local offline `tycho harness list` catalog, inquiry draft persistence, and improved Summary attachment previews. Context replacement transfers recurring schedule ownership and archives the source at its safe lifecycle point. Manual archive has different queue and inquiry outcomes; read [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs) before using it. No manual data migration or credential reset is required. FRED remains removed.
 
-Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.14.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.0) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
+Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.14.0 release notes](https://github.com/firewalker06/tycho/releases) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
 
 ## Install from Source
 
 Use a source checkout when you want to contribute or Homebrew is not suitable:
 
 ```bash
-git clone --branch v0.14.0 https://github.com/firewalker06/tycho.git
+git clone --branch v0.14.1 https://github.com/firewalker06/tycho.git
 cd tycho
 bin/setup --check
 bin/setup

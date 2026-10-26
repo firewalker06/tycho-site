@@ -3,7 +3,7 @@ title: CLI Reference
 description: Tycho v0.14.0 commands, queue recovery, server controls, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.14.0](https://github.com/firewalker06/tycho/releases/tag/v0.14.0), commit `8d813dca497fe9e106d0a679ee2f74849239c54c`. Command forms were checked against that tag's help and command registry. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.14.0](https://github.com/firewalker06/tycho/releases), commit `8d813dca497fe9e106d0a679ee2f74849239c54c`. Command forms were checked against that tag's help and command registry. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
 
 ## General Commands
 
