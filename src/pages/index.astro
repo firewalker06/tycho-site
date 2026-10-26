@@ -30,7 +30,8 @@ const workflows = [
 ];
 
 const title = 'Tycho - Supervise coding agents.';
-const description = 'Tycho is a local-first operator console for supervising coding agents across projects.';
+const description = 'Tycho is a local-first operator console for supervising coding agents.';
+const ogImageAlt = 'Tycho home page: Supervise coding agents, with a laptop and phone showing the Remote UI agent list.';
 const canonicalUrl = 'https://usetycho.com/';
 const ogImage = 'https://usetycho.com/og-image.png';
 const currentVersion = 'v0.14.1';
@@ -59,10 +60,12 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 		<meta property="og:image" content={ogImage} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={ogImageAlt} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content={ogImageAlt} />
 	</head>
 	<body>
 		<header class="site-header">
