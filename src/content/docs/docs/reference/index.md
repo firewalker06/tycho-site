@@ -1,9 +1,9 @@
 ---
 title: CLI Reference
-description: Tycho v0.14.0 commands, queue recovery, server controls, and compatibility notes.
+description: Tycho v0.14.1 commands, queue recovery, server controls, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.14.0](https://github.com/firewalker06/tycho/releases), commit `8d813dca497fe9e106d0a679ee2f74849239c54c`. Command forms were checked against that tag's help and command registry. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.14.1](https://github.com/firewalker06/tycho/releases/tag/v0.14.1), commit `2092ce32874d1b874bb467b8d293f986c7b5648a`. Command forms were checked against that tag's command registry and the `--help` output of each registered command. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
 
 ## General Commands
 
@@ -128,6 +128,8 @@ tycho serve restart
 tycho serve restart --server vps --json
 tycho schedule restart --server vps --json
 ```
+
+In v0.14.1, `tycho serve restart --help` stops with a `NameError` in the source. The same options work without `--help`, and invalid options report a normal error. Check `tycho serve restart` output before relying on it in automation.
 
 Check the installed version with `tycho --version` or `tycho -v`. `tycho update` upgrades a Homebrew installation and restarts running local services through their stable launcher; source checkouts update through Git instead.
 
