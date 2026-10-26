@@ -235,7 +235,7 @@ h1 {
 	right: -3%;
 	bottom: -7%;
 	width: 27%;
-	padding: 4% 4% 4%;
+	padding: 22px 4% 4%;
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	border-radius: 30px;
 	background: #0d0d0c;
@@ -249,10 +249,10 @@ h1 {
 
 .device-camera {
 	position: absolute;
-	top: calc(4% + 9px);
+	top: 7px;
 	left: 50%;
-	width: 26%;
-	height: 18px;
+	width: 24%;
+	height: 10px;
 	transform: translateX(-50%);
 	border-radius: 999px;
 	background: #050505;
