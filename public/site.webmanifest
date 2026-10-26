@@ -1,7 +1,7 @@
 {
   "name": "Tycho",
   "short_name": "Tycho",
-  "description": "Supervise coding agents across projects.",
+  "description": "Supervise coding agents.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#11100e",

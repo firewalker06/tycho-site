@@ -11,7 +11,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Tycho',
-			description: 'Supervise coding agents across projects.',
+			description: 'Supervise coding agents.',
 			logo: {
 				src: './public/assets/tycho-logo-only.svg',
 			},

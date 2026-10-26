@@ -18,7 +18,7 @@ This is the public landing page and documentation site for Tycho.
 ## Content Direction
 
 - Primary audience: solo developers and technical leads managing many coding-agent sessions.
-- Primary promise: "Supervise coding agents across projects."
+- Primary promise: "Supervise coding agents."
 - Supporting sentence: "Tycho helps you see which agent sessions deserve your attention."
 - Feature pillars: Supervise, Switch, Loop.
 - Use "agent sessions" in public copy; define "managed agent" in reference material.

@@ -1,0 +1,20 @@
+---
+interface Props {
+	device: 'laptop' | 'phone';
+	src: string;
+	alt: string;
+	width: number;
+	height: number;
+	loading?: 'eager' | 'lazy';
+}
+
+const { device, src, alt, width, height, loading = 'lazy' } = Astro.props;
+---
+
+<figure class={`device-frame device-frame-${device}`}>
+	<div class="device-screen">
+		<img src={src} alt={alt} width={width} height={height} loading={loading} decoding="async" />
+	</div>
+	{device === 'laptop' && <div class="device-base" aria-hidden="true"></div>}
+	{device === 'phone' && <span class="device-camera" aria-hidden="true"></span>}
+</figure>
