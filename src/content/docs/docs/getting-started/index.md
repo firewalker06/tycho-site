@@ -7,16 +7,16 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- Homebrew bottles for v0.14.0: Apple Silicon on macOS 26 (Tahoe) or newer, and x86_64 Linux. Bottles for v0.14.1 are not yet published, so use a source install for v0.14.1.
-- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.0 or v0.14.1.
+- Homebrew bottles for v0.14.1 are published for Apple Silicon macOS 26 (Tahoe) (`arm64_tahoe`) and x86_64 Linux (`x86_64_linux`). See the [v0.14.1 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.1).
+- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.1.
 - For a source install: Ruby 4.0.9 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
-On macOS 15 or other platforms without a supported bottle, use [Install from Source](#install-from-source).
+On macOS 15 (Sequoia) or other platforms without a published bottle, use [Install from Source](#install-from-source). A source build was tested on macOS 15 (Sequoia). No bottle was poured on that platform.
 
 ## Install with Homebrew
 
-The [v0.14.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.0) are published for the supported platforms listed above. Install with:
+The [v0.14.1 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.1) are published for the supported platforms listed above. Install with:
 
 ```bash
 brew tap firewalker06/tycho
@@ -31,7 +31,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After installing or upgrading, verify that `tycho --version` reports the version you installed. A Homebrew install reports `0.14.0` until v0.14.1 bottles are published. A v0.14.1 source checkout reports `0.14.1`:
+After installing or upgrading, verify that `tycho --version` reports `0.14.1`:
 
 ```bash
 tycho --version
@@ -49,7 +49,7 @@ v0.14.1 requires Ruby 4.0.9 or newer, adds `jwt` (`>= 3.2.0`, `< 4`) as a direct
 
 v0.14.0 adds the local offline `tycho harness list` catalog, inquiry draft persistence, and improved Summary attachment previews. Context replacement transfers recurring schedule ownership and archives the source at its safe lifecycle point. Manual archive has different queue and inquiry outcomes; read [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs) before using it. No manual data migration or credential reset is required. FRED remains removed.
 
-Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.14.0 release notes](https://github.com/firewalker06/tycho/releases) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
+Use `tycho serve restart` and `tycho schedule restart` in automation. The old `tycho restart` and `tycho schedule reload` forms are deprecated. `tycho metrics backfill` no longer runs; use `tycho metrics query`. See the [v0.14.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.0) and [CLI compatibility notes](/docs/reference/#removed-and-deprecated-commands).
 
 ## Install from Source
 
