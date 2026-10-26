@@ -29,11 +29,14 @@ if (!badge || badge[1] !== `${releasePrefix}${badge[2]}`) {
 	failures.push('/ -> version badge must name and link to the same exact release');
 }
 
+// Earlier releases that pages intentionally name. Each link must still resolve to its own exact tag.
+const historicalReleaseLinks = new Set([`${releasePrefix}v0.14.0`]);
+
 for (const file of htmlFiles) {
 	const html = await readFile(file, 'utf8');
 	if (badge) {
 		for (const release of html.matchAll(/href=["'](https:\/\/github\.com\/firewalker06\/tycho\/releases\/tag\/[^"'#?]+)["']/g)) {
-			if (release[1] !== badge[1]) failures.push(`${path.relative(root, file)} -> release link differs from homepage: ${release[1]}`);
+			if (release[1] !== badge[1] && !historicalReleaseLinks.has(release[1])) failures.push(`${path.relative(root, file)} -> release link differs from homepage: ${release[1]}`);
 		}
 	}
 

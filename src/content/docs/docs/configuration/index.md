@@ -36,6 +36,8 @@ The `agent` field is the default harness. You can override it per session:
 tycho agent create my-workspace "Try the alternate implementation" --harness claude --run
 ```
 
+To choose the project that Quick Agent selects by default, set `quick_agent.default_project_key` in `hq.yml`. A blank value keeps the first available project. You can also set it in Remote UI under **Settings > Configuration**.
+
 Tycho includes Codex, Claude, OpenCode, and Pi harnesses. See [Harnesses](/docs/configuration/harnesses/) for prerequisites, executable overrides, safety differences, and compatible custom harness profiles.
 
 The local `tycho harness list` command reads model and reasoning suggestions from fallback or configured catalogs. It is offline by default. See [Harness Catalogs](/docs/configuration/harnesses/#inspect-local-model-and-reasoning-catalogs) for exact filters, discovery, and evidence limits.
