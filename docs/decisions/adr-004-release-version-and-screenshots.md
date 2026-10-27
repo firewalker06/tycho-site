@@ -39,3 +39,7 @@ follow-up composer.
 The homepage version, release notes, and screenshots move together through an intentional documentation update. Site builds remain deterministic and do not depend on GitHub availability.
 
 Screenshot audits are mandatory for release updates, while full recapture remains conditional. Synthetic fixtures make current product behavior concrete without publishing live peer data or credentials. For v0.10.0, images whose fixtures named v0.9.0 were replaced with exact-release captures of the TUI, delegation, workspace preview, and run-summary navigation.
+
+## Scoped operator exception: card 724
+
+On 2026-10-27, the operator selected and authorized a real, redacted code-review session capture for the desktop hero and Watch panel. The [selected capture audit](../audits/2026-10-27-card724-desktop-review.md) records the exact session, run, public-use authorization, redactions, and hashes. This capture must be described as real session content. Other screenshots continue to use the synthetic-fixture default.
