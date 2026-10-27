@@ -17,7 +17,7 @@ This checklist implements [ADR 004](https://github.com/firewalker06/tycho-site/b
 - [ ] Inventory every public screenshot, including unused files and the social preview. Record its route or use, provenance, fixture story, and a keep, replace, or remove decision with a reason.
 - [ ] Recapture only when UI changed materially, fixture content names an old release, or the image cannot support its surrounding claim. A filename with an old version is not by itself a reason to recapture. Retention needs explicit evidence. Do not require a full recapture when the audit supports retention.
 - [ ] Use the exact release tag for product captures. If a product checkout is occupied, export an immutable tag archive outside checkouts. Use synthetic fixtures and isolated state, config, logs, credentials, and harness executables. Never capture personal sessions, hosts, tokens, or config. Record capture commands, fixture changes, viewport, browser version, and output hashes. Do not alter product source to make the UI look different.
-- [ ] Preserve the site's visual identity, the promise “Supervise coding agents across projects,” and the local-first proof. Use “agent sessions” in public copy. Keep multiserver images paired where that story is shown.
+- [ ] Preserve the site's visual identity, the promise “Supervise coding agents.” and the local-first proof. Use “agent sessions” in public copy. Keep multiserver images paired where that story is shown.
 
 ## 3. Install, build, and inspect
 

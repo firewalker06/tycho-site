@@ -60,7 +60,7 @@ Cloudflare owns DNS for `usetycho.com`, and Pages manages the production custom-
 
 ## Content Direction
 
-Primary promise: "Supervise coding agents across projects."
+Primary promise: "Supervise coding agents."
 
 Feature pillars: Supervise, Switch, Loop.
 

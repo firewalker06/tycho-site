@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted.
+Accepted. The homepage tagline was later shortened to "Supervise coding agents." by Fizzy card 724. Read the bullet about the homepage tagline below as the original decision.
 
 ## Context
 

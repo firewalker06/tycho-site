@@ -173,19 +173,21 @@ h1 {
 
 .hero-visual {
 	position: relative;
-	min-height: 610px;
 }
 
-.screen {
-	position: absolute;
-	overflow: hidden;
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	border-radius: 8px;
-	background: #080807;
+/* Device frames: a laptop carries the desktop capture, a phone carries the mobile capture. */
+.device-frame {
+	position: relative;
+	margin: 0;
 	box-shadow: var(--shadow);
 }
 
-.screen img {
+.device-screen {
+	overflow: hidden;
+	background: #080807;
+}
+
+.device-screen img {
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -193,32 +195,68 @@ h1 {
 	object-position: top center;
 }
 
-.screen-label {
-	position: absolute;
-	top: 12px;
-	left: 12px;
-	z-index: 1;
-	padding: 6px 9px;
+.device-frame-laptop {
+	padding: 2.4% 2.4% 0;
 	border: 1px solid rgba(255, 255, 255, 0.16);
-	border-radius: 6px;
-	background: rgba(8, 8, 7, 0.82);
-	color: var(--text);
-	font-size: 12px;
-	font-weight: 700;
+	border-bottom: 0;
+	border-radius: 14px 14px 4px 4px;
+	background: linear-gradient(180deg, #2c2a27, #171614);
 }
 
-.screen-tui {
+.device-frame-laptop .device-screen {
+	aspect-ratio: 16 / 10;
+	border-radius: 4px 4px 0 0;
+}
+
+.device-base {
+	position: relative;
+	height: 14px;
+	margin: 0 -5%;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-top: 0;
+	border-radius: 0 0 16px 16px;
+	background: linear-gradient(180deg, #3a3835, #1b1a18);
+}
+
+.device-base::before {
+	content: '';
+	position: absolute;
 	top: 0;
-	left: 0;
-	width: 78%;
-	aspect-ratio: 8 / 5;
+	left: 50%;
+	width: 14%;
+	height: 5px;
+	transform: translateX(-50%);
+	border-radius: 0 0 8px 8px;
+	background: #0c0b0a;
 }
 
-.screen-web {
-	right: 0;
-	bottom: 18px;
-	width: 70%;
-	aspect-ratio: 4 / 3;
+.device-frame-phone {
+	position: absolute;
+	right: -3%;
+	bottom: -7%;
+	width: 27%;
+	padding: 22px 4% 4%;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 30px;
+	background: #0d0d0c;
+	z-index: 1;
+}
+
+.device-frame-phone .device-screen {
+	aspect-ratio: 390 / 844;
+	border-radius: 22px;
+}
+
+.device-camera {
+	position: absolute;
+	top: 7px;
+	left: 50%;
+	width: 24%;
+	height: 10px;
+	transform: translateX(-50%);
+	border-radius: 999px;
+	background: #050505;
+	z-index: 2;
 }
 
 .workflow {
@@ -390,16 +428,13 @@ h1 {
 		padding-top: 28px;
 	}
 
-	.hero-visual {
-		min-height: 520px;
+	.device-frame-phone {
+		right: 0;
+		width: 25%;
 	}
 
-	.screen-tui {
-		width: 88%;
-	}
-
-	.screen-web {
-		width: 82%;
+	.device-base {
+		margin-inline: -3%;
 	}
 }
 
@@ -474,17 +509,16 @@ h1 {
 		margin-top: 36px;
 	}
 
-	.hero-visual {
-		min-height: 0;
+	/* On phones the laptop capture would shrink to unreadable text, so the phone capture carries the hero alone. */
+	.device-frame-laptop {
+		display: none;
 	}
 
-	.screen-tui,
-	.screen-web {
+	.device-frame-phone {
 		position: relative;
-		width: 100%;
-	}
-
-	.screen-web {
-		margin-top: 14px;
+		right: auto;
+		bottom: auto;
+		width: 94%;
+		margin: 0 auto;
 	}
 }

@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted.
+Accepted. The homepage hero no longer uses the v0.10.0 Terminal UI capture described below. Fizzy card 724 replaced it with a v0.14.1 laptop frame and a v0.14.1 phone frame. The Terminal UI asset was removed from `public/assets/`.
 
 ## Context
 
