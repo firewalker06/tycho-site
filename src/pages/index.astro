@@ -2,6 +2,9 @@
 import '../styles/site.css';
 import DeviceFrame from '../components/DeviceFrame.astro';
 
+const desktopScreenshot = '/assets/remote-desktop-review-2026-10-27.png';
+const desktopScreenshotAlt = 'Tycho Remote UI showing a code-review conversation on the left, its completed run summary in the center, and an open review report on the right. Local file paths are hidden.';
+
 const workflows = [
 	{
 		label: 'Launch',
@@ -11,9 +14,11 @@ const workflows = [
 	},
 	{
 		label: 'Watch',
-		title: 'Watch status, logs, and attention states without hunting through terminal tabs.',
-		image: '/assets/quickstart-watch-v0.14.1.png',
-		alt: 'Tycho agent list showing nine agent sessions across three projects in succeeded, answer required, running, and failed states.',
+		title: 'Review the conversation, run summary, and attachments in one view.',
+		image: desktopScreenshot,
+		alt: desktopScreenshotAlt,
+		width: 1920,
+		height: 1200,
 	},
 	{
 		label: 'Answer',
@@ -31,7 +36,7 @@ const workflows = [
 
 const title = 'Tycho - Supervise coding agents.';
 const description = 'Tycho is a local-first operator console for supervising coding agents.';
-const ogImageAlt = 'Tycho home page: Supervise coding agents, with a laptop and phone showing the Remote UI agent list.';
+const ogImageAlt = 'Tycho home page: Supervise coding agents, with a laptop showing a conversation, run summary, and review report, and a phone showing the agent list.';
 const canonicalUrl = 'https://usetycho.com/';
 const ogImage = 'https://usetycho.com/og-image.png';
 const currentVersion = 'v0.14.1';
@@ -107,16 +112,16 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 				<div class="hero-visual">
 					<DeviceFrame
 						device="laptop"
-						src="/assets/quickstart-watch-v0.14.1.png"
-						alt="Tycho Remote UI on a laptop showing nine agent sessions across three projects, with succeeded, answer required, running, and failed states."
-						width={1440}
-						height={900}
+						src={desktopScreenshot}
+						alt={desktopScreenshotAlt}
+						width={1920}
+						height={1200}
 						loading="eager"
 					/>
 					<DeviceFrame
 						device="phone"
 						src="/assets/remote-mobile-agents-v0.14.1.png"
-						alt="Tycho Remote UI on a phone showing the same nine agent sessions in a filterable list."
+						alt="Tycho Remote UI on a phone showing nine agent sessions in a filterable list."
 						width={780}
 						height={1688}
 						loading="eager"
@@ -162,8 +167,8 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 										class="workflow-screenshot"
 										src={item.image}
 										alt={item.alt}
-										width="1440"
-										height="900"
+										width={item.width ?? 1440}
+										height={item.height ?? 900}
 										loading={index === 0 ? 'eager' : 'lazy'}
 										decoding="async"
 									/>

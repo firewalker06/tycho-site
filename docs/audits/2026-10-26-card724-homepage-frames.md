@@ -2,6 +2,8 @@
 
 This audit supports [Fizzy card 724](https://fizzy.startkit.tech/1/cards/724) and [draft PR 15](https://github.com/firewalker06/tycho-site/pull/15). It follows [ADR 004](https://github.com/firewalker06/tycho-site/blob/main/docs/decisions/adr-004-release-version-and-screenshots.md) and the [site release checklist](https://github.com/firewalker06/tycho-site/blob/main/docs/RELEASING.md).
 
+The desktop hero, Watch image, and social preview are superseded by the [operator-selected review capture](2026-10-27-card724-desktop-review.md). The record below describes the earlier frame update.
+
 ## Source and provenance
 
 - Product source: Tycho tag `v0.14.1`, commit `2092ce32874d1b874bb467b8d293f986c7b5648a`. The tag was fetched into the product repository and extracted with `git archive` into a temporary directory outside every checkout.
