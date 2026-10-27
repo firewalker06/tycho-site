@@ -235,24 +235,24 @@ h1 {
 	right: -3%;
 	bottom: -7%;
 	width: 27%;
-	padding: 22px 4% 4%;
+	padding: 16px 2.5% 2.5%;
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 30px;
+	border-radius: 26px;
 	background: #0d0d0c;
 	z-index: 1;
 }
 
 .device-frame-phone .device-screen {
 	aspect-ratio: 390 / 844;
-	border-radius: 22px;
+	border-radius: 20px;
 }
 
 .device-camera {
 	position: absolute;
-	top: 7px;
+	top: 5px;
 	left: 50%;
 	width: 24%;
-	height: 10px;
+	height: 8px;
 	transform: translateX(-50%);
 	border-radius: 999px;
 	background: #050505;
