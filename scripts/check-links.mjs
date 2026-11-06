@@ -30,7 +30,7 @@ if (!badge || badge[1] !== `${releasePrefix}${badge[2]}`) {
 }
 
 // Earlier releases that pages intentionally name. Each link must still resolve to its own exact tag.
-const historicalReleaseLinks = new Set([`${releasePrefix}v0.14.0`]);
+const historicalReleaseLinks = new Set([`${releasePrefix}v0.14.0`, `${releasePrefix}v0.14.1`]);
 
 for (const file of htmlFiles) {
 	const html = await readFile(file, 'utf8');

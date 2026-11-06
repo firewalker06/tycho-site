@@ -7,8 +7,8 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- Homebrew bottles for v0.14.1 are published for Apple Silicon macOS 26 (Tahoe) (`arm64_tahoe`) and x86_64 Linux (`x86_64_linux`). See the [v0.14.1 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.1).
-- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.14.1.
+- v0.15.0 targets Apple Silicon macOS and Linux Homebrew bottles. Bottle publication is separate from the Tycho source release. Check the [v0.15.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.15.0) before you install.
+- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.15.0.
 - For a source install: Ruby 4.0.9 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
@@ -16,7 +16,7 @@ On macOS 15 (Sequoia) or other platforms without a published bottle, use [Instal
 
 ## Install with Homebrew
 
-The [v0.14.1 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.14.1) are published for the supported platforms listed above. Install with:
+When the [v0.15.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.15.0) are published for your platform, install with:
 
 ```bash
 brew tap firewalker06/tycho
@@ -31,7 +31,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After installing or upgrading, verify that `tycho --version` reports `0.14.1`:
+After installing or upgrading, verify that `tycho --version` reports `0.15.0`:
 
 ```bash
 tycho --version
@@ -41,11 +41,13 @@ tycho project list
 tycho schedule list
 ```
 
-Projects must now be created explicitly: replace `tycho project my-project` with `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect an existing project. If upgrading from a release before v0.13.0, update every Tycho-owned skill in **Settings → Skills**, then restart a harness if needed. The packaged skill is unchanged from v0.13.0 to v0.14.0. Tycho will not overwrite an unmarked or locally modified skill.
+v0.15.0 keeps Ruby 4.0.9 or newer and adds no gem dependency or manual data migration. It sends managed prompts through stdin, adds configurable prompt transports for custom profiles, and updates Pi to `@earendil-works/pi-coding-agent` 0.84.4. It also adds experimental native agy support. Authentication and sandbox isolation for agy are not verified. See the [v0.15.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.15.0) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/UPGRADING.md#0150).
 
-Existing Claude custom profiles keep working, but new profiles must declare one native adapter: `codex`, `claude`, `opencode`, or `pi`. Automation using the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands must be deleted; read-only agent pull-request diffs use an authenticated local `gh` CLI.
+Projects must be created explicitly: use `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect one. If you upgrade from a release before v0.13.0, update each Tycho-owned skill in **Settings → Skills**, then restart its harness if needed. Tycho will not overwrite an unmarked or locally changed skill.
 
-v0.14.1 requires Ruby 4.0.9 or newer, adds `jwt` (`>= 3.2.0`, `< 4`) as a direct gem dependency, and adds the optional `quick_agent.default_project_key` setting. It groups delegated agents under their parents in the Agents list and shows harness marks beside harness names. No manual data migration is required. See the [v0.14.1 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.1) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.14.1/docs/UPGRADING.md#0141).
+Existing custom profiles remain supported. New profiles must use the `codex`, `claude`, `opencode`, or `pi` adapter. The key `agy` is now reserved for experimental native support; rename a custom profile with that key. Remove automation that calls the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands. Read-only agent pull-request diffs use an authenticated local `gh` CLI.
+
+v0.14.1 requires Ruby 4.0.9 or newer and added the optional `quick_agent.default_project_key` setting. It groups delegated agents under their parents in the Agents list and shows harness marks beside harness names. No manual data migration was required. See the [v0.14.1 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.1) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.14.1/docs/UPGRADING.md#0141).
 
 v0.14.0 adds the local offline `tycho harness list` catalog, inquiry draft persistence, and improved Summary attachment previews. Context replacement transfers recurring schedule ownership and archives the source at its safe lifecycle point. Manual archive has different queue and inquiry outcomes; read [Agent Session Lifecycle](/docs/concept/lifecycle/#context-pressure-and-handoffs) before using it. No manual data migration or credential reset is required. FRED remains removed.
 
@@ -56,7 +58,7 @@ Use `tycho serve restart` and `tycho schedule restart` in automation. The old `t
 Use a source checkout when you want to contribute or Homebrew is not suitable:
 
 ```bash
-git clone --branch v0.14.1 https://github.com/firewalker06/tycho.git
+git clone --branch v0.15.0 https://github.com/firewalker06/tycho.git
 cd tycho
 bin/setup --check
 bin/setup
@@ -131,8 +133,6 @@ Keep that terminal open, then open [http://127.0.0.1:7373](http://127.0.0.1:7373
    ```
 
 4. Choose **Create and run**.
-
-![The Tycho Remote UI New agent form for the Welcome Sandbox](/assets/remote-new-agent.png)
 
 Remote UI records and displays the same agent session state as the TUI and CLI.
 

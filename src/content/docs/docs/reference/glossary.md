@@ -13,7 +13,7 @@ The internal Tycho object behind an agent session. Use this term in technical re
 
 ## Harness
 
-The command adapter Tycho uses to run a coding agent. Codex, Claude, OpenCode, and Pi are built in. A compatible custom profile declares one of those native adapters plus its own key and execution command.
+The command adapter Tycho uses to run a coding agent. Codex, Claude, OpenCode, and Pi are built in. Experimental agy support is available, but its authentication status and sandbox isolation are unverified. A compatible custom profile declares the Codex, Claude, OpenCode, or Pi adapter plus its own key and execution command.
 
 ## Operator Loop
 

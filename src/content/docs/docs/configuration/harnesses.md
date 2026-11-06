@@ -1,6 +1,6 @@
 ---
 title: Harnesses
-description: Run Codex, Claude, OpenCode, Pi, or a compatible custom harness profile through Tycho.
+description: Run Codex, Claude, OpenCode, Pi, experimental agy, or a custom harness profile through Tycho.
 ---
 
 A harness is the command adapter Tycho uses to run a coding-agent CLI.
@@ -15,15 +15,16 @@ Tycho includes harnesses for Codex, Claude, OpenCode, and Pi. Each one uses the 
 | Claude | `claude` | `TYCHO_CLAUDE_BIN` |
 | OpenCode | `opencode` | `TYCHO_OPENCODE_BIN` |
 | Pi | `pi` | `TYCHO_PI_BIN` |
+| agy | `agy` | `TYCHO_AGY_BIN` |
 
 Install and authenticate the CLI you plan to use before starting its first agent session. A missing harness executable does not stop Tycho itself, but a session that uses it cannot run.
 
-Tycho parses each built-in harness's native output, records conversation and run history, preserves its native session ID, and maps configured model and reasoning-effort values to that CLI's arguments. This creates a consistent supervision workflow, not identical behavior across the four CLIs.
+Managed prompts use stdin for Codex, Claude, OpenCode, Pi, and agy. Tycho parses each harness's native output, records conversation and run history, preserves native session IDs where available, and maps configured model and reasoning-effort values to the CLI contract.
 
-Pi support targets `@mariozechner/pi-coding-agent` 0.73.1. Install the exact supported version:
+Pi support targets `@earendil-works/pi-coding-agent` 0.84.4. Install the supported version:
 
 ```bash
-npm install -g --ignore-scripts @mariozechner/pi-coding-agent@0.73.1
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent@0.84.4
 ```
 
 Run `pi`, enter `/login`, and authenticate a provider. Then verify readiness before selecting the harness:
@@ -33,6 +34,24 @@ pi --list-models
 ```
 
 Tycho reports Pi as ready only when that command returns at least one authenticated model.
+
+Older Pi versions that emit only `agent_end` are unsupported. Restricted Pi modes use a tool allowlist; they do not provide filesystem isolation.
+
+## Experimental agy
+
+Tycho includes native support for the Antigravity CLI (`agy`), including conversation resume, structured results, model discovery, and skill installation. It is experimental. Authentication status and sandbox isolation are not verified. Do not use it in production. The name `agy` is reserved; rename a custom profile that uses this key. See [agy support and limits](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/AGY.md).
+
+## Custom Prompt Transport
+
+Custom wrappers use the native adapter's stdin contract by default, except Pi, which uses JSONL RPC. A wrapper that requires the prompt as an argument can select version 1 `argv` transport:
+
+```yaml
+prompt_transport:
+  version: 1
+  mode: argv
+```
+
+Version 1 also supports `stdin` and private `file` transport. `argv` keeps operating-system argument limits and exposes prompt text in the process arguments. See [custom harness transport](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/CUSTOM_HARNESSES.md#migration).
 
 ## Inspect Local Model and Reasoning Catalogs
 
@@ -160,7 +179,7 @@ custom_harnesses:
 
 The command must accept the selected adapter's native flags for streaming output, structured results, model and effort selection, and native-session resume. Tycho validates the configuration and executable, but the wrapper remains responsible for its provider credentials and runtime dependencies. Existing `adapter: claude` profiles remain valid.
 
-A custom key cannot be `codex`, `claude`, `opencode`, or `pi`, because those names belong to the built-in harnesses.
+A custom key cannot be `codex`, `claude`, `opencode`, `pi`, or `agy`, because those names belong to built-in harnesses. Rename a custom profile named `agy` and update its references before upgrading.
 
 ## Structured Result Validation
 
