@@ -41,6 +41,8 @@ Older Pi versions that emit only `agent_end` are unsupported. Restricted Pi mode
 
 Tycho includes native support for the Antigravity CLI (`agy`), including conversation resume, structured results, model discovery, and skill installation. It is experimental. Authentication status and sandbox isolation are not verified. Do not use it in production. The name `agy` is reserved; rename a custom profile that uses this key. See [agy support and limits](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/AGY.md).
 
+Tycho ignores saved reasoning effort for agy. It sends no effort flag, so agy uses its native default.
+
 ## Custom Prompt Transport
 
 Custom wrappers use the native adapter's stdin contract by default, except Pi, which uses JSONL RPC. A wrapper that requires the prompt as an argument can select version 1 `argv` transport:

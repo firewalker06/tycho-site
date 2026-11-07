@@ -3,7 +3,7 @@ title: CLI Reference
 description: Tycho v0.15.0 commands, recovery controls, server diagnostics, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.15.0](https://github.com/firewalker06/tycho/releases/tag/v0.15.0), source commit `69d76f3c632042860acefa049a6172e98a0352a7`. Command forms were checked against the release-prep source. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.15.0](https://github.com/firewalker06/tycho/releases/tag/v0.15.0), released at commit [e34e2cd766762e9c5b8f76e4276523596ef8afb9](https://github.com/firewalker06/tycho/commit/e34e2cd766762e9c5b8f76e4276523596ef8afb9). Command forms were checked against the exact release tag. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
 
 ## General Commands
 
