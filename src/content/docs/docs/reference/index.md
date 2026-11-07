@@ -1,9 +1,9 @@
 ---
 title: CLI Reference
-description: Tycho v0.14.1 commands, queue recovery, server controls, and compatibility notes.
+description: Tycho v0.15.0 commands, recovery controls, server diagnostics, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.14.1](https://github.com/firewalker06/tycho/releases/tag/v0.14.1), commit `2092ce32874d1b874bb467b8d293f986c7b5648a`. Command forms were checked against that tag's command registry and the `--help` output of each registered command. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.15.0](https://github.com/firewalker06/tycho/releases/tag/v0.15.0), released at commit [e34e2cd766762e9c5b8f76e4276523596ef8afb9](https://github.com/firewalker06/tycho/commit/e34e2cd766762e9c5b8f76e4276523596ef8afb9). Command forms were checked against the exact release tag. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
 
 ## General Commands
 
@@ -64,7 +64,7 @@ tycho agent clone my-project-agent-3 --run
 tycho agent clone my-project-agent-3 --handoff --run
 ```
 
-Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Clone supports `--handoff` for concise source context. Ordinary CLI clones retain their source; Remote UI context replacement archives its source and transfers schedule ownership at its safe lifecycle point. Logs support `--type raw|conversation|system` and `--follow`.
+Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Built-in harness choices are Codex, Claude, OpenCode, Pi, and experimental agy; custom profiles can add a configured key. Clone supports `--handoff` for concise source context. Ordinary CLI clones retain their source; Remote UI context replacement archives its source and transfers schedule ownership at its safe lifecycle point. Logs support `--type raw|conversation|system` and `--follow`.
 
 Create an explicit child session:
 
@@ -129,7 +129,7 @@ tycho serve restart --server vps --json
 tycho schedule restart --server vps --json
 ```
 
-In v0.14.1, `tycho serve restart --help` stops with a `NameError` in the source. The same options work without `--help`, and invalid options report a normal error. Check `tycho serve restart` output before relying on it in automation.
+The authenticated `GET /diagnostics/serve` endpoint reports request timing and worker admission data. Use it to inspect service load; it does not expose prompt or credential contents. See [Serve diagnostics](/docs/getting-started/remote-ui/#serve-diagnostics).
 
 Check the installed version with `tycho --version` or `tycho -v`. `tycho update` upgrades a Homebrew installation and restarts running local services through their stable launcher; source checkouts update through Git instead.
 

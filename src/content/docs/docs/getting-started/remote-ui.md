@@ -34,6 +34,14 @@ Inquiry values save locally while you type and survive refresh and reload. Conve
 
 The agent switcher follows the same ordering and status cues as the Agents view. While a session is running, you can queue follow-up prompts and load newer conversation messages on demand without losing the focused conversation.
 
+### Recover uncertain sends
+
+Tycho confirms accepted messages with a small receipt. An exact retry uses the same request ID, so it does not add a second message after acceptance. If delivery is uncertain, use **Retry** or **Cancel retry**. Cancel stops browser retries across tabs that share browser storage; it does not remove work the server accepted. Inquiry answers keep their fields, feedback, and files while Tycho retries or restores the response. See [inquiry answer recovery](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/INQUIRY_ANSWER_RECOVERY.md) for limits.
+
+### Appearance
+
+Choose Dark, Light (Nord), or System in **Settings → Configuration → Appearance**. Dark remains the default. System follows the operating-system preference. Tycho applies a saved choice before first paint and shares changes across open tabs.
+
 ## Browse a Project Safely
 
 Each registered project has a **Files** view. Search files, preview Markdown and images, and use guarded plain-text editing on desktop where available; existing workspaces remain read-only on mobile. The server accepts relative paths inside that project and rejects traversal, unsafe symlinks, VCS and generated directories, secret-shaped names or content, binary files, and oversized previews. This boundary protects browsing and editing; it does not restrict what a launched harness can access. Review [Harnesses](/docs/configuration/harnesses/#harness-and-workspace-safety) before running an agent.
@@ -58,6 +66,10 @@ tycho serve
 This keeps the generated value in the named shell variable and copies it to the macOS clipboard without printing it. When Remote UI asks for authentication, paste that same value into **Remote token** and save it. On WSL, replace `pbcopy` with `clip.exe`; on Linux with Wayland, use `wl-copy`. Do not print the token, put its literal value in shell history, or paste it anywhere else. Run `unset TYCHO_REMOTE_TOKEN_VALUE TYCHO_REMOTE_TOKEN` after the server stops.
 
 When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and print a MagicDNS URL and QR code. Prefer Tailscale Serve HTTPS when you need service workers or push notifications. Passing `--host` disables Tailscale auto-binding.
+
+### Serve diagnostics
+
+Authenticated server diagnostics report admission, worker use, store-lock waits, route time, and response writes. See [serve diagnostics](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/SERVE_DIAGNOSTICS.md). The optional Interaction Profiler is a separate tool; see its [guide](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/REMOTE_UI_INTERACTION_PROFILER.md).
 
 ## Notification Evidence
 

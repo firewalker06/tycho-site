@@ -85,7 +85,7 @@ A missing or invalid structured result still gets a Summary card. Only the detai
 
 Attach or detach a pull request from the session's PR diff catalog through Remote UI or `tycho agent pr-diff add` and `remove`. Detaching preserves source attachments and shared immutable snapshots.
 
-![Tycho v0.14.0 Summary view with run navigation and a completed result](/assets/web-summary-v0.14.0.png)
+![Tycho Summary view with run navigation and a completed result](/assets/web-summary-v0.14.0.png)
 
 For an agent-owned pull request, open its saved diff, select exact added, removed, or context lines, write a comment, and choose **Add section**. Tycho attaches bounded context from that immutable snapshot to the same agent composer. If the pull request changes, refresh and select again; stale selections are rejected instead of being applied to a different diff.
 
