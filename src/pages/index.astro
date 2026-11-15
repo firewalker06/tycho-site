@@ -9,13 +9,13 @@ const desktopScreenshotAlt = 'Tycho Remote UI showing agent sessions with active
 const workflows = [
 	{
 		label: 'Launch',
-		title: 'Launch an agent session from a registered project.',
+		title: 'Start an agent session.',
 		image: '/assets/quickstart-launch-v0.16.0.png',
 		alt: 'Tycho quick agent modal populated for the registered Atlas Web project, ready to create and run a session.',
 	},
 	{
 		label: 'Watch',
-		title: 'Review active work, completed results, and sessions that need input.',
+		title: 'See which sessions need attention.',
 		image: desktopScreenshot,
 		alt: desktopScreenshotAlt,
 		width: 1440,
@@ -23,21 +23,21 @@ const workflows = [
 	},
 	{
 		label: 'Answer',
-		title: 'Answer questions or send follow-ups when the session needs direction.',
+		title: 'Answer a question or send a follow-up.',
 		image: '/assets/quickstart-answer-v0.16.0.png',
 		alt: 'Tycho Remote UI showing the Checkout rollout session waiting for a rollout-window decision.',
 	},
 	{
 		label: 'Resume',
-		title: 'Resume or re-run work with Tycho keeping the durable session record.',
+		title: 'Resume a session or run it again.',
 		image: '/assets/quickstart-resume-v0.16.0.png',
 		alt: 'Tycho Remote UI showing a completed Accessibility audit run and the composer for a follow-up.',
 	},
 ];
 
 const title = 'Tycho - Supervise coding agents.';
-const description = 'Tycho is a local-first operator console for supervising coding agents.';
-const ogImageAlt = 'Tycho home page: Supervise coding agents, with a laptop and phone showing agent sessions in a filterable list.';
+const description = 'Tycho helps you see which agent sessions deserve your attention.';
+const ogImageAlt = 'Tycho v0.16.0 with agent sessions on a laptop and phone.';
 const canonicalUrl = 'https://usetycho.com/';
 const ogImage = 'https://usetycho.com/og-image.png';
 const currentVersion = 'v0.16.0';
@@ -94,15 +94,14 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 		<main>
 			<section class="hero">
 				<div class="hero-copy">
-					<p class="eyebrow">Local-first control for coding agents</p>
+					<p class="eyebrow">Local-first</p>
 					<h1>Supervise coding agents.</h1>
 					<p class="lede">
-						Tycho helps you see which agent sessions deserve your attention. Launch, monitor, switch, and continue
-						agent work across your repos.
+						Tycho helps you see which agent sessions deserve your attention.
 					</p>
 					<p class="compatibility">
-						Your project config, logs, prompts, and history stay under your control.
-						Built-in support for Codex, Claude, OpenCode, and Pi.
+						Tycho stores your config, prompts, and logs locally.
+						Works with Codex, Claude, OpenCode, and Pi.
 					</p>
 					<div class="actions">
 						<a class="button primary" href="#install">Install Tycho</a>
@@ -133,57 +132,55 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 
 			<section class="installation" id="install" aria-labelledby="install-heading">
 				<div class="section-heading">
-					<p class="eyebrow">Start in your browser</p>
-					<h2 id="install-heading">Install Tycho. Start your first agent.</h2>
-					<p>Use the built-in Welcome Sandbox. Add your own projects later.</p>
+					<p class="eyebrow">Get started</p>
+					<h2 id="install-heading">Start your first agent.</h2>
 				</div>
-				<div class="install-step-heading"><span>01</span><h3>Install and start the browser UI.</h3></div>
-				<p class="install-prerequisite">First, install and authenticate a supported coding-agent CLI on this computer. <a href="/docs/configuration/harnesses/">Check harness setup</a>.</p>
-				<p class="install-publication">Published v0.16.0 bottles support macOS Tahoe on Apple Silicon and Linux x86_64. See the <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Homebrew release</a>. For macOS Sequoia, Intel Mac, and other platforms, use the <a href="/docs/getting-started/#install-from-source">source path</a>.</p>
-				<div class="platform-grid">
-					<article class="platform-card" aria-labelledby="install-macos">
-						<h4 id="install-macos">macOS</h4>
-						<p>Apple Silicon on macOS Tahoe: with Homebrew installed, run:</p>
-						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
-						<p>macOS Sequoia, Intel Mac, or a platform without a bottle? Use the <a href="/docs/getting-started/#install-from-source">source path</a>. v0.11.0 was the final Intel bottle.</p>
-					</article>
-					<article class="platform-card" aria-labelledby="install-linux">
-						<h4 id="install-linux">Linux</h4>
-						<p>Linux x86_64: with Homebrew installed, run:</p>
-						<CommandBlock label="Linux install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
-						<p>Without a supported bottle, use the <a href="/docs/getting-started/#install-from-source">source path</a> with Ruby 4.0.9+, Bundler, Go, and native build tools.</p>
-					</article>
-					<article class="platform-card" aria-labelledby="install-windows">
-						<h4 id="install-windows">Windows · WSL2</h4>
-						<p>Use a Linux distribution inside WSL2. Install Ruby 4.0.9+, Bundler, Git, Go, native build tools, and your harness there. Then run:</p>
-						<CommandBlock label="WSL2 source install and start" command={'git clone --branch v0.16.0 https://github.com/firewalker06/tycho.git\ncd tycho\nbin/setup --check\nbin/setup\nbin/tycho --version\nbin/tycho serve --host 127.0.0.1 --port 7373'} />
-						<p>This is a WSL2 source path, not a native Windows install. See <a href="/docs/getting-started/#requirements">detailed requirements</a>.</p>
-					</article>
-				</div>
-				<p class="install-note">Confirm the version is <strong>0.16.0</strong> before starting. Already installed? Read the <a href="/docs/getting-started/#install-with-homebrew">upgrade steps</a> before updating queue storage.</p>
+				<p>Install and sign in to <a href="/docs/configuration/harnesses/">a supported agent CLI</a> first.</p>
+				<tycho-install-tabs>
+					<div class="install-tabs" role="tablist" aria-label="Installation platform">
+						<button type="button" id="install-tab-macos" role="tab" aria-selected="true" aria-controls="install-panel-macos" tabindex="0">macOS</button>
+						<button type="button" id="install-tab-linux" role="tab" aria-selected="false" aria-controls="install-panel-linux" tabindex="-1">Linux</button>
+						<button type="button" id="install-tab-windows" role="tab" aria-selected="false" aria-controls="install-panel-windows" tabindex="-1">Windows WSL2</button>
+					</div>
+					<section class="install-panel" id="install-panel-macos" role="tabpanel" aria-labelledby="install-tab-macos" tabindex="0">
+						<p>Requires macOS Tahoe on Apple Silicon and Homebrew.</p>
+						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+						<p>For Sequoia or Intel Macs, <a href="/docs/getting-started/#install-from-source">install from source</a>.</p>
+					</section>
+					<section class="install-panel" id="install-panel-linux" role="tabpanel" aria-labelledby="install-tab-linux" tabindex="0" hidden>
+						<p>Requires Linux x86_64 and Homebrew.</p>
+						<CommandBlock label="Linux install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+						<p>For other Linux targets, <a href="/docs/getting-started/#install-from-source">install from source</a>.</p>
+					</section>
+					<section class="install-panel" id="install-panel-windows" role="tabpanel" aria-labelledby="install-tab-windows" tabindex="0" hidden>
+						<p>Install the <a href="/docs/getting-started/#requirements">source requirements</a> inside WSL2 first. Run these commands in your Linux terminal.</p>
+						<CommandBlock label="WSL2 source install and start" command={'git clone --branch v0.16.0 \\\n  https://github.com/firewalker06/tycho.git\ncd tycho\nbin/setup --check\nbin/setup\nbin/tycho --version\nbin/tycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+					</section>
+				</tycho-install-tabs>
+				<p class="install-note">Check for version 0.16.0. For an existing install, follow the <a href="/docs/getting-started/#install-with-homebrew">upgrade steps</a> before updating. <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Bottle release</a>.</p>
 				<div class="first-run-grid">
 					<article>
-						<div class="install-step-heading"><span>02</span><h3>Open Tycho.</h3></div>
-						<p>Keep the terminal running. Open <a href="http://127.0.0.1:7373">Tycho in your browser</a> on the same computer. WSL2 users can open this address in their Windows browser.</p>
-						<p>This command uses localhost. For another device, follow the <a href="/docs/getting-started/remote-ui/#protect-non-local-access">token and tailnet setup</a>.</p>
+						<h3>Open Tycho.</h3>
+						<p>Keep the terminal open and visit <a href="http://127.0.0.1:7373">127.0.0.1:7373</a> in your browser.</p>
 					</article>
 					<article>
-						<div class="install-step-heading"><span>03</span><h3>Run an agent in Welcome Sandbox.</h3></div>
+						<h3>Run in Welcome Sandbox.</h3>
 						<ol>
-							<li>On a new install, select <strong>Create Welcome Sandbox</strong>. Tycho sets up its built-in starter project.</li>
-							<li>Open <strong>Welcome Sandbox</strong>, then select <strong>New agent</strong>.</li>
-							<li>In <strong>Options → Advanced</strong>, choose your installed, authenticated harness. Paste this prompt, then select <strong>Create and Run</strong>.</li>
+							<li>Select <strong>Create Welcome Sandbox</strong>.</li>
+							<li>Open <strong>Welcome Sandbox</strong> and choose <strong>New agent</strong>.</li>
+							<li>Under <strong>Options</strong>, open <strong>Advanced</strong> and select your authenticated harness.</li>
+							<li>Paste this prompt and select <strong>Create and Run</strong>.</li>
 						</ol>
 						<CommandBlock label="First agent prompt" command="Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change." />
-						<p>Watch the result, then send a follow-up in the same session. <a href="/docs/getting-started/">Follow the full getting-started guide</a>.</p>
+						<p>Send a follow-up after the run finishes. <a href="/docs/getting-started/">Read the getting-started guide</a>.</p>
 					</article>
 				</div>
 			</section>
 
 			<section class="workflow" aria-labelledby="workflow-heading">
 				<div class="section-heading workflow-heading">
-					<p class="eyebrow">From first run to follow-up</p>
-					<h2 id="workflow-heading">Install Tycho, then supervise your first agent session.</h2>
+					<p class="eyebrow">Agent sessions</p>
+					<h2 id="workflow-heading">Follow an agent session.</h2>
 				</div>
 				<tycho-carousel class="workflow-carousel">
 					<ol class="workflow-tabs" aria-label="Quickstart steps">
@@ -232,6 +229,36 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 			</section>
 		</main>
 		<script>
+			class TychoInstallTabs extends HTMLElement {
+				connectedCallback() {
+					const tabs = [...this.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+					const panels = [...this.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+					const select = (index: number, focus = false) => {
+						tabs.forEach((tab, current) => {
+							const selected = current === index;
+							tab.setAttribute('aria-selected', String(selected));
+							tab.tabIndex = selected ? 0 : -1;
+							panels[current].hidden = !selected;
+						});
+						if (focus) tabs[index].focus();
+					};
+					tabs.forEach((tab, index) => {
+						tab.addEventListener('click', () => select(index));
+						tab.addEventListener('keydown', (event) => {
+							let next;
+							if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+							else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+							else if (event.key === 'Home') next = 0;
+							else if (event.key === 'End') next = tabs.length - 1;
+							else return;
+							event.preventDefault();
+							select(next, true);
+						});
+					});
+				}
+			}
+			if (!customElements.get('tycho-install-tabs')) customElements.define('tycho-install-tabs', TychoInstallTabs);
+
 			class TychoCarousel extends HTMLElement {
 				connectedCallback() {
 					const tabs = [...this.querySelectorAll('[data-carousel-tab]')];
