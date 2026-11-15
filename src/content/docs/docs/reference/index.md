@@ -1,9 +1,9 @@
 ---
 title: CLI Reference
-description: Tycho v0.15.0 commands, recovery controls, server diagnostics, and compatibility notes.
+description: Tycho v0.16.0 commands, recovery controls, server diagnostics, and compatibility notes.
 ---
 
-This reference describes [Tycho v0.15.0](https://github.com/firewalker06/tycho/releases/tag/v0.15.0), released at commit [e34e2cd766762e9c5b8f76e4276523596ef8afb9](https://github.com/firewalker06/tycho/commit/e34e2cd766762e9c5b8f76e4276523596ef8afb9). Command forms were checked against the exact release tag. Run `tycho <group> <command> --help` for command-specific options; the top-level help omits some registered commands.
+This reference describes [Tycho v0.16.0](https://github.com/firewalker06/tycho/releases/tag/v0.16.0), released at commit [ec3cbd49a3f5ba58f9ec6b83b505328955c3ae3c](https://github.com/firewalker06/tycho/commit/ec3cbd49a3f5ba58f9ec6b83b505328955c3ae3c). Command forms were checked against the exact release tag. Run `tycho <group> <command> --help` for registered command options; the top-level help omits some registered commands. In this release, `serve restart --help` prints usage but exits with an error, and deprecated `restart --help` rejects the argument. Use the documented forms below.
 
 ## General Commands
 
@@ -64,7 +64,7 @@ tycho agent clone my-project-agent-3 --run
 tycho agent clone my-project-agent-3 --handoff --run
 ```
 
-Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Built-in harness choices are Codex, Claude, OpenCode, Pi, and experimental agy; custom profiles can add a configured key. Clone supports `--handoff` for concise source context. Ordinary CLI clones retain their source; Remote UI context replacement archives its source and transfers schedule ownership at its safe lifecycle point. Logs support `--type raw|conversation|system` and `--follow`.
+Create accepts `--harness`, `--model`, `--name`, `--template`, and `--run`. Built-in harness choices are Codex, Claude, OpenCode, Pi, experimental agy, and dsh; custom profiles can add a configured key. Clone supports `--handoff` for concise source context. Ordinary CLI clones retain their source; Remote UI context replacement archives its source and transfers schedule ownership at its safe lifecycle point. Logs support `--type raw|conversation|system` and `--follow`.
 
 Create an explicit child session:
 
@@ -95,6 +95,26 @@ tycho agent list --archived
 tycho agent list --include-archived
 ```
 
+## Agent Focus
+
+```bash
+tycho agent focus <agent-key> --json
+tycho agent focus <agent-key> --file /absolute/path/focus.json --revision 0 --json
+tycho agent focus <agent-key> --server vps --json
+```
+
+Focus stores current actions separately from Summary and Conversation. Read it first, preserve unrelated items, then replace it with the returned revision. The input file contains the sections array. A stale different write fails; an exact retry is safe. An empty array clears Focus. Archive keeps its history; clones start empty. File links must refer to existing agent attachments. See [Focus format and limits](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/AGENT_FOCUS.md).
+
+## Backdrop Images
+
+```bash
+tycho appearance images list --json
+tycho appearance images upload scene /absolute/path/scene.png --name "Scene"
+tycho appearance images remove scene --server vps --json
+```
+
+These commands manage the server's shared PNG image library. Upload does not select an image in the browser. Each command supports `--server` and `--json`. See [appearance limits](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/REMOTE_UI_APPEARANCE.md).
+
 ## Schedules
 
 ```bash
@@ -103,6 +123,8 @@ tycho schedule create weekday-maintenance \
   --agent-name "Weekday maintenance" --message "Run the maintenance check."
 tycho schedule update weekday-maintenance --agent codex --model gpt-6-astra --reasoning-effort medium
 tycho schedule list
+tycho schedule list --include-archived
+tycho schedule archive weekly-review
 tycho schedule validate
 tycho schedule run weekly-review
 tycho schedule pause weekly-review
@@ -212,6 +234,15 @@ For `complete`, replace `<outcomes-json>` with a JSON array containing every ent
 
 Success, no-action success, and Partial automatically settle delivered work with `completed` and `incorporated`. Failed, blocked, and input-required results keep unresolved work. See [Agent Session Lifecycle](/docs/concept/lifecycle/#durable-queue-work).
 
+### Queue migration receipts
+
+```bash
+tycho queue-work cleanup-migrations
+tycho queue-work cleanup-migrations --apply
+```
+
+This local-only command reports eligible empty migration audit receipts by default. `--apply` retains 100 and removes at most 1,000 per call. Queue records and completion evidence stay intact. Use `--apply` only with explicit operator approval for the target store. This command does not accept `--server` or `--json`. See [receipt retention](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/QUEUE_MIGRATION_RETENTION.md).
+
 ## Pull-Request Diff Catalogs
 
 ```bash
@@ -233,7 +264,7 @@ These commands are local-only. Backups lists validated rolling snapshots with ti
 
 ## Removed and Deprecated Commands
 
-| Old form | v0.14.0 behavior and replacement |
+| Old form | Behavior and replacement |
 | --- | --- |
 | `tycho project <key>` | Unsupported; use explicit `project create` or `project show`. |
 | `tycho github login`, `status`, `logout` | Removed; use an authenticated local `gh` CLI for PR diff reads. |

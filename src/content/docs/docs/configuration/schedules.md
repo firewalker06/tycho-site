@@ -78,9 +78,11 @@ tycho schedule run weekday-maintenance
 tycho schedule pause weekday-maintenance
 tycho schedule resume weekday-maintenance
 tycho schedule restart
+tycho schedule archive weekday-maintenance
+tycho schedule list --include-archived
 ```
 
-Remote UI exposes the same run, pause, resume, edit, and daemon controls. Removing a schedule detaches its active session but keeps that session, transcript, attachments, and native history as ordinary agent work.
+Remote UI has a dedicated Schedules page with run, pause, resume, edit, and daemon controls. Archive keeps configuration and history while hiding a stopped schedule from active lists. Startup preserves stopped target intent. Explicit one-time queue processing for an inactive schedule does not resume automatic scheduling. Removing a schedule detaches its active session but keeps that session, transcript, attachments, and native history as ordinary agent work.
 
 ## Context Replacement
 

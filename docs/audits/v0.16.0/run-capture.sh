@@ -1,0 +1,2 @@
+#!/bin/sh
+env -i HOME=/tmp/tycho-site-v0160/home PATH=/Users/didik/.local/share/mise/installs/node/22.23.4/bin:/Users/didik/.local/share/mise/installs/ruby/4.0.9/bin:/usr/bin:/bin GEM_PATH=/Users/didik/.gem/ruby/4.0.0:/Users/didik/.local/share/mise/installs/ruby/4.0.9/lib/ruby/gems/4.0.0 TYCHO_HOME=/tmp/tycho-site-v0160/home /Users/didik/.local/share/mise/installs/ruby/4.0.9/bin/ruby /tmp/tycho-site-v0160/source/bin/capture-site-quickstart

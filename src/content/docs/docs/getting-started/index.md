@@ -7,8 +7,8 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- v0.15.0 targets Apple Silicon macOS and Linux Homebrew bottles. Bottle publication is separate from the Tycho source release. Check the [v0.15.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.15.0) before you install.
-- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.15.0.
+- v0.16.0 targets Apple Silicon macOS and Linux Homebrew bottles. Bottle publication is separate from the Tycho source release. Check the [v0.16.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) before you install.
+- Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.16.0.
 - For a source install: Ruby 4.0.9 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
@@ -16,14 +16,16 @@ On macOS 15 (Sequoia) or other platforms without a published bottle, use [Instal
 
 ## Install with Homebrew
 
-When the [v0.15.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.15.0) are published for your platform, install with:
+When the [v0.16.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) are published for your platform, install with:
 
 ```bash
 brew tap firewalker06/tycho
 brew install tycho
 ```
 
-Existing Homebrew users can upgrade with:
+Before an upgrade to v0.16.0, stop all TUI, server, scheduler, and other writers together. Back up the complete logs directory. Queue storage migrates on first lifecycle load. Do not run an older writer against migrated state. See the [upgrade and recovery guide](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/UPGRADING.md#0160).
+
+Existing Homebrew users can then upgrade with:
 
 ```bash
 tycho update
@@ -31,7 +33,7 @@ tycho update
 
 `tycho update` is for Homebrew installs and safely restarts any running local Remote UI server or scheduler daemon. Source checkouts update with Git; rerun `bin/setup` if its dependency check asks you to.
 
-After installing or upgrading, verify that `tycho --version` reports `0.15.0`:
+After installing or upgrading, verify that `tycho --version` reports `0.16.0`:
 
 ```bash
 tycho --version
@@ -41,11 +43,12 @@ tycho project list
 tycho schedule list
 ```
 
-v0.15.0 keeps Ruby 4.0.9 or newer and adds no gem dependency or manual data migration. It sends managed prompts through stdin, adds configurable prompt transports for custom profiles, and updates Pi to `@earendil-works/pi-coding-agent` 0.84.4. It also adds experimental native agy support. Authentication and sandbox isolation for agy are not verified. See the [v0.15.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.15.0) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/UPGRADING.md#0150).
+v0.16.0 requires Ruby 4.0.9 or newer. Run `bundle install` for the new `chunky_png` and `fiddle` dependencies. It adds Focus, native DeepSeek Harness support, project creation and deletion in Remote UI, schedule archives, and custom themes and backdrops. See the [v0.16.0 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.16.0) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/UPGRADING.md#0160).
 
+Before upgrading, stop all TUI, server, scheduler, and other writers together. Back up the complete logs directory. Queue storage migrates automatically on first lifecycle load. Never run an older writer against migrated state, restore only one state file, or delete the queue store to retry. A downgrade needs a coordinated restore of the complete pre-upgrade backup. Existing sessions, credentials, schedules, and attachments are retained.
 Projects must be created explicitly: use `tycho project create my-project [options]`. Use `tycho project show my-project` to inspect one. If you upgrade from a release before v0.13.0, update each Tycho-owned skill in **Settings → Skills**, then restart its harness if needed. Tycho will not overwrite an unmarked or locally changed skill.
 
-Existing custom profiles remain supported. New profiles must use the `codex`, `claude`, `opencode`, or `pi` adapter. The key `agy` is now reserved for experimental native support; rename a custom profile with that key. Remove automation that calls the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands. Read-only agent pull-request diffs use an authenticated local `gh` CLI.
+Existing custom profiles remain supported. New profiles can use the `codex`, `claude`, `opencode`, `pi`, or `dsh` adapter. The built-in keys `agy` and `dsh` are reserved; rename a conflicting custom profile. Remove automation that calls the removed `tycho github login`, `tycho github status`, or `tycho github logout` commands. Read-only agent pull-request diffs use an authenticated local `gh` CLI.
 
 v0.14.1 requires Ruby 4.0.9 or newer and added the optional `quick_agent.default_project_key` setting. It groups delegated agents under their parents in the Agents list and shows harness marks beside harness names. No manual data migration was required. See the [v0.14.1 release notes](https://github.com/firewalker06/tycho/releases/tag/v0.14.1) and [upgrade guide](https://github.com/firewalker06/tycho/blob/v0.14.1/docs/UPGRADING.md#0141).
 
@@ -58,7 +61,7 @@ Use `tycho serve restart` and `tycho schedule restart` in automation. The old `t
 Use a source checkout when you want to contribute or Homebrew is not suitable:
 
 ```bash
-git clone --branch v0.15.0 https://github.com/firewalker06/tycho.git
+git clone --branch v0.16.0 https://github.com/firewalker06/tycho.git
 cd tycho
 bin/setup --check
 bin/setup
@@ -177,20 +180,9 @@ tycho project create my-workspace \
 
 See the [CLI Reference](/docs/reference/) for project update and archive commands.
 
-### Ask an Agent from Remote UI
+### From Remote UI
 
-Remote UI cannot register an arbitrary local directory. It can search files, preview Markdown and images, and make guarded plain-text edits only inside an already registered project; existing workspaces remain read-only on mobile. To register a new path from the browser, ask an agent in the Welcome Sandbox to run the project command for you.
-
-Create another Welcome Sandbox agent and give it the exact existing path:
-
-```text
-Use the Tycho CLI to register /Users/you/Code/my-workspace as a project.
-Use project key my-workspace, display name "My Workspace", group Personal,
-and Codex as the default harness.
-Run `tycho project show my-workspace` afterward and report the result.
-```
-
-The new project appears in Remote UI after Tycho refreshes its project registry.
+Use **New project** to create a project under the Tycho server user's home. The server checks directory ownership, permissions, ACLs, and the local filesystem. Rejected forms keep your input. Exact request retries prevent duplicate registration. This boundary trusts same-user and root processes. Use the CLI to register an existing path outside this browser creation flow. See [project creation](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/REMOTE_SERVER.md#manual-project-creation).
 
 Open the project's **Files** view to search and browse bounded listings, preview supported text files, and make guarded plain-text edits. It stays inside the registered project and excludes sensitive, generated, binary, oversized, and unsafe paths. See [Projects and Agents](/docs/configuration/#inspect-a-project-workspace) for the boundary.
 
