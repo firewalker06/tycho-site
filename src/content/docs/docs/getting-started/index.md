@@ -9,7 +9,7 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 - v0.16.0 targets Apple Silicon macOS and Linux Homebrew bottles. Bottle publication is separate from the Tycho source release. Check the [v0.16.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) before you install.
 - Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.16.0.
-- For a source install: Ruby 4.0.9 or newer, Bundler, Go, and native build tools. Source installs also work in Linux-style environments and Windows 11 through WSL.
+- For a source install: Ruby 4.0.9 or newer, Bundler, Git, Go, native build tools, and Bash 5 or newer on `PATH`. Source installs also work in Linux-style environments and Windows 11 through WSL2.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
 
 On macOS 15 (Sequoia) or other platforms without a published bottle, use [Install from Source](#install-from-source). A source build was tested on macOS 15 (Sequoia). No bottle was poured on that platform.
@@ -58,7 +58,7 @@ Use `tycho serve restart` and `tycho schedule restart` in automation. The old `t
 
 ## Install from Source
 
-Use a source checkout when you want to contribute or Homebrew is not suitable:
+Use a source checkout when you want to contribute or Homebrew is not suitable. On macOS, put Bash 5 or newer on `PATH` first: the released setup script fails with the default Bash 3.2 when no profile is selected. WSL2 users run the commands inside their Linux distribution.
 
 ```bash
 git clone --branch v0.16.0 https://github.com/firewalker06/tycho.git
@@ -70,11 +70,11 @@ bin/tycho
 
 `bin/setup --check` reports missing requirements without installing gems or creating config files. `bin/setup` installs dependencies, creates the user config files under `~/.tycho`, and runs `tycho doctor` as a smoke check.
 
-The remaining commands use the Homebrew executable, `tycho`. For a source checkout, replace it with `bin/tycho`.
+The remaining commands use the Homebrew executable, `tycho`. For a source checkout, replace it with `bin/tycho`. On WSL2, run Tycho and the harness inside Linux; open localhost from your Windows browser. See [Microsoft’s WSL networking guide](https://learn.microsoft.com/en-us/windows/wsl/networking#accessing-linux-networking-apps-from-windows-localhost) if your local network setup differs.
 
 ## Choose a Control Surface
 
-Tycho offers to create a safe Welcome Sandbox when it starts without any projects. The sandbox lives at `~/.tycho/workspaces/welcome` and contains a small `README.md` and `notes.md`.
+Tycho offers to create a safe Welcome Sandbox when it starts without any projects. The sandbox lives at `~/tycho-projects/welcome` and contains a small `README.md` and `notes.md`.
 
 Choose the terminal or Remote UI for your first run. Both paths create the same sandbox and run the same task.
 
@@ -124,18 +124,18 @@ Start Tycho on localhost:
 tycho serve --host 127.0.0.1 --port 7373
 ```
 
-Keep that terminal open, then open [http://127.0.0.1:7373](http://127.0.0.1:7373) in your browser.
+The initial registry is empty. The built-in Welcome Sandbox is set up when you select its button; no manual project registration is needed. Keep that terminal open, then open [http://127.0.0.1:7373](http://127.0.0.1:7373) in your browser.
 
 1. Choose **Create Welcome Sandbox**.
 2. Open **Welcome Sandbox**, then choose **New agent**.
-3. Enter the same prompt:
+3. In **Options → Advanced**, choose your installed, authenticated harness, then enter the same prompt:
 
    ```text
    Read README.md and notes.md.
    Add one practical next step to notes.md, then summarize the change.
    ```
 
-4. Choose **Create and run**.
+4. Choose **Create and Run**.
 
 Remote UI records and displays the same agent session state as the TUI and CLI.
 

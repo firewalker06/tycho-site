@@ -1,6 +1,7 @@
 ---
 import '../styles/site.css';
 import DeviceFrame from '../components/DeviceFrame.astro';
+import CommandBlock from '../components/CommandBlock.astro';
 
 const desktopScreenshot = '/assets/quickstart-watch-v0.16.0.png';
 const desktopScreenshotAlt = 'Tycho Remote UI showing agent sessions with active work, completed results, and sessions that need input.';
@@ -104,7 +105,7 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 						Built-in support for Codex, Claude, OpenCode, and Pi.
 					</p>
 					<div class="actions">
-						<a class="button primary" href="/docs/getting-started/">Install Tycho</a>
+						<a class="button primary" href="#install">Install Tycho</a>
 						<a class="button secondary" href="https://github.com/firewalker06/tycho">View on GitHub</a>
 					</div>
 				</div>
@@ -126,6 +127,56 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 						height={1688}
 						loading="eager"
 					/>
+				</div>
+			</section>
+
+
+			<section class="installation" id="install" aria-labelledby="install-heading">
+				<div class="section-heading">
+					<p class="eyebrow">Start in your browser</p>
+					<h2 id="install-heading">Install Tycho. Start your first agent.</h2>
+					<p>Use the built-in Welcome Sandbox. Add your own projects later.</p>
+				</div>
+				<div class="install-step-heading"><span>01</span><h3>Install and start the browser UI.</h3></div>
+				<p class="install-prerequisite">First, install and authenticate a supported coding-agent CLI on this computer. <a href="/docs/configuration/harnesses/">Check harness setup</a>.</p>
+				<p class="install-publication">v0.16.0 Homebrew bottle publication is not yet verified. Check the <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Homebrew release</a> before using the Homebrew paths below. You can <a href="/docs/getting-started/#install-from-source">install the published source</a> now.</p>
+				<div class="platform-grid">
+					<article class="platform-card" aria-labelledby="install-macos">
+						<h4 id="install-macos">macOS</h4>
+						<p>Apple Silicon: with Homebrew installed and v0.16.0 bottles published, run:</p>
+						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
+						<p>Intel Mac or a platform without a bottle? Use the <a href="/docs/getting-started/#install-from-source">source path</a>. v0.11.0 was the final Intel bottle.</p>
+					</article>
+					<article class="platform-card" aria-labelledby="install-linux">
+						<h4 id="install-linux">Linux</h4>
+						<p>With Homebrew installed and a v0.16.0 bottle for your platform published, run:</p>
+						<CommandBlock label="Linux install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
+						<p>Without a supported bottle, use the <a href="/docs/getting-started/#install-from-source">source path</a> with Ruby 4.0.9+, Bundler, Go, and native build tools.</p>
+					</article>
+					<article class="platform-card" aria-labelledby="install-windows">
+						<h4 id="install-windows">Windows · WSL2</h4>
+						<p>Use a Linux distribution inside WSL2. Install Ruby 4.0.9+, Bundler, Git, Go, native build tools, and your harness there. Then run:</p>
+						<CommandBlock label="WSL2 source install and start" command={'git clone --branch v0.16.0 https://github.com/firewalker06/tycho.git\ncd tycho\nbin/setup --check\nbin/setup\nbin/tycho --version\nbin/tycho serve --host 127.0.0.1 --port 7373'} />
+						<p>This is a WSL2 source path, not a native Windows install. See <a href="/docs/getting-started/#requirements">detailed requirements</a>.</p>
+					</article>
+				</div>
+				<p class="install-note">Confirm the version is <strong>0.16.0</strong> before starting. Already installed? Read the <a href="/docs/getting-started/#install-with-homebrew">upgrade steps</a> before updating queue storage.</p>
+				<div class="first-run-grid">
+					<article>
+						<div class="install-step-heading"><span>02</span><h3>Open Tycho.</h3></div>
+						<p>Keep the terminal running. Open <a href="http://127.0.0.1:7373">Tycho in your browser</a> on the same computer. WSL2 users can open this address in their Windows browser.</p>
+						<p>This command uses localhost. For another device, follow the <a href="/docs/getting-started/remote-ui/#protect-non-local-access">token and tailnet setup</a>.</p>
+					</article>
+					<article>
+						<div class="install-step-heading"><span>03</span><h3>Run an agent in Welcome Sandbox.</h3></div>
+						<ol>
+							<li>On a new install, select <strong>Create Welcome Sandbox</strong>. Tycho sets up its built-in starter project.</li>
+							<li>Open <strong>Welcome Sandbox</strong>, then select <strong>New agent</strong>.</li>
+							<li>In <strong>Options → Advanced</strong>, choose your installed, authenticated harness. Paste this prompt, then select <strong>Create and Run</strong>.</li>
+						</ol>
+						<CommandBlock label="First agent prompt" command="Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change." />
+						<p>Watch the result, then send a follow-up in the same session. <a href="/docs/getting-started/">Follow the full getting-started guide</a>.</p>
+					</article>
 				</div>
 			</section>
 
