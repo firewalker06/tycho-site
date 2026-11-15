@@ -7,7 +7,7 @@ This path gets you from an empty Tycho installation to one supervised agent sess
 
 ## Requirements
 
-- v0.16.0 targets Apple Silicon macOS and Linux Homebrew bottles. Bottle publication is separate from the Tycho source release. Check the [v0.16.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) before you install.
+- v0.16.0 Homebrew bottles are published for macOS Tahoe on Apple Silicon (`arm64_tahoe`) and Linux x86_64 (`x86_64_linux`). See the [v0.16.0 Homebrew release](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0). No Sequoia or Intel macOS bottle is published for v0.16.0.
 - Intel macOS: v0.11.0 is the final bottle. Use a source install for v0.16.0.
 - For a source install: Ruby 4.0.9 or newer, Bundler, Git, Go, native build tools, and Bash 5 or newer on `PATH`. Source installs also work in Linux-style environments and Windows 11 through WSL2.
 - At least one installed and authenticated coding-agent CLI: Codex, Claude, OpenCode, Pi, or a compatible custom harness profile.
@@ -16,7 +16,7 @@ On macOS 15 (Sequoia) or other platforms without a published bottle, use [Instal
 
 ## Install with Homebrew
 
-When the [v0.16.0 Homebrew bottles](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) are published for your platform, install with:
+On macOS Tahoe with Apple Silicon or Linux x86_64, install the [published v0.16.0 bottle](https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0) with:
 
 ```bash
 brew tap firewalker06/tycho

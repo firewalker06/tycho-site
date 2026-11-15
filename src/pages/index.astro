@@ -139,17 +139,17 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 				</div>
 				<div class="install-step-heading"><span>01</span><h3>Install and start the browser UI.</h3></div>
 				<p class="install-prerequisite">First, install and authenticate a supported coding-agent CLI on this computer. <a href="/docs/configuration/harnesses/">Check harness setup</a>.</p>
-				<p class="install-publication">v0.16.0 Homebrew bottle publication is not yet verified. Check the <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Homebrew release</a> before using the Homebrew paths below. You can <a href="/docs/getting-started/#install-from-source">install the published source</a> now.</p>
+				<p class="install-publication">Published v0.16.0 bottles support macOS Tahoe on Apple Silicon and Linux x86_64. See the <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Homebrew release</a>. For macOS Sequoia, Intel Mac, and other platforms, use the <a href="/docs/getting-started/#install-from-source">source path</a>.</p>
 				<div class="platform-grid">
 					<article class="platform-card" aria-labelledby="install-macos">
 						<h4 id="install-macos">macOS</h4>
-						<p>Apple Silicon: with Homebrew installed and v0.16.0 bottles published, run:</p>
+						<p>Apple Silicon on macOS Tahoe: with Homebrew installed, run:</p>
 						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
-						<p>Intel Mac or a platform without a bottle? Use the <a href="/docs/getting-started/#install-from-source">source path</a>. v0.11.0 was the final Intel bottle.</p>
+						<p>macOS Sequoia, Intel Mac, or a platform without a bottle? Use the <a href="/docs/getting-started/#install-from-source">source path</a>. v0.11.0 was the final Intel bottle.</p>
 					</article>
 					<article class="platform-card" aria-labelledby="install-linux">
 						<h4 id="install-linux">Linux</h4>
-						<p>With Homebrew installed and a v0.16.0 bottle for your platform published, run:</p>
+						<p>Linux x86_64: with Homebrew installed, run:</p>
 						<CommandBlock label="Linux install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve --host 127.0.0.1 --port 7373'} />
 						<p>Without a supported bottle, use the <a href="/docs/getting-started/#install-from-source">source path</a> with Ruby 4.0.9+, Bundler, Go, and native build tools.</p>
 					</article>
