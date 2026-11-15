@@ -1,0 +1,35 @@
+const {chromium}=require('/Users/didik/Code/personal/tycho-site/node_modules/playwright');
+(async()=>{
+ const mobile=process.env.CAPTURE_MODE==='mobile';const viewport=mobile?{width:390,height:844}:{width:1080,height:900};
+ const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+ const page=await browser.newPage({viewport,deviceScaleFactor:1,colorScheme:'dark'});const base=process.env.FIRST_RUN_URL;const output=process.env.FIRST_RUN_OUTPUT;const suffix=mobile?'-mobile':'';
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ async function capture(name,selector){await page.evaluate(()=>document.fonts.ready);await page.locator(selector).screenshot({path:`${output}/first-agent-${name}${suffix}-v0.16.0.png`});}
+ await page.goto(base,{waitUntil:'networkidle'});
+ await page.locator('[data-select-onboarding-cli="codex"]').click();
+ await page.getByRole('button',{name:'Create Welcome Sandbox',exact:true}).waitFor();
+ await page.locator('.onboarding-actions').evaluate(e=>e.scrollIntoView({block:'center'}));
+ const panelBox=await page.locator('.onboarding-panel').boundingBox();const actionsBox=await page.locator('.onboarding-actions').boundingBox();
+ const verifyBox=await page.getByText('Then verify the installation:',{exact:true}).boundingBox();
+ const cropTop=Math.max(0,verifyBox.y-10);const cropBottom=Math.min(viewport.height,actionsBox.y+actionsBox.height+8);
+ await page.screenshot({path:`${output}/first-agent-browser${suffix}-v0.16.0.png`,clip:{x:panelBox.x,y:cropTop,width:panelBox.width,height:cropBottom-cropTop}});
+ await page.getByRole('button',{name:'Create Welcome Sandbox',exact:true}).click();
+ await page.getByRole('button',{name:'New agent',exact:true}).waitFor();
+ await capture('welcome','#view');
+ await page.getByRole('button',{name:'New agent',exact:true}).click();
+ await page.locator('.agent-options > summary').click();
+ await page.locator('.agent-advanced-config > summary').click();
+ await page.locator('#agent-harness').selectOption('codex');
+ const harnessField=page.locator('#agent-harness').locator('..');
+ await harnessField.evaluate(e=>e.scrollIntoView({block:'center'}));
+ await harnessField.screenshot({path:`${output}/first-agent-harness${suffix}-v0.16.0.png`});
+ await page.locator('.agent-options > summary').click();
+ await page.locator('#agent-prompt').fill('Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change.');
+ await capture('prompt','#agent-form');
+ const accepted=page.waitForResponse(response=>response.url()===base+'/agents'&&response.request().method()==='POST');
+ await page.getByRole('button',{name:'Create and Run',exact:true}).click();
+ if((await accepted).status()!==201)throw Error('agent creation was not accepted');
+ if(errors.length)throw Error(errors.join('; '));
+ console.log(JSON.stringify({browser:browser.version(),viewport,mode:mobile?'mobile':'desktop',captures:4,result:'actual Welcome bootstrap, harness selection, prompt and accepted creation passed',limit:'This UI capture ends at accepted creation; the runner verifies completed state and the workspace edit through the API'}));
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

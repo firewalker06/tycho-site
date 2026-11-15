@@ -1,31 +1,21 @@
 const {chromium}=require('/Users/didik/Code/personal/tycho-site/node_modules/playwright');
-(async()=>{const b=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});console.log('Chrome '+b.version());
-for(const [name,viewport] of [['desktop',{width:1440,height:1000}],['mobile',{width:390,height:844}]]){
- const context=await b.newContext({viewport,permissions:['clipboard-read','clipboard-write']});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:4322/',{waitUntil:'networkidle'});await page.getByRole('link',{name:'Install Tycho',exact:true}).click();if(!page.url().endsWith('#install'))throw Error('install anchor');
- const group=page.getByRole('tablist',{name:'Installation platform'});const tabs=group.getByRole('tab');const panels=page.locator('tycho-install-tabs [role="tabpanel"]');if(await tabs.count()!==3||await panels.count()!==3)throw Error('three tabs/panels');
- async function selected(index){
-  for(let i=0;i<3;i++){
-   const tab=tabs.nth(i),panel=panels.nth(i);if(await tab.getAttribute('aria-controls')!==await panel.getAttribute('id'))throw Error('controls');
-   if(await panel.getAttribute('aria-labelledby')!==await tab.getAttribute('id'))throw Error('label');
-   if(await tab.getAttribute('aria-selected')!==String(i===index))throw Error('selection');
-   if(await tab.getAttribute('tabindex')!==(i===index?'0':'-1'))throw Error('roving focus');
-   if(await panel.isVisible()!==(i===index))throw Error('one panel visible');
-  }
- }
- await selected(0);
- await tabs.nth(1).click();await selected(1);
- for(const [key,index] of [['ArrowRight',2],['ArrowRight',0],['ArrowLeft',2],['Home',0],['End',2]]){await page.keyboard.press(key);await selected(index);if(!await tabs.nth(index).evaluate(e=>e===document.activeElement))throw Error('keyboard focus');}
- await tabs.nth(0).focus();await page.keyboard.press('Enter');await selected(0);await tabs.nth(1).focus();await page.keyboard.press('Space');await selected(1);
- await page.keyboard.press('Tab');if(!await panels.nth(1).evaluate(e=>e===document.activeElement))throw Error('tab into panel');await page.keyboard.press('Shift+Tab');if(!await tabs.nth(1).evaluate(e=>e===document.activeElement))throw Error('return to selected tab');
- const colors=await tabs.evaluateAll(els=>els.map(e=>getComputedStyle(e).borderColor));if(colors[1]===colors[0])throw Error('selected visual state');
- for(let i=0;i<3;i++){
-  await tabs.nth(i).click();await selected(i);const panel=panels.nth(i);const button=panel.getByRole('button');const command=await panel.locator('code').textContent();await button.click();if(await page.evaluate(()=>navigator.clipboard.readText())!==command)throw Error('clipboard bytes');
-  await page.locator('#install').screenshot({path:`/tmp/tycho-site-v0160/rework/evidence/tabs-${i}-${name}.png`});
- }
- const prompt=page.locator('.first-run-grid .command-block');await prompt.getByRole('button').click();if(await page.evaluate(()=>navigator.clipboard.readText())!==await prompt.locator('code').textContent())throw Error('prompt copy');
- await page.evaluate(()=>{navigator.clipboard.writeText=async()=>{throw Error('denied by test')};});await panels.nth(2).getByRole('button').click();await panels.nth(2).getByRole('status').getByText('Copy unavailable. Select the command text to copy it.').waitFor();
- const layout=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,tabs:[...document.querySelectorAll('.install-tabs button')].map(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=0&&r.right<=innerWidth})}));if(layout.overflow||layout.tabs.some(v=>!v)||errors.length)throw Error(JSON.stringify({layout,errors}));
- console.log(name+': mouse, ArrowLeft/Right wrap, Home/End, Enter/Space, Tab/Shift+Tab, ARIA links, one panel, selected style, all clipboard bytes, denied-copy fallback, layout/errors PASS');await context.close();
+(async()=>{const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});console.log('Chrome '+browser.version());
+for(const [mode,viewport] of [['desktop',{width:1440,height:1000}],['mobile',{width:390,height:844}]]){
+ const context=await browser.newContext({viewport,permissions:['clipboard-read','clipboard-write']});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:4322/',{waitUntil:'networkidle'});
+ if(await page.getByText('For Sequoia or Intel Macs,',{exact:false}).count()||await page.locator('.install-note,.first-run-grid').count())throw Error('marked content remains');
+ const os=page.locator('.installation-platform'),steps=page.locator('.first-agent-steps');
+ async function state(group,index,count){const tabs=group.getByRole('tab'),panels=group.locator('[role="tabpanel"]');if(await tabs.count()!==count||await panels.count()!==count)throw Error('tab count');for(let i=0;i<count;i++){const t=tabs.nth(i),p=panels.nth(i);if(await t.getAttribute('aria-selected')!==String(i===index)||await t.getAttribute('tabindex')!==(i===index?'0':'-1')||await p.isVisible()!==(i===index)||await t.getAttribute('aria-controls')!==await p.getAttribute('id')||await p.getAttribute('aria-labelledby')!==await t.getAttribute('id'))throw Error('tab semantics/visibility');}}
+ await state(os,0,3);await state(steps,0,4);
+ const osTabs=os.getByRole('tab');await osTabs.nth(0).focus();for(const [key,index] of [['ArrowRight',1],['End',2],['ArrowRight',0],['ArrowLeft',2],['Home',0]]){await page.keyboard.press(key);await state(os,index,3);}
+ for(let i=0;i<3;i++){await osTabs.nth(i).click();const p=os.locator('[role="tabpanel"]').nth(i);await p.getByRole('button').click();if(await page.evaluate(()=>navigator.clipboard.readText())!==await p.locator('code').textContent())throw Error('OS copy');}
+ await osTabs.nth(0).click();
+ const tabs=steps.getByRole('tab');if(await steps.getByRole('tablist').getAttribute('aria-orientation')!=='vertical')throw Error('vertical orientation');
+ await tabs.nth(0).focus();for(const [key,index] of [['ArrowDown',1],['ArrowDown',2],['End',3],['ArrowDown',0],['ArrowUp',3],['Home',0]]){await page.keyboard.press(key);await state(steps,index,4);if(!await tabs.nth(index).evaluate(e=>e===document.activeElement))throw Error('step focus');}
+ await tabs.nth(1).focus();await page.keyboard.press('Enter');await state(steps,1,4);await tabs.nth(2).focus();await page.keyboard.press('Space');await state(steps,2,4);await page.keyboard.press('Tab');if(!await steps.locator('[role="tabpanel"]').nth(2).evaluate(e=>e===document.activeElement))throw Error('panel Tab');await page.keyboard.press('Shift+Tab');if(!await tabs.nth(2).evaluate(e=>e===document.activeElement))throw Error('panel ShiftTab');
+ const colors=await tabs.evaluateAll(items=>items.map(e=>getComputedStyle(e).borderColor));if(colors[2]===colors[1])throw Error('selected style');
+ for(let i=0;i<4;i++){await tabs.nth(i).click();await state(steps,i,4);await state(os,0,3);const img=steps.locator('[role="tabpanel"]').nth(i).locator('img');await img.scrollIntoViewIfNeeded();const data=await img.evaluate(async image=>{await image.decode();return{src:image.currentSrc,width:image.naturalWidth,height:image.naturalHeight}});if(data.width<=0||data.height<=0||data.src.includes('-mobile-')!==(mode==='mobile'))throw Error('step picture source');await page.locator('#install').screenshot({path:`/tmp/tycho-site-v0160/vertical/evidence/site-step-${i}-${mode}.png`});}
+ const prompt=page.locator('#step-panel-prompt .command-block');await prompt.getByRole('button').click();if(await page.evaluate(()=>navigator.clipboard.readText())!==await prompt.locator('code').textContent())throw Error('starter prompt copy');await page.evaluate(()=>{navigator.clipboard.writeText=async()=>{throw Error('denied by test')};});await prompt.getByRole('button').click();await prompt.getByRole('status').getByText('Copy unavailable. Select the command text to copy it.').waitFor();
+ const bad=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,tabs:[...document.querySelectorAll('.step-tabs button,.install-tabs button')].some(e=>{const r=e.getBoundingClientRect();return r.width<44||r.height<44||r.left<0||r.right>innerWidth})}));if(bad.overflow||bad.tabs||errors.length)throw Error(JSON.stringify({bad,errors}));
+ console.log(mode+': OS and vertical keys/focus, independent single panels, ARIA links, 4 correct real screenshot sources, clipboard/denial, removed content, touch sizes and layout/errors PASS');await context.close();
 }
-await b.close();})().catch(e=>{console.error(e);process.exit(1)});
+await browser.close();})().catch(e=>{console.error(e);process.exit(1)});

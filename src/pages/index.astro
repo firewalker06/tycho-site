@@ -2,6 +2,7 @@
 import '../styles/site.css';
 import DeviceFrame from '../components/DeviceFrame.astro';
 import CommandBlock from '../components/CommandBlock.astro';
+import StepScreenshot from '../components/StepScreenshot.astro';
 
 const desktopScreenshot = '/assets/quickstart-watch-v0.16.0.png';
 const desktopScreenshotAlt = 'Tycho Remote UI showing agent sessions with active work, completed results, and sessions that need input.';
@@ -136,7 +137,7 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 					<h2 id="install-heading">Start your first agent.</h2>
 				</div>
 				<p>Install and sign in to <a href="/docs/configuration/harnesses/">a supported agent CLI</a> first.</p>
-				<tycho-install-tabs>
+				<tycho-tabs class="installation-platform">
 					<div class="install-tabs" role="tablist" aria-label="Installation platform">
 						<button type="button" id="install-tab-macos" role="tab" aria-selected="true" aria-controls="install-panel-macos" tabindex="0">macOS</button>
 						<button type="button" id="install-tab-linux" role="tab" aria-selected="false" aria-controls="install-panel-linux" tabindex="-1">Linux</button>
@@ -145,7 +146,6 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 					<section class="install-panel" id="install-panel-macos" role="tabpanel" aria-labelledby="install-tab-macos" tabindex="0">
 						<p>Requires macOS Tahoe on Apple Silicon and Homebrew.</p>
 						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
-						<p>For Sequoia or Intel Macs, <a href="/docs/getting-started/#install-from-source">install from source</a>.</p>
 					</section>
 					<section class="install-panel" id="install-panel-linux" role="tabpanel" aria-labelledby="install-tab-linux" tabindex="0" hidden>
 						<p>Requires Linux x86_64 and Homebrew.</p>
@@ -156,25 +156,34 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 						<p>Install the <a href="/docs/getting-started/#requirements">source requirements</a> inside WSL2 first. Run these commands in your Linux terminal.</p>
 						<CommandBlock label="WSL2 source install and start" command={'git clone --branch v0.16.0 \\\n  https://github.com/firewalker06/tycho.git\ncd tycho\nbin/setup --check\nbin/setup\nbin/tycho --version\nbin/tycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
 					</section>
-				</tycho-install-tabs>
-				<p class="install-note">Check for version 0.16.0. For an existing install, follow the <a href="/docs/getting-started/#install-with-homebrew">upgrade steps</a> before updating. <a href="https://github.com/firewalker06/homebrew-tycho/releases/tag/tycho-0.16.0">Bottle release</a>.</p>
-				<div class="first-run-grid">
-					<article>
-						<h3>Open Tycho.</h3>
-						<p>Keep the terminal open and visit <a href="http://127.0.0.1:7373">127.0.0.1:7373</a> in your browser.</p>
-					</article>
-					<article>
-						<h3>Run in Welcome Sandbox.</h3>
-						<ol>
-							<li>Select <strong>Create Welcome Sandbox</strong>.</li>
-							<li>Open <strong>Welcome Sandbox</strong> and choose <strong>New agent</strong>.</li>
-							<li>Under <strong>Options</strong>, open <strong>Advanced</strong> and select your authenticated harness.</li>
-							<li>Paste this prompt and select <strong>Create and Run</strong>.</li>
-						</ol>
-						<CommandBlock label="First agent prompt" command="Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change." />
-						<p>Send a follow-up after the run finishes. <a href="/docs/getting-started/">Read the getting-started guide</a>.</p>
-					</article>
-				</div>
+				</tycho-tabs>
+				<tycho-tabs class="first-agent-steps">
+					<div class="step-tabs" role="tablist" aria-label="First agent steps" aria-orientation="vertical">
+						<button type="button" id="step-tab-browser" role="tab" aria-controls="step-panel-browser" aria-selected="true" tabindex="0"><span aria-hidden="true">1</span>Open browser</button>
+						<button type="button" id="step-tab-welcome" role="tab" aria-controls="step-panel-welcome" aria-selected="false" tabindex="-1"><span aria-hidden="true">2</span>Welcome Sandbox</button>
+						<button type="button" id="step-tab-harness" role="tab" aria-controls="step-panel-harness" aria-selected="false" tabindex="-1"><span aria-hidden="true">3</span>Choose a harness</button>
+						<button type="button" id="step-tab-prompt" role="tab" aria-controls="step-panel-prompt" aria-selected="false" tabindex="-1"><span aria-hidden="true">4</span>Run an agent</button>
+					</div>
+					<div class="step-panels">
+						<section id="step-panel-browser" class="step-panel" role="tabpanel" aria-labelledby="step-tab-browser" tabindex="0">
+							<p>Keep the terminal open and visit <a href="http://127.0.0.1:7373">127.0.0.1:7373</a> in your browser.</p>
+							<StepScreenshot step="browser" alt="Tycho v0.16.0 first-run setup instructions and Create Welcome Sandbox button." />
+						</section>
+						<section id="step-panel-welcome" class="step-panel" role="tabpanel" aria-labelledby="step-tab-welcome" tabindex="0" hidden>
+							<p>Select <strong>Create Welcome Sandbox</strong>, or open the existing project.</p>
+							<StepScreenshot step="welcome" alt="The built-in Welcome Sandbox project in Tycho v0.16.0, with its New agent button." />
+						</section>
+						<section id="step-panel-harness" class="step-panel" role="tabpanel" aria-labelledby="step-tab-harness" tabindex="0" hidden>
+							<p>Choose <strong>New agent</strong>. In <strong>Options</strong>, open <strong>Advanced</strong> and select your signed-in harness.</p>
+							<StepScreenshot step="harness" alt="The Harness field in Tycho v0.16.0 with Codex selected." />
+						</section>
+						<section id="step-panel-prompt" class="step-panel" role="tabpanel" aria-labelledby="step-tab-prompt" tabindex="0" hidden>
+							<p>Enter a prompt and select <strong>Create and Run</strong>.</p>
+							<CommandBlock label="Starter prompt" command="Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change." />
+							<StepScreenshot step="prompt" alt="Tycho v0.16.0 New agent form with the starter prompt and Create and Run button." />
+						</section>
+					</div>
+				</tycho-tabs>
 			</section>
 
 			<section class="workflow" aria-labelledby="workflow-heading">
@@ -229,8 +238,9 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 			</section>
 		</main>
 		<script>
-			class TychoInstallTabs extends HTMLElement {
+			class TychoTabs extends HTMLElement {
 				connectedCallback() {
+					const vertical = this.querySelector('[role="tablist"]')?.getAttribute('aria-orientation') === 'vertical';
 					const tabs = [...this.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
 					const panels = [...this.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
 					const select = (index: number, focus = false) => {
@@ -246,8 +256,8 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 						tab.addEventListener('click', () => select(index));
 						tab.addEventListener('keydown', (event) => {
 							let next;
-							if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-							else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+							if (event.key === (vertical ? 'ArrowDown' : 'ArrowRight')) next = (index + 1) % tabs.length;
+							else if (event.key === (vertical ? 'ArrowUp' : 'ArrowLeft')) next = (index - 1 + tabs.length) % tabs.length;
 							else if (event.key === 'Home') next = 0;
 							else if (event.key === 'End') next = tabs.length - 1;
 							else return;
@@ -257,7 +267,7 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 					});
 				}
 			}
-			if (!customElements.get('tycho-install-tabs')) customElements.define('tycho-install-tabs', TychoInstallTabs);
+			if (!customElements.get('tycho-tabs')) customElements.define('tycho-tabs', TychoTabs);
 
 			class TychoCarousel extends HTMLElement {
 				connectedCallback() {

@@ -1,0 +1,13 @@
+---
+import captures from '../data/first-agent-captures.json';
+interface Props {
+	step: keyof typeof captures;
+	alt: string;
+}
+const { step, alt } = Astro.props;
+const capture = captures[step];
+---
+<picture>
+	<source media="(max-width: 620px)" srcset={capture.mobile.src} width={capture.mobile.width} height={capture.mobile.height} />
+	<img class="step-screenshot" src={capture.desktop.src} width={capture.desktop.width} height={capture.desktop.height} alt={alt} loading="lazy" decoding="async" />
+</picture>
