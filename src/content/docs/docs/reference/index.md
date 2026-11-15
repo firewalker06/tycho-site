@@ -273,4 +273,4 @@ These commands are local-only. Backups lists validated rolling snapshots with ti
 | `tycho metrics backfill` | Deprecated and no longer runs; use `tycho metrics query`. |
 | `tycho debug claude [--run-agent]` | Deprecated; use `tycho doctor --claude [--run-agent]`. |
 
-FRED and its experimental configuration were removed in v0.12.0. Legacy records stay hidden. Do not add it to new configurations.
+The old FRED automation and its experimental configuration were removed in v0.12.0. Legacy records stay hidden. Do not add it to new configurations. The FRED mascot expressions in the v0.16.0 Now empty state are separate from that removed automation.
