@@ -15,7 +15,7 @@ tycho serve --host 127.0.0.1 --port 7373
 
 Open [http://127.0.0.1:7373](http://127.0.0.1:7373). Use `tycho serve daemon` when you want the server to continue in the background; its request and lifecycle output continues in `~/.tycho/logs/remote_server_daemon.log` and `~/.tycho/logs/hq.log`.
 
-Remote UI can create the Welcome Sandbox on an empty installation. It cannot register an arbitrary host directory. Register real project paths from the TUI or CLI, or ask a Welcome Sandbox agent to run an exact `tycho project create` command.
+Remote UI can create the Welcome Sandbox on an empty installation. Use **New project** to create projects under the server user's home with ownership, permission, ACL, and local-filesystem checks. Use the TUI or CLI to register other paths.
 
 ## Supervise a Session
 
@@ -28,7 +28,7 @@ The **Agents** view combines projects and sessions. Open a conversation to:
 - open run attachments, including scrollable attachment detail and direct file downloads, usage details, saved pull-request diffs, and durable history;
 - run, stop, clone, archive, schedule, or delegate work when that action is valid.
 
-The **Now** view keeps attention work and schedules compact. `no_action_needed` runs stay quiet; input-required, blocked, failed, stopped, partial, and normal successful outcomes keep their distinct lifecycle meaning. See [Agent Session Lifecycle](/docs/concept/lifecycle/).
+The **Now** view shows work that needs attention. Schedules have a dedicated page. `no_action_needed` runs stay quiet; input-required, blocked, failed, stopped, partial, and normal successful outcomes keep their distinct lifecycle meaning. See [Agent Session Lifecycle](/docs/concept/lifecycle/).
 
 Inquiry values save locally while you type and survive refresh and reload. Conversation opens at its latest message. The working/completion marker follows matching run evidence and respects reduced motion.
 
@@ -36,11 +36,17 @@ The agent switcher follows the same ordering and status cues as the Agents view.
 
 ### Recover uncertain sends
 
-Tycho confirms accepted messages with a small receipt. An exact retry uses the same request ID, so it does not add a second message after acceptance. If delivery is uncertain, use **Retry** or **Cancel retry**. Cancel stops browser retries across tabs that share browser storage; it does not remove work the server accepted. Inquiry answers keep their fields, feedback, and files while Tycho retries or restores the response. See [inquiry answer recovery](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/INQUIRY_ANSWER_RECOVERY.md) for limits.
+Tycho confirms accepted messages with a small receipt. An exact retry uses the same request ID, so it does not add a second message after acceptance. If delivery is uncertain, use **Retry** or **Cancel retry**. Cancel stops browser retries across tabs that share browser storage; it does not remove work the server accepted. Inquiry answers keep their fields, feedback, and files while Tycho retries or restores the response. See [inquiry answer recovery](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/INQUIRY_ANSWER_RECOVERY.md) for limits.
 
 ### Appearance
 
-Choose Dark, Light (Nord), or System in **Settings → Configuration → Appearance**. Dark remains the default. System follows the operating-system preference. Tycho applies a saved choice before first paint and shares changes across open tabs.
+Choose Dark, Light, or System in **Settings → Configuration → Appearance**. Select independent palettes for Dark and Light; Dracula and Nord remain the defaults. System follows the OS. Use the Themes gallery to import, update, share, or remove custom JSON palettes.
+
+Choose bundled photo themes, vector scenes, or uploaded backdrops. Still and slow motion are available; reduced motion stops drift. Browser upload converts JPEG and WebP to PNG in a bounded server library. Palette selection and image adjustments belong to each browser. Existing browser-only images stay private until **Upload local image** is selected. Portable palette JSON contains no image references. See [appearance and image limits](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/REMOTE_UI_APPEARANCE.md).
+
+### Keep current work in Focus
+
+Focus is a saved current-state document beside Conversation. Use it for next actions, review requests, and blockers. Summary and Conversation keep run history. Existing Focus opens by default when desktop panels fit; narrow and mobile views start closed. Manual choices survive polling and navigation. Focus first created during polling stays closed until opened. See [Focus commands](/docs/reference/#agent-focus).
 
 ## Browse a Project Safely
 
@@ -69,7 +75,7 @@ When Tailscale is available, `tycho serve` can auto-bind to its IPv4 address and
 
 ### Serve diagnostics
 
-Authenticated server diagnostics report admission, worker use, store-lock waits, route time, and response writes. See [serve diagnostics](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/SERVE_DIAGNOSTICS.md). The optional Interaction Profiler is a separate tool; see its [guide](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/REMOTE_UI_INTERACTION_PROFILER.md).
+Authenticated server diagnostics report admission, worker use, store-lock waits, route time, and response writes. See [serve diagnostics](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/SERVE_DIAGNOSTICS.md). The optional Interaction Profiler is a separate tool; see its [guide](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/REMOTE_UI_INTERACTION_PROFILER.md).
 
 ## Notification Evidence
 

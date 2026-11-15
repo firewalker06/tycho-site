@@ -1,11 +1,11 @@
 ---
 title: Harnesses
-description: Run Codex, Claude, OpenCode, Pi, experimental agy, or a custom harness profile through Tycho.
+description: Run Codex, Claude, OpenCode, Pi, experimental agy, DeepSeek Harness, or a custom harness profile through Tycho.
 ---
 
 A harness is the command adapter Tycho uses to run a coding-agent CLI.
 
-Tycho includes harnesses for Codex, Claude, OpenCode, and Pi. Each one uses the same Tycho operator workflow: launch an agent session, monitor its state, read its output, send follow-ups, and resume its native session. The underlying CLI still owns authentication, permissions, models, and provider-specific behavior.
+Tycho includes harnesses for Codex, Claude, OpenCode, Pi, agy, and DeepSeek Harness. Each one uses the same Tycho operator workflow: launch an agent session, monitor its state, read its output, send follow-ups, and resume its native session. The underlying CLI still owns authentication, permissions, models, and provider-specific behavior.
 
 ## Built-in Harnesses
 
@@ -16,10 +16,11 @@ Tycho includes harnesses for Codex, Claude, OpenCode, and Pi. Each one uses the 
 | OpenCode | `opencode` | `TYCHO_OPENCODE_BIN` |
 | Pi | `pi` | `TYCHO_PI_BIN` |
 | agy | `agy` | `TYCHO_AGY_BIN` |
+| DeepSeek Harness | `dsh` | `TYCHO_DSH_BIN` |
 
 Install and authenticate the CLI you plan to use before starting its first agent session. A missing harness executable does not stop Tycho itself, but a session that uses it cannot run.
 
-Managed prompts use stdin for Codex, Claude, OpenCode, Pi, and agy. Tycho parses each harness's native output, records conversation and run history, preserves native session IDs where available, and maps configured model and reasoning-effort values to the CLI contract.
+Managed prompts use stdin for Codex, Claude, OpenCode, Pi, agy, and dsh. Tycho parses each harness's native output, records conversation and run history, preserves native session IDs where available, and maps configured model and reasoning-effort values to the CLI contract.
 
 Pi support targets `@earendil-works/pi-coding-agent` 0.84.4. Install the supported version:
 
@@ -39,9 +40,15 @@ Older Pi versions that emit only `agent_end` are unsupported. Restricted Pi mode
 
 ## Experimental agy
 
-Tycho includes native support for the Antigravity CLI (`agy`), including conversation resume, structured results, model discovery, and skill installation. It is experimental. Authentication status and sandbox isolation are not verified. Do not use it in production. The name `agy` is reserved; rename a custom profile that uses this key. See [agy support and limits](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/AGY.md).
+Tycho includes native support for the Antigravity CLI (`agy`), including conversation resume, structured results, model discovery, and skill installation. It is experimental. Authentication status and sandbox isolation are not verified. Do not use it in production. The name `agy` is reserved; rename a custom profile that uses this key. See [agy support and limits](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/AGY.md).
 
 Tycho ignores saved reasoning effort for agy. It sends no effort flag, so agy uses its native default.
+
+## DeepSeek Harness
+
+The native `dsh` adapter targets developer-preview `@deepseek-ai/dsh` 0.2.2-rc.1 and needs Node.js 24.9.0 or newer. It uses stdin prompts, JSON events, native session resume, structured-result validation and correction, and an offline model catalog. Custom profiles can use `adapter: dsh` with stdin transport.
+
+Authentication readiness remains unknown. Model discovery does not prove account access. Tycho does not certify native sandbox confinement. Interactive terminal chat, Tycho skill installation, and the typed sleep circuit breaker are unsupported for dsh. See [DeepSeek setup and limits](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/DEEPSEEK.md).
 
 ## Custom Prompt Transport
 
@@ -53,7 +60,7 @@ prompt_transport:
   mode: argv
 ```
 
-Version 1 also supports `stdin` and private `file` transport. `argv` keeps operating-system argument limits and exposes prompt text in the process arguments. See [custom harness transport](https://github.com/firewalker06/tycho/blob/v0.15.0/docs/CUSTOM_HARNESSES.md#migration).
+Version 1 also supports `stdin` and private `file` transport. `argv` keeps operating-system argument limits and exposes prompt text in the process arguments. See [custom harness transport](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/CUSTOM_HARNESSES.md#migration).
 
 ## Inspect Local Model and Reasoning Catalogs
 
@@ -151,7 +158,7 @@ Only set the override for the harnesses you use. The value must point to an exec
 
 ## Add a Custom Harness Profile
 
-Custom harnesses can use the native `codex`, `claude`, `opencode`, or `pi` adapter. Define a unique key, its native adapter, and an execution command. Tycho keeps that adapter's native session, parsing, skills, metrics, and readiness behavior:
+Custom harnesses can use the native `codex`, `claude`, `opencode`, `pi`, or `dsh` adapter. Define a unique key, its native adapter, and an execution command. Tycho keeps that adapter's native session, parsing, skills, metrics, and readiness behavior:
 
 ```yaml
 custom_harnesses:
@@ -181,15 +188,15 @@ custom_harnesses:
 
 The command must accept the selected adapter's native flags for streaming output, structured results, model and effort selection, and native-session resume. Tycho validates the configuration and executable, but the wrapper remains responsible for its provider credentials and runtime dependencies. Existing `adapter: claude` profiles remain valid.
 
-A custom key cannot be `codex`, `claude`, `opencode`, `pi`, or `agy`, because those names belong to built-in harnesses. Rename a custom profile named `agy` and update its references before upgrading.
+A custom key cannot be `codex`, `claude`, `opencode`, `pi`, `agy`, or `dsh`, because those names belong to built-in harnesses. Rename a custom profile named `agy` or `dsh` and update its references before upgrading.
 
 ## Structured Result Validation
 
-Tycho validates a managed agent's final result against `~/.tycho/config/schemas/agent_result.json` before accepting success. If Codex, Pi, or a Claude-compatible harness returns malformed JSON or violates the schema, Tycho sends safe error details to the same native session and asks for one complete replacement payload. Error feedback contains codes, schema paths, expected types, and allowed enum values, not rejected field values.
+Tycho validates a managed agent's final result against `~/.tycho/config/schemas/agent_result.json` before accepting success. If Codex, Pi, dsh, or a Claude-compatible harness returns malformed JSON or violates the schema, Tycho sends safe error details to the same native session and asks for one complete replacement payload. Error feedback contains codes, schema paths, expected types, and allowed enum values, not rejected field values.
 
 The default is two correction attempts after the initial response. Set `TYCHO_STRUCTURED_OUTPUT_CORRECTION_LIMIT=0` to keep validation but disable correction, or choose up to `5`. If correction is exhausted, the run fails with an actionable summary. Tycho keeps the final invalid response in an owner-readable `*.invalid_structured_output.json` diagnostic file and does not expose it as a successful result.
 
-OpenCode cold prompts use the same canonical result schema, but bounded same-session correction applies only to Codex, Pi, and Claude-compatible adapters. The Remote UI shows each validation attempt as a collapsed Tycho system event without copying rejected values into the conversation.
+OpenCode cold prompts use the same canonical result schema, but bounded same-session correction applies only to Codex, Pi, dsh, and Claude-compatible adapters. The Remote UI shows each validation attempt as a collapsed Tycho system event without copying rejected values into the conversation.
 
 ## Keep Harness Behavior Explicit
 

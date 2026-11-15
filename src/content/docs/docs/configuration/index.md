@@ -48,7 +48,7 @@ Remote UI exposes a **Files** view for every registered project, including proje
 
 The server accepts relative paths only and resolves them against the registered project root. It rejects traversal and paths that escape through symlinks, hides VCS and generated directories, filters secret-shaped names and content, and refuses binary or oversized previews. Listings are paginated and bounded. The browser never receives an arbitrary host path and cannot use this view to register a new project.
 
-The browser cannot register an arbitrary host directory. Use the TUI or CLI for project registration. The Files boundary protects browsing and guarded editing; it does not restrict a launched harness.
+Use **New project** to create a project under the server user's home. Ownership, permissions, ACLs, and local-filesystem checks apply. The TUI or CLI can register other paths. The Files boundary protects browsing and guarded editing; it does not restrict a launched harness.
 
 ## Configure a Remote Server
 
@@ -85,7 +85,6 @@ A missing or invalid structured result still gets a Summary card. Only the detai
 
 Attach or detach a pull request from the session's PR diff catalog through Remote UI or `tycho agent pr-diff add` and `remove`. Detaching preserves source attachments and shared immutable snapshots.
 
-![Tycho Summary view with run navigation and a completed result](/assets/web-summary-v0.14.0.png)
 
 For an agent-owned pull request, open its saved diff, select exact added, removed, or context lines, write a comment, and choose **Add section**. Tycho attaches bounded context from that immutable snapshot to the same agent composer. If the pull request changes, refresh and select again; stale selections are rejected instead of being applied to a different diff.
 
@@ -109,6 +108,8 @@ Use `TYCHO_` environment variables when you need a temporary profile or test run
 | `TYCHO_CODEX_BIN` | Override Codex executable lookup. |
 | `TYCHO_CLAUDE_BIN` | Override Claude executable lookup. |
 | `TYCHO_OPENCODE_BIN` | Override OpenCode executable lookup. |
+| `TYCHO_DSH_BIN` | Override DeepSeek Harness executable lookup. |
+| `TYCHO_AGY_BIN` | Override Antigravity executable lookup. |
 | `TYCHO_PI_BIN` | Override Pi Coding Agent executable lookup. |
 | `TYCHO_SKILLS_HOME` | Override the home prefix used for isolated harness-skill profiles. |
 | `TYCHO_STRUCTURED_OUTPUT_CORRECTION_LIMIT` | Set structured-output correction attempts from `0` to `5`; the default is `2`. |
@@ -116,3 +117,7 @@ Use `TYCHO_` environment variables when you need a temporary profile or test run
 Keep secrets, real config files, and generated agent artifacts out of committed repos.
 
 See [Harnesses](/docs/configuration/harnesses/#structured-result-validation) for how validation and bounded same-session correction behave.
+
+## Delete a Project
+
+In **Edit project → Danger zone**, type the project key and confirm deletion. A background job saves progress and offers explicit retry. Default deletion stops and archives sessions and identified logs. Optional permanent removal deletes identified archives. Workspace files stay on disk. Remove every schedule reference first, including archived schedules. See [project deletion and recovery](https://github.com/firewalker06/tycho/blob/v0.16.0/docs/PROJECT_DELETION.md).

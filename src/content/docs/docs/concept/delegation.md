@@ -13,7 +13,6 @@ A parent and child are ordinary durable agent sessions with one added relationsh
 
 One child can have only one parent. Tycho accepts repeated attachment to that same parent, but rejects self-parenting, cycles, an unknown parent, re-parenting to a different session, or a mismatched server identity.
 
-![Tycho Remote UI showing a parent session, delegated children, and a returned report](/assets/web-delegation-v0.14.0.png)
 
 ## Create Child Work
 

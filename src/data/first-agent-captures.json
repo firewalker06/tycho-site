@@ -1,0 +1,50 @@
+{
+  "browser": {
+    "desktop": {
+      "src": "/assets/first-agent-browser-v0.16.0.png",
+      "width": 520,
+      "height": 273
+    },
+    "mobile": {
+      "src": "/assets/first-agent-browser-mobile-v0.16.0.png",
+      "width": 354,
+      "height": 344
+    }
+  },
+  "welcome": {
+    "desktop": {
+      "src": "/assets/first-agent-welcome-v0.16.0.png",
+      "width": 818,
+      "height": 463
+    },
+    "mobile": {
+      "src": "/assets/first-agent-welcome-mobile-v0.16.0.png",
+      "width": 390,
+      "height": 525
+    }
+  },
+  "harness": {
+    "desktop": {
+      "src": "/assets/first-agent-harness-v0.16.0.png",
+      "width": 333,
+      "height": 148
+    },
+    "mobile": {
+      "src": "/assets/first-agent-harness-mobile-v0.16.0.png",
+      "width": 250,
+      "height": 94
+    }
+  },
+  "prompt": {
+    "desktop": {
+      "src": "/assets/first-agent-prompt-v0.16.0.png",
+      "width": 794,
+      "height": 441
+    },
+    "mobile": {
+      "src": "/assets/first-agent-prompt-mobile-v0.16.0.png",
+      "width": 366,
+      "height": 439
+    }
+  }
+}

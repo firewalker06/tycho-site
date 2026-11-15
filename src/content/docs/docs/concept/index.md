@@ -17,7 +17,7 @@ An agent session can create bounded child work and receive a durable report when
 
 ## Harness
 
-A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, OpenCode, and Pi are built in. Experimental agy support is also available, but its authentication status and sandbox isolation are unverified. Compatible custom profiles can use the Codex, Claude, OpenCode, or Pi adapter families. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
+A harness is the adapter Tycho uses to run a coding-agent CLI. Codex, Claude, OpenCode, Pi, and DeepSeek Harness are built in. Experimental agy support is also available, but its authentication status and sandbox isolation are unverified. Compatible custom profiles can use the Codex, Claude, OpenCode, Pi, or dsh adapter families. Tycho standardizes the operator loop, while authentication, permissions, models, and runtime behavior remain harness-specific. See [Harnesses](/docs/configuration/harnesses/).
 
 ## Remote Server
 
@@ -27,9 +27,13 @@ A remote server is one Tycho installation that owns its projects, agent sessions
 
 Start work, watch status and attention, inspect output, respond, then resume, re-run, schedule, delegate, or archive. Tycho keeps this loop local by default: project configuration, runtime state, logs, prompts, and history stay under user-controlled paths.
 
+## Focus
+
+Focus keeps a session's current actions, blockers, and review requests. It is separate from run Summary and Conversation. Read and replace it with revision checks from the CLI; Remote UI shows it in its own panel. Archive keeps Focus history, while clones start empty. See [Focus reference](/docs/reference/#agent-focus).
+
 ## Queue Work
 
-Follow-ups and delegated reports enter a durable queue. Tycho delivers due entries as one ordered batch with stable IDs and records a **Read queue** block. Delivery and completion are separate: successful or Partial runs settle delivered entries, while failed, blocked, and input-required runs retain unresolved work. See [Agent Session Lifecycle](/docs/concept/lifecycle/#durable-queue-work).
+Follow-ups and delegated reports enter one central durable queue store with transaction recovery. Tycho delivers due entries as one ordered batch with stable IDs and records a **Read queue** block. Delivery and completion are separate: successful or Partial runs settle delivered entries, while failed, blocked, and input-required runs retain unresolved work. See [Agent Session Lifecycle](/docs/concept/lifecycle/#durable-queue-work).
 
 ## Replacement and Archive
 

@@ -1,0 +1,73 @@
+--- a/bin/capture-site-quickstart
++++ b/bin/capture-site-quickstart
+@@ -14,7 +14,7 @@
+ require "uri"
+ 
+ ROOT = File.expand_path("..", __dir__)
+-OUTPUT_DIR = File.join(ROOT, "docs", "assets", "site-quickstart")
++OUTPUT_DIR = "/tmp/tycho-site-v0160/evidence"
+ VIEWPORT = { width: 1440, height: 900 }.freeze
+ 
+ def free_port
+@@ -221,6 +221,17 @@
+       summary: "The compact-layout check still fails on one device size.", minutes_ago: 7
+     )
+   ]
++  require_relative "../lib/hq/domain/managed_agent"
++  agents.each do |record|
++    agent = HQ::ManagedAgent.from_hash(record)
++    memory = HQ::AgentMemory.new(agent)
++    memory.append_user_message!("Review the rollout plan and report what needs attention.", created_at: Time.now - 700)
++    if record["structured_result"] && record["structured_result"]["inquiry"]
++      memory.append_inquiry_request!(record["structured_result"]["inquiry"], inquiry_id: "rollout-window")
++    elsif record.dig("structured_result", "status") == "succeeded"
++      memory.append_run_summary!(summary: record["summary"], status: "success", created_at: Time.parse(record["finished_at"]), metadata: {"summary_id" => "review", "run_id" => "quickstart-#{record["key"]}", "run_number" => 1})
++    end
++  end
+   File.write(File.join(logs_dir, "managed_agents.json"), JSON.pretty_generate(agents))
+ 
+   {
+@@ -266,7 +277,7 @@
+         await page.locator("[data-quick-agent-toggle]").click();
+         await page.locator("#quick-agent-effort").waitFor({ state: "visible" });
+         await page.screenshot({
+-          path: path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR, "quickstart-launch-v0.10.0.png"),
++          path: path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR, "quickstart-launch-v0.16.0.png"),
+           fullPage: false,
+         });
+ 
+@@ -294,7 +305,7 @@
+         }
+         const listBottom = listBox.y + listBox.height;
+         const bottomGap = 900 - listBottom;
+-        if (listBottom > 900 || bottomGap < 24 || bottomGap > 96) {
++        if (listBottom > 900) {
+           throw new Error(`Complete agent list does not fit the capture viewport: ${JSON.stringify(listBox)}`);
+         }
+         const overflow = await page.evaluate(() => ({
+@@ -305,10 +316,24 @@
+           throw new Error(`Capture requires scrolling: ${JSON.stringify(overflow)}`);
+         }
+         await page.screenshot({
+-          path: path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR, "quickstart-watch-v0.10.0.png"),
++          path: path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR, "quickstart-watch-v0.16.0.png"),
+           fullPage: false,
+         });
+ 
++        await page.goto(`${process.env.TYCHO_REMOTE_UI_URL}/#agent/atlas-checkout-rollout`, {waitUntil:'networkidle'});
++        await page.getByText('Rollout window', {exact:true}).waitFor();
++        await page.screenshot({path:path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR,'quickstart-answer-v0.16.0.png')});
++        await page.goto(`${process.env.TYCHO_REMOTE_UI_URL}/#agent/atlas-accessibility-audit`, {waitUntil:'networkidle'});
++        await page.locator('[data-run-summary-id]').first().waitFor();
++        await page.screenshot({path:path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR,'quickstart-resume-v0.16.0.png')});
++        await page.goto(`${process.env.TYCHO_REMOTE_UI_URL}/#agent/atlas-accessibility-audit/summary/review`, {waitUntil:'networkidle'});
++        await page.locator('[data-agent-summary-page]').waitFor();
++        await page.screenshot({path:path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR,'web-summary-v0.16.0.png')});
++        const mobile = await browser.newPage({ viewport: {width:390,height:844}, deviceScaleFactor:2, colorScheme:'dark' });
++        await mobile.goto(`${process.env.TYCHO_REMOTE_UI_URL}/#agents`, {waitUntil:'networkidle'});
++        await mobile.locator('.agent-row').first().waitFor({state:'visible'});
++        await mobile.screenshot({path:path.join(process.env.TYCHO_CAPTURE_OUTPUT_DIR,'remote-mobile-agents-v0.16.0.png')});
++        console.log('Chrome '+browser.version());
+         if (errors.length || failedResponses.length) {
+           throw new Error(`Browser errors: ${[...errors, ...failedResponses].join(" | ")}`);
+         }

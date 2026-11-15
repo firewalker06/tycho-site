@@ -1,45 +1,47 @@
 ---
 import '../styles/site.css';
 import DeviceFrame from '../components/DeviceFrame.astro';
+import CommandBlock from '../components/CommandBlock.astro';
+import StepScreenshot from '../components/StepScreenshot.astro';
 
-const desktopScreenshot = '/assets/quickstart-watch-v0.15.0.png';
+const desktopScreenshot = '/assets/quickstart-watch-v0.16.0.png';
 const desktopScreenshotAlt = 'Tycho Remote UI showing agent sessions with active work, completed results, and sessions that need input.';
 
 const workflows = [
 	{
 		label: 'Launch',
-		title: 'Launch an agent session from a registered project.',
-		image: '/assets/quickstart-launch-v0.15.0.png',
+		title: 'Start an agent session.',
+		image: '/assets/quickstart-launch-v0.16.0.png',
 		alt: 'Tycho quick agent modal populated for the registered Atlas Web project, ready to create and run a session.',
 	},
 	{
 		label: 'Watch',
-		title: 'Review active work, completed results, and sessions that need input.',
+		title: 'See which sessions need attention.',
 		image: desktopScreenshot,
 		alt: desktopScreenshotAlt,
-		width: 1920,
-		height: 1200,
+		width: 1440,
+		height: 900,
 	},
 	{
 		label: 'Answer',
-		title: 'Answer questions or send follow-ups when the session needs direction.',
-		image: '/assets/quickstart-answer-v0.14.0.png',
+		title: 'Answer a question or send a follow-up.',
+		image: '/assets/quickstart-answer-v0.16.0.png',
 		alt: 'Tycho Remote UI showing the Checkout rollout session waiting for a rollout-window decision.',
 	},
 	{
 		label: 'Resume',
-		title: 'Resume or re-run work with Tycho keeping the durable session record.',
-		image: '/assets/quickstart-resume-v0.14.0.png',
-		alt: 'Tycho Remote UI showing two recorded Accessibility audit runs and a follow-up ready to resume the same session.',
+		title: 'Resume a session or run it again.',
+		image: '/assets/quickstart-resume-v0.16.0.png',
+		alt: 'Tycho Remote UI showing a completed Accessibility audit run and the composer for a follow-up.',
 	},
 ];
 
 const title = 'Tycho - Supervise coding agents.';
-const description = 'Tycho is a local-first operator console for supervising coding agents.';
-const ogImageAlt = 'Tycho home page: Supervise coding agents, with a laptop and phone showing agent sessions in a filterable list.';
+const description = 'Tycho helps you see which agent sessions deserve your attention.';
+const ogImageAlt = 'Tycho v0.16.0 with agent sessions on a laptop and phone.';
 const canonicalUrl = 'https://usetycho.com/';
 const ogImage = 'https://usetycho.com/og-image.png';
-const currentVersion = 'v0.15.0';
+const currentVersion = 'v0.16.0';
 const currentReleaseUrl = `https://github.com/firewalker06/tycho/releases/tag/${currentVersion}`;
 const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 ---
@@ -93,18 +95,17 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 		<main>
 			<section class="hero">
 				<div class="hero-copy">
-					<p class="eyebrow">Local-first control for coding agents</p>
+					<p class="eyebrow">Local-first</p>
 					<h1>Supervise coding agents.</h1>
 					<p class="lede">
-						Tycho helps you see which agent sessions deserve your attention. Launch, monitor, switch, and continue
-						agent work across your repos.
+						Tycho helps you see which agent sessions deserve your attention.
 					</p>
 					<p class="compatibility">
-						Your project config, logs, prompts, and history stay under your control.
-						Built-in support for Codex, Claude, OpenCode, and Pi.
+						Tycho stores your config, prompts, and logs locally.
+						Works with Codex, Claude, OpenCode, and Pi.
 					</p>
 					<div class="actions">
-						<a class="button primary" href="/docs/getting-started/">Install Tycho</a>
+						<a class="button primary" href="#install">Install Tycho</a>
 						<a class="button secondary" href="https://github.com/firewalker06/tycho">View on GitHub</a>
 					</div>
 				</div>
@@ -120,7 +121,7 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 					/>
 					<DeviceFrame
 						device="phone"
-						src="/assets/remote-mobile-agents-v0.15.0.png"
+						src="/assets/remote-mobile-agents-v0.16.0.png"
 						alt="Tycho Remote UI on a phone showing nine agent sessions in a filterable list."
 						width={780}
 						height={1688}
@@ -129,10 +130,66 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 				</div>
 			</section>
 
+
+			<section class="installation" id="install" aria-labelledby="install-heading">
+				<div class="section-heading">
+					<p class="eyebrow">Get started</p>
+					<h2 id="install-heading">Start your first agent.</h2>
+				</div>
+				<p>Install and sign in to <a href="/docs/configuration/harnesses/">a supported agent CLI</a> first.</p>
+				<tycho-tabs class="installation-platform">
+					<div class="install-tabs" role="tablist" aria-label="Installation platform">
+						<button type="button" id="install-tab-macos" role="tab" aria-selected="true" aria-controls="install-panel-macos" tabindex="0">macOS</button>
+						<button type="button" id="install-tab-linux" role="tab" aria-selected="false" aria-controls="install-panel-linux" tabindex="-1">Linux</button>
+						<button type="button" id="install-tab-windows" role="tab" aria-selected="false" aria-controls="install-panel-windows" tabindex="-1">Windows WSL2</button>
+					</div>
+					<section class="install-panel" id="install-panel-macos" role="tabpanel" aria-labelledby="install-tab-macos" tabindex="0">
+						<p>Requires macOS Tahoe on Apple Silicon and Homebrew.</p>
+						<CommandBlock label="macOS install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+					</section>
+					<section class="install-panel" id="install-panel-linux" role="tabpanel" aria-labelledby="install-tab-linux" tabindex="0" hidden>
+						<p>Requires Linux x86_64 and Homebrew.</p>
+						<CommandBlock label="Linux install and start" command={'brew tap firewalker06/tycho\nbrew install tycho\ntycho --version\ntycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+						<p>For other Linux targets, <a href="/docs/getting-started/#install-from-source">install from source</a>.</p>
+					</section>
+					<section class="install-panel" id="install-panel-windows" role="tabpanel" aria-labelledby="install-tab-windows" tabindex="0" hidden>
+						<p>Install the <a href="/docs/getting-started/#requirements">source requirements</a> inside WSL2 first. Run these commands in your Linux terminal.</p>
+						<CommandBlock label="WSL2 source install and start" command={'git clone --branch v0.16.0 \\\n  https://github.com/firewalker06/tycho.git\ncd tycho\nbin/setup --check\nbin/setup\nbin/tycho --version\nbin/tycho serve \\\n  --host 127.0.0.1 \\\n  --port 7373'} />
+					</section>
+				</tycho-tabs>
+				<tycho-tabs class="first-agent-steps">
+					<div class="step-tabs" role="tablist" aria-label="First agent steps" aria-orientation="vertical">
+						<button type="button" id="step-tab-browser" role="tab" aria-controls="step-panel-browser" aria-selected="true" tabindex="0"><span aria-hidden="true">1</span>Open browser</button>
+						<button type="button" id="step-tab-welcome" role="tab" aria-controls="step-panel-welcome" aria-selected="false" tabindex="-1"><span aria-hidden="true">2</span>Welcome Sandbox</button>
+						<button type="button" id="step-tab-harness" role="tab" aria-controls="step-panel-harness" aria-selected="false" tabindex="-1"><span aria-hidden="true">3</span>Choose a harness</button>
+						<button type="button" id="step-tab-prompt" role="tab" aria-controls="step-panel-prompt" aria-selected="false" tabindex="-1"><span aria-hidden="true">4</span>Run an agent</button>
+					</div>
+					<div class="step-panels">
+						<section id="step-panel-browser" class="step-panel" role="tabpanel" aria-labelledby="step-tab-browser" tabindex="0">
+							<p>Keep the terminal open and visit <a href="http://127.0.0.1:7373">127.0.0.1:7373</a> in your browser.</p>
+							<StepScreenshot step="browser" alt="Tycho v0.16.0 first-run setup instructions and Create Welcome Sandbox button." />
+						</section>
+						<section id="step-panel-welcome" class="step-panel" role="tabpanel" aria-labelledby="step-tab-welcome" tabindex="0" hidden>
+							<p>Select <strong>Create Welcome Sandbox</strong>, or open the existing project.</p>
+							<StepScreenshot step="welcome" alt="The built-in Welcome Sandbox project in Tycho v0.16.0, with its New agent button." />
+						</section>
+						<section id="step-panel-harness" class="step-panel" role="tabpanel" aria-labelledby="step-tab-harness" tabindex="0" hidden>
+							<p>Choose <strong>New agent</strong>. In <strong>Options</strong>, open <strong>Advanced</strong> and select your signed-in harness.</p>
+							<StepScreenshot step="harness" alt="The Harness field in Tycho v0.16.0 with Codex selected." />
+						</section>
+						<section id="step-panel-prompt" class="step-panel" role="tabpanel" aria-labelledby="step-tab-prompt" tabindex="0" hidden>
+							<p>Enter a prompt and select <strong>Create and Run</strong>.</p>
+							<CommandBlock label="Starter prompt" command="Read README.md and notes.md. Add one practical next step to notes.md, then summarize the change." />
+							<StepScreenshot step="prompt" alt="Tycho v0.16.0 New agent form with the starter prompt and Create and Run button." />
+						</section>
+					</div>
+				</tycho-tabs>
+			</section>
+
 			<section class="workflow" aria-labelledby="workflow-heading">
 				<div class="section-heading workflow-heading">
-					<p class="eyebrow">From first run to follow-up</p>
-					<h2 id="workflow-heading">Install Tycho, then supervise your first agent session.</h2>
+					<p class="eyebrow">Agent sessions</p>
+					<h2 id="workflow-heading">Follow an agent session.</h2>
 				</div>
 				<tycho-carousel class="workflow-carousel">
 					<ol class="workflow-tabs" aria-label="Quickstart steps">
@@ -181,6 +238,37 @@ const changelogUrl = 'https://github.com/firewalker06/tycho/releases';
 			</section>
 		</main>
 		<script>
+			class TychoTabs extends HTMLElement {
+				connectedCallback() {
+					const vertical = this.querySelector('[role="tablist"]')?.getAttribute('aria-orientation') === 'vertical';
+					const tabs = [...this.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+					const panels = [...this.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+					const select = (index: number, focus = false) => {
+						tabs.forEach((tab, current) => {
+							const selected = current === index;
+							tab.setAttribute('aria-selected', String(selected));
+							tab.tabIndex = selected ? 0 : -1;
+							panels[current].hidden = !selected;
+						});
+						if (focus) tabs[index].focus();
+					};
+					tabs.forEach((tab, index) => {
+						tab.addEventListener('click', () => select(index));
+						tab.addEventListener('keydown', (event) => {
+							let next;
+							if (event.key === (vertical ? 'ArrowDown' : 'ArrowRight')) next = (index + 1) % tabs.length;
+							else if (event.key === (vertical ? 'ArrowUp' : 'ArrowLeft')) next = (index - 1 + tabs.length) % tabs.length;
+							else if (event.key === 'Home') next = 0;
+							else if (event.key === 'End') next = tabs.length - 1;
+							else return;
+							event.preventDefault();
+							select(next, true);
+						});
+					});
+				}
+			}
+			if (!customElements.get('tycho-tabs')) customElements.define('tycho-tabs', TychoTabs);
+
 			class TychoCarousel extends HTMLElement {
 				connectedCallback() {
 					const tabs = [...this.querySelectorAll('[data-carousel-tab]')];
