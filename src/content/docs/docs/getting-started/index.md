@@ -65,7 +65,7 @@ git clone --branch v0.16.0 https://github.com/firewalker06/tycho.git
 cd tycho
 bin/setup --check
 bin/setup
-bin/tycho
+bin/tycho serve --host 127.0.0.1 --port 7373
 ```
 
 `bin/setup --check` reports missing requirements without installing gems or creating config files. `bin/setup` installs dependencies, creates the user config files under `~/.tycho`, and runs `tycho doctor` as a smoke check.
@@ -76,7 +76,7 @@ The remaining commands use the Homebrew executable, `tycho`. For a source checko
 
 Tycho offers to create a safe Welcome Sandbox when it starts without any projects. The sandbox lives at `~/tycho-projects/welcome` and contains a small `README.md` and `notes.md`.
 
-Choose the terminal or Remote UI for your first run. Both paths create the same sandbox and run the same task.
+Start with Remote UI in your browser for your first run. The optional terminal path below creates the same sandbox and runs the same task.
 
 Before you start, confirm the selected harness is installed and authenticated. The harness—not Tycho—ultimately enforces model access, approval, and sandbox behavior. The Welcome Sandbox keeps this first write away from a real repository; review [Harness Safety](/docs/configuration/harnesses/#harness-and-workspace-safety) before registering one.
 
